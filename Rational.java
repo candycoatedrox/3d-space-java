@@ -1,10 +1,12 @@
 public class Rational {
+
+    // ADD SUPPORT FOR DOUBLE INTERACTION
     
     private int numerator;
     private int denominator;
 
     /**
-     * Constructor
+     * Constructs a Rational from two integers (ints)
      * @param numerator the numerator of the rational number
      * @param denominator the denominator of the rational number
      */
@@ -15,7 +17,7 @@ public class Rational {
     }
 
     /**
-     * Constructor
+     * Constructs a Rational from a Rational numerator and an integer (int) denominator
      * @param numerator the numerator of the rational number (in Rational form)
      * @param denominator the denominator of the rational number
      */
@@ -26,7 +28,7 @@ public class Rational {
     }
 
     /**
-     * Constructor
+     * Constructs a Rational from an integer (int) numerator and a Rational denominator
      * @param numerator the numerator of the rational number
      * @param denominator the denominator of the rational number (in Rational form)
      */
@@ -37,7 +39,7 @@ public class Rational {
     }
 
     /**
-     * Constructor
+     * Constructs a Rational from two other Rationals
      * @param numerator the numerator of the rational number (in Rational form)
      * @param denominator the denominator of the rational number (in Rational form)
      */
@@ -48,7 +50,7 @@ public class Rational {
     }
 
     /**
-     * Constructor
+     * Constructs a Rational from an integer (int)
      * @param value the integer value of the rational number
      */
     public Rational(int value) {
@@ -75,6 +77,41 @@ public class Rational {
                 this.denominator *= -1;
             }
         }
+    }
+
+    /**
+     * Returns a rational number reduced to lowest terms
+     * @return the reduced form of the Rational
+     */
+    public Rational reduced() {
+        int numer = this.numerator;
+        int denom = this.denominator;
+
+        if (numer == denom) {
+            numer = 1;
+            denom = 1;
+        }
+
+        else {
+            int gcd = gcd(numer, denom);
+            numer /= gcd;
+            denom /= gcd;
+
+            if (denom < 0) {
+                numer *= -1;
+                denom *= -1;
+            }
+        }
+
+        return new Rational(numer, denom);
+    }
+
+    /**
+     * Returns true if this Rational is in its lowest terms
+     * @return true if this Rational is reduced to lowest terms; false otherwise
+     */
+    public boolean isReduced() {
+        return this == this.reduced();
     }
 
     /**
@@ -106,7 +143,7 @@ public class Rational {
      * @return the negative version of the rational number
      */
     public Rational negative() {
-        return new Rational(this.denominator * -1, this.numerator);
+        return new Rational(this.numerator * -1, this.denominator);
     }
 
     /**
@@ -352,7 +389,7 @@ public class Rational {
     }
 
     /**
-     * Multiplies a Rational and an int together
+     * Multiplies a Rational with an int
      * @param other the int to multiply by this Rational
      * @return the product of the Rational and the int
      */
@@ -365,7 +402,7 @@ public class Rational {
      * @param other the Rational to divide this Rational by
      * @return the quotient of the two Rationals
      */
-    public Rational divide(Rational other) {
+    public Rational divideBy(Rational other) {
         Rational quotient = this.multiply(other.invert());
         return quotient;
     }
@@ -375,7 +412,7 @@ public class Rational {
      * @param other the int to divide this Rational by
      * @return the quotient of the Rational and the int
      */
-    public Rational divide(int other) {
+    public Rational divideBy(int other) {
         return new Rational(this.numerator, this.denominator * other);
     }
 
@@ -384,7 +421,7 @@ public class Rational {
      * @param other the int to divide by this Rational
      * @return the quotient of the int and the Rational
      */
-    public Rational divideBy(int other) {
+    public Rational divide(int other) {
         return this.invert().multiply(other);
     }
 
