@@ -627,6 +627,8 @@ public class ScalarWrapper implements Cloneable {
     public String toString() {
         if (this.isInt()) {
             return this.Int.toString();
+        } else if (this.isDouble()) {
+            return this.dec.toString();
         } else {
             return this.rat.toString();
         }
