@@ -165,8 +165,7 @@ public class Matrix {
             for (int c = 0; c < n; c++) {
                 if (r == c) {
                     row[c] = oneWrap;
-                }
-                else {
+                } else {
                     row[c] = zeroWrap;
                 }
             }

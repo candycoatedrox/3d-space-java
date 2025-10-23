@@ -1,4 +1,3 @@
-
 public class Rational implements Cloneable {
 
     // add constructors using Integer, double, Double, ScalarWrapper
@@ -60,13 +59,11 @@ public class Rational implements Cloneable {
         if (value.isInt()) {
             this.numerator = value.getInt();
             this.denominator = 1;
-        }
-        else if (value.isDouble()) {
+        } else if (value.isDouble()) {
             int[] contFract = continuedFraction(value.getDouble(), contFractIterations);
             this.numerator = contFract[0];
             this.denominator = contFract[1];
-        }
-        else {
+        } else {
             this.numerator = value.getRat().getNumerator();
             this.denominator = value.getRat().getDenominator();
         }
@@ -109,9 +106,7 @@ public class Rational implements Cloneable {
         if (this.numerator == this.denominator) {
             this.numerator = 1;
             this.denominator = 1;
-        }
-
-        else {
+        } else {
             int gcd = gcd(this.numerator, this.denominator);
             this.numerator /= gcd;
             this.denominator /= gcd;
@@ -134,9 +129,7 @@ public class Rational implements Cloneable {
         if (numer == denom) {
             numer = 1;
             denom = 1;
-        }
-
-        else {
+        } else {
             int gcd = gcd(numer, denom);
             numer /= gcd;
             denom /= gcd;
@@ -278,8 +271,7 @@ public class Rational implements Cloneable {
     public boolean equals(ScalarWrapper other) {
         if (other.isInt()) {
             return this.equals(other.getInt());
-        }
-        else if (other.isDouble()) {
+        } else if (other.isDouble()) {
             return this.equals(other.getDouble());
         }
         return this.equals(other.getRat());
@@ -325,8 +317,7 @@ public class Rational implements Cloneable {
     public boolean lessThan(ScalarWrapper other) {
         if (other.isInt()) {
             return this.lessThan(other.getInt());
-        }
-        else if (other.isDouble()) {
+        } else if (other.isDouble()) {
             return this.lessThan(other.getDouble());
         }
         return this.lessThan(other.getRat());
@@ -372,8 +363,7 @@ public class Rational implements Cloneable {
     public boolean lessThanOrEquals(ScalarWrapper other) {
         if (other.isInt()) {
             return this.lessThanOrEquals(other.getInt());
-        }
-        else if (other.isDouble()) {
+        } else if (other.isDouble()) {
             return this.lessThanOrEquals(other.getDouble());
         }
         return this.lessThanOrEquals(other.getRat());
@@ -419,8 +409,7 @@ public class Rational implements Cloneable {
     public boolean greaterThan(ScalarWrapper other) {
         if (other.isInt()) {
             return this.greaterThan(other.getInt());
-        }
-        else if (other.isDouble()) {
+        } else if (other.isDouble()) {
             return this.greaterThan(other.getDouble());
         }
         return this.greaterThan(other.getRat());
@@ -466,8 +455,7 @@ public class Rational implements Cloneable {
     public boolean greaterThanOrEquals(ScalarWrapper other) {
         if (other.isInt()) {
             return this.greaterThanOrEquals(other.getInt());
-        }
-        else if (other.isDouble()) {
+        } else if (other.isDouble()) {
             return this.greaterThanOrEquals(other.getDouble());
         }
         return this.greaterThanOrEquals(other.getRat());
@@ -493,8 +481,7 @@ public class Rational implements Cloneable {
         if (other.isInt()) {
             Rational p = this.add(other.getInt());
             return new ScalarWrapper(p);
-        }
-        else if (other.isDouble()) {
+        } else if (other.isDouble()) {
             return new ScalarWrapper(this.add(other.getDouble()));
         }
         return new ScalarWrapper(this.add(other.getRat()));
@@ -511,8 +498,7 @@ public class Rational implements Cloneable {
     }
 
     public Rational add(Integer other) {
-        int intOther = other;
-        return this.add(intOther);
+        return this.add(other.intValue());
     }
 
     public double add(double other) {
@@ -544,8 +530,7 @@ public class Rational implements Cloneable {
         if (other.isInt()) {
             Rational p = this.subtract(other.getInt());
             return new ScalarWrapper(p);
-        }
-        else if (other.isDouble()) {
+        } else if (other.isDouble()) {
             return new ScalarWrapper(this.subtract(other.getDouble()));
         }
         return new ScalarWrapper(this.subtract(other.getRat()));
@@ -562,8 +547,7 @@ public class Rational implements Cloneable {
     }
 
     public Rational subtract(Integer other) {
-        int intOther = other;
-        return this.subtract(intOther);
+        return this.subtract(other.intValue());
     }
 
     public double subtract(double other) {
@@ -590,8 +574,7 @@ public class Rational implements Cloneable {
         if (other.isInt()) {
             Rational p = this.subtractFrom(other.getInt());
             return new ScalarWrapper(p);
-        }
-        else if (other.isDouble()) {
+        } else if (other.isDouble()) {
             return new ScalarWrapper(this.subtractFrom(other.getDouble()));
         }
         return new ScalarWrapper(this.subtractFrom(other.getRat()));
@@ -607,8 +590,7 @@ public class Rational implements Cloneable {
     }
 
     public Rational subtractFrom(Integer other) {
-        int intOther = other;
-        return this.subtractFrom(intOther);
+        return this.subtractFrom(other.intValue());
     }
 
     public double subtractFrom(double other) {
@@ -646,8 +628,7 @@ public class Rational implements Cloneable {
         if (other.isInt()) {
             Rational p = this.multiply(other.getInt());
             return new ScalarWrapper(p);
-        }
-        else if (other.isDouble()) {
+        } else if (other.isDouble()) {
             return new ScalarWrapper(this.multiply(other.getDouble()));
         }
         return new ScalarWrapper(this.multiply(other.getRat()));
@@ -691,8 +672,7 @@ public class Rational implements Cloneable {
         if (other.isInt()) {
             Rational p = this.divideBy(other.getInt());
             return new ScalarWrapper(p);
-        }
-        else if (other.isDouble()) {
+        } else if (other.isDouble()) {
             return new ScalarWrapper(this.divideBy(other.getDouble()));
         }
         return new ScalarWrapper(this.divideBy(other.getRat()));
@@ -718,8 +698,7 @@ public class Rational implements Cloneable {
     }
 
     public Rational divideBy(Integer other) {
-        int intOther = other;
-        return this.divideBy(intOther);
+        return this.divideBy(other.intValue());
     }
 
     public double divideBy(double other) {
@@ -746,8 +725,7 @@ public class Rational implements Cloneable {
     public ScalarWrapper divide(ScalarWrapper other) {
         if (other.isInt()) {
             return new ScalarWrapper(this.divide(other.getInt()));
-        }
-        else if (other.isDouble()) {
+        } else if (other.isDouble()) {
             return new ScalarWrapper(this.divide(other.getDouble()));
         }
         return new ScalarWrapper(this.divide(other.getRat()));
@@ -772,8 +750,7 @@ public class Rational implements Cloneable {
     }
 
     public Rational divide(Integer other) {
-        int intOther = other;
-        return this.divide(intOther);
+        return this.divide(other.intValue());
     }
 
     public double divide(double other) {

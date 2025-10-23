@@ -18,6 +18,11 @@ public class Vector implements Cloneable {
         this.dim = values.length;
     }
 
+    public Vector(double[] values) {
+        this.values = ScalarWrapper.wrapArray(values);
+        this.dim = values.length;
+    }
+
     public Vector(Rational[] values) {
         this.values = ScalarWrapper.wrapArray(values);
         this.dim = values.length;
@@ -36,6 +41,18 @@ public class Vector implements Cloneable {
     }
 
     public void set(int i, int newValue) {
+        this.values[i] = new ScalarWrapper(newValue);
+    }
+
+    public void set(int i, Integer newValue) {
+        this.values[i] = new ScalarWrapper(newValue);
+    }
+
+    public void set(int i, double newValue) {
+        this.values[i] = new ScalarWrapper(newValue);
+    }
+
+    public void set(int i, Double newValue) {
         this.values[i] = new ScalarWrapper(newValue);
     }
 
@@ -62,6 +79,36 @@ public class Vector implements Cloneable {
         }
     }
 
+    public Vector reducedPreserveType() {
+        Vector copy = this.clone();
+        copy.reducePreserveType();
+        return copy;
+    }
+
+    public void reducePreserveType() {
+        for (int i = 0; i < this.dim; i++) {
+            this.get(i).reducePreserveType();
+        }
+    }
+
+    public void convertToDoubles() {
+        for (ScalarWrapper component : this.values) {
+            component.convertToDouble();
+        }
+    }
+
+    public void convertToRationals() {
+        for (ScalarWrapper component : this.values) {
+            component.convertToRat();
+        }
+    }
+
+    public void convertToIntsOrRationals() {
+        for (ScalarWrapper component : this.values) {
+            component.convertToIntOrRat();
+        }
+    }
+
     public ScalarWrapper mag2() {
         Matrix Gij = Matrix.identityMatrix(this.dim);
         return innerProduct(this, this, Gij);
@@ -71,9 +118,19 @@ public class Vector implements Cloneable {
         return innerProduct(this, this, Gij);
     }
     
-    // IMPLEMENT MAG() ONCE WRAPPER SUPPORTS DOUBLES
+    public ScalarWrapper mag() {
+        Matrix Gij = Matrix.identityMatrix(this.dim);
+        return this.mag(Gij);
+    }
 
-    public boolean isScalarMultOf(Vector other) {
+    public ScalarWrapper mag(Matrix Gij) {
+        ScalarWrapper mag2 = this.mag2(Gij);
+        mag2.convertToDouble();
+        double root = Math.sqrt(mag2.getDouble());
+        return new ScalarWrapper(root);
+    }
+
+    /* public boolean isScalarMultOf(Vector other) {
         if (this.dim != other.dim) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
@@ -91,6 +148,7 @@ public class Vector implements Cloneable {
         NormalVector otherNormal = other.normalize(Gij);
         return thisNormal.trueValue() == otherNormal.trueValue();
     }
+    */
 
     public Vector negative() {
         return this.multiply(-1);
@@ -115,6 +173,8 @@ public class Vector implements Cloneable {
     public Vector multiply(ScalarWrapper other) {
         if (other.isInt()) {
             return this.multiply(other.getInt());
+        } else if (other.isDouble()) {
+            return this.multiply(other.getDouble());
         }
         return this.multiply(other.getRat());
     }
@@ -128,8 +188,19 @@ public class Vector implements Cloneable {
     }
 
     public Vector multiply(Integer other) {
-        int intOther = other;
-        return this.multiply(intOther);
+        return this.multiply(other.intValue());
+    }
+
+    public Vector multiply(double other) {
+        ScalarWrapper[] product = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            product[i] = this.get(i).multiply(other);
+        }
+        return new Vector(product);
+    }
+
+    public Vector multiply(Double other) {
+        return this.multiply(other.intValue());
     }
 
     public Vector multiply(Rational other) {
@@ -140,15 +211,19 @@ public class Vector implements Cloneable {
         return new Vector(product);
     }
 
-    public Matrix multiply(Matrix other) {
+    /* public Matrix multiply(Matrix other) {
 
     }
+    */
 
     public Vector divideBy(ScalarWrapper other) {
         if (other.isInt()) {
             return this.divideBy(other.getInt());
+        } else if (other.isDouble()) {
+            return this.divideBy(other.getDouble());
+        } else {
+            return this.divideBy(other.getRat());
         }
-        return this.divideBy(other.getRat());
     }
 
     public Vector divideBy(int other) {
@@ -156,8 +231,12 @@ public class Vector implements Cloneable {
     }
 
     public Vector divideBy(Integer other) {
-        int intOther = other;
-        return this.divideBy(intOther);
+        return this.divideBy(other.intValue());
+    }
+
+    public Vector divideBy(double other) {
+        double invert = 1 / other;
+        return this.multiply(new Rational(invert));
     }
 
     public Vector divideBy(Rational other) {
@@ -177,13 +256,14 @@ public class Vector implements Cloneable {
         return (innerProduct(this, other, Gij).equals(0));
     }
 
-    public double cosAngle(Vector other) {
+    /* public double cosAngle(Vector other) {
 
     }
 
     public double angle(Vector other) {
         
     }
+    */
 
     public Vector clone() {
         Stream<ScalarWrapper> st = Arrays.stream(this.values);
@@ -191,7 +271,7 @@ public class Vector implements Cloneable {
         return new Vector(arr);
     }
 
-    public NormalVector normalize() {
+    /* public NormalVector normalize() {
         Matrix Gij = Matrix.identityMatrix(this.dim);
         return this.normalize(Gij);
     }
@@ -202,6 +282,7 @@ public class Vector implements Cloneable {
         ScalarWrapper mag2 = v.mag2(Gij);
         return new NormalVector(this.values, mag2);
     }
+    */
 
     public Matrix toMatrix() {
         Vector[] arr = {this};

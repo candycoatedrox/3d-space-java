@@ -22,17 +22,22 @@ public class NormalVector extends Vector {
         this.divSqrt = divSqrt;
     }
 
-    // IMPLEMENT TRUEVALUE() ONCE VECTOR SUPPORTS DOUBLES
-    public Vector trueValue() {
-
+    public Vector simpleVector() {
+        return new Vector(this.values);
     }
 
-    @Override
+    // IMPLEMENT TRUEVALUE() ONCE VECTOR SUPPORTS DOUBLES
+    public Vector trueValue() {
+        double mag = Math.sqrt(this.divSqrt);
+        return this.simpleVector().divideBy(mag);
+    }
+
+    //@Override
     public NormalVector normalize() {
         return this;
     }
 
-    @Override
+    //@Override
     public NormalVector normalize(Matrix Gij) {
         return this;
     }

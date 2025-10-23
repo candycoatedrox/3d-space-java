@@ -1,4 +1,3 @@
-
 public class ScalarWrapper implements Cloneable {
 
     private Integer Int = null;
@@ -14,18 +13,14 @@ public class ScalarWrapper implements Cloneable {
     public ScalarWrapper(Integer Int, Double dec, Rational rat) {
         if (Int == null && dec == null && rat == null) {
             throw new NullPointerException();
-        }
-        else if (dec == null && rat == null) {
+        } else if (dec == null && rat == null) {
             this.Int = Int;
-        }
-        else if (Int == null && rat == null) {
+        } else if (Int == null && rat == null) {
             this.dec = dec;
-        }
-        else if (Int == null && dec == null) {
+        } else if (Int == null && dec == null) {
             if (rat.isWhole()) {
                 this.Int = rat.intValue();
-            }
-            else {
+            } else {
                 this.rat = rat;
             }
         }
@@ -41,11 +36,9 @@ public class ScalarWrapper implements Cloneable {
     public ScalarWrapper(Integer Int, Double dec) {
         if (Int == null && dec == null) {
             throw new NullPointerException();
-        }
-        else if (dec == null) {
+        } else if (dec == null) {
             this.Int = Int;
-        }
-        else if (Int == null) {
+        } else if (Int == null) {
             this.dec = dec;
         }
 
@@ -60,15 +53,12 @@ public class ScalarWrapper implements Cloneable {
     public ScalarWrapper(Integer Int, Rational rat) {
         if (Int == null && rat == null) {
             throw new NullPointerException();
-        }
-        else if (rat == null) {
+        } else if (rat == null) {
             this.Int = Int;
-        }
-        else if (Int == null) {
+        } else if (Int == null) {
             if (rat.isWhole()) {
                 this.Int = rat.intValue();
-            }
-            else {
+            } else {
                 this.rat = rat;
             }
         }
@@ -84,15 +74,12 @@ public class ScalarWrapper implements Cloneable {
     public ScalarWrapper(Double dec, Rational rat) {
         if (dec == null && rat == null) {
             throw new NullPointerException();
-        }
-        else if (rat == null) {
+        } else if (rat == null) {
             this.dec = dec;
-        }
-        else if (dec == null) {
+        } else if (dec == null) {
             if (rat.isWhole()) {
                 this.Int = rat.intValue();
-            }
-            else {
+            } else {
                 this.rat = rat;
             }
         }
@@ -139,8 +126,7 @@ public class ScalarWrapper implements Cloneable {
     public ScalarWrapper(Rational rat) {
         if (rat.isWhole()) {
             this.Int = rat.intValue();
-        }
-        else {
+        } else {
             this.rat = rat;
         }
     }
@@ -243,11 +229,9 @@ public class ScalarWrapper implements Cloneable {
     public boolean isWhole() {
         if (this.isInt()) {
             return true;
-        }
-        else if (this.isDouble()) {
+        } else if (this.isDouble()) {
             return this.dec % 1 == 0;
-        }
-        else {
+        } else {
             return this.rat.isWhole();
         }
     }
@@ -295,8 +279,7 @@ public class ScalarWrapper implements Cloneable {
     public int type() {
         if (this.isInt()) {
             return 0;
-        }
-        else if (this.isDouble()) {
+        } else if (this.isDouble()) {
             return 1;
         }
         return 2;
@@ -305,8 +288,7 @@ public class ScalarWrapper implements Cloneable {
     public void convertToInt() {
         if (this.isDouble()) {
             this.set(this.dec.intValue());
-        }
-        else if (this.isRat()) {
+        } else if (this.isRat()) {
             this.set(this.rat.intValue());
         }
     }
@@ -315,8 +297,7 @@ public class ScalarWrapper implements Cloneable {
         if (this.isInt()) {
             double d = this.Int;
             this.set(d);
-        }
-        else if (this.isRat()) {
+        } else if (this.isRat()) {
             this.set(this.rat.value());
         }
     }
@@ -324,9 +305,16 @@ public class ScalarWrapper implements Cloneable {
     public void convertToRat() {
         if (this.isInt()) {
             this.set(new Rational(this.Int));
-        }
-        else if (this.isDouble()) {
+        } else if (this.isDouble()) {
             this.set(new Rational(this.dec));
+        }
+    }
+
+    public void convertToIntOrRat() {
+        if (this.isWhole()) {
+            this.convertToInt();
+        } else {
+            this.convertToRat();
         }
     }
 
@@ -338,38 +326,45 @@ public class ScalarWrapper implements Cloneable {
     }
 
     public boolean equals(ScalarWrapper other) {
-        if (this.isInt()) {
-            if (other.isInt()) {
-                return this.Int.equals(other.Int);
-            }
-            else if (other.isDouble()) {
-                int i = this.Int.intValue();
-                double d = other.dec.doubleValue();
-                return i == d;
-            }
-            return other.rat.equals(this.Int);
-        }
         if (other.isInt()) {
-            return this.rat.equals(other.Int);
+            return other.equals(this.Int);
+        } else if (other.isDouble()) {
+            return other.equals(this.dec);
         }
-        return this.rat.equals(other.rat);
+        return other.equals(this.rat);
     }
 
     public boolean equals(int other) {
         if (this.isInt()) {
             return this.Int.equals(other);
+        } else if (this.isDouble()) {
+            return this.dec == other;
         }
         return this.rat.equals(other);
     }
 
     public boolean equals(Integer other) {
-        int intOther = other;
-        return this.equals(intOther);
+        return this.equals(other.intValue());
+    }
+
+    public boolean equals(double other) {
+        if (this.isInt()) {
+            return this.Int == other;
+        } else if (this.isDouble()) {
+            return this.dec.equals(other);
+        }
+        return this.rat.equals(other);
+    }
+
+    public boolean equals(Double other) {
+        return this.equals(other.doubleValue());
     }
 
     public boolean equals(Rational other) {
         if (this.isInt()) {
             return other.equals(this.Int);
+        } else if (this.isDouble()) {
+            return other.equals(this.dec);
         }
         return this.rat.equals(other);
     }
@@ -379,6 +374,8 @@ public class ScalarWrapper implements Cloneable {
     public ScalarWrapper add(ScalarWrapper other) {
         if (other.isInt()) {
             return other.add(this.Int);
+        } else if (other.isDouble()) {
+            return other.add(this.dec);
         }
         return other.add(this.rat);
     }
@@ -386,30 +383,43 @@ public class ScalarWrapper implements Cloneable {
     public ScalarWrapper add(int other) {
         if (this.isInt()) {
             return new ScalarWrapper(this.Int + other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec + other);
         }
         Rational sum = this.rat.add(other);
         return new ScalarWrapper(sum);
     }
 
     public ScalarWrapper add(Integer other) {
-        int intOther = other;
-        return this.add(intOther);
+        return this.add(other.intValue());
+    }
+
+    public ScalarWrapper add(double other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.Int + other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec + other);
+        } else {
+            return new ScalarWrapper(this.rat.add(other));
+        }
+    }
+
+    public ScalarWrapper add(Double other) {
+        return this.add(other.doubleValue());
     }
 
     public ScalarWrapper add(Rational other) {
-        Rational sum;
         if (this.isInt()) {
-            sum = other.add(this.Int);
-        }
-        else
+            Rational sum = other.add(this.Int);
+            return new ScalarWrapper(sum);
+        } else if (this.isDouble()) {
+            double sum = other.add(this.dec);
+            return new ScalarWrapper(sum);
+        } else
         {
-            sum = other.add(this.rat);
+            Rational sum = other.add(this.rat);
+            return new ScalarWrapper(sum);
         }
-
-        if (sum.isWhole()) {
-            return new ScalarWrapper(sum.intValue());
-        }
-        return new ScalarWrapper(sum);
     }
 
     public ScalarWrapper subtract(ScalarWrapper other) {
@@ -421,6 +431,14 @@ public class ScalarWrapper implements Cloneable {
     }
 
     public ScalarWrapper subtract(Integer other) {
+        return this.add(other * -1);
+    }
+
+    public ScalarWrapper subtract(double other) {
+        return this.add(other * -1);
+    }
+
+    public ScalarWrapper subtract(Double other) {
         return this.add(other * -1);
     }
 
@@ -440,77 +458,113 @@ public class ScalarWrapper implements Cloneable {
         return this.negative().add(other);
     }
 
+    public ScalarWrapper subtractFrom(double other) {
+        return this.negative().add(other);
+    }
+
+    public ScalarWrapper subtractFromDouble(Double other) {
+        return this.negative().add(other);
+    }
+
     public ScalarWrapper subtractFrom(Rational other) {
         return this.negative().add(other);
     }
 
     public ScalarWrapper multiply(ScalarWrapper other) {
         if (other.isInt()) {
-            return this.multiply(other.Int);
+            return other.multiply(this.Int);
+        } else if (other.isDouble()) {
+            return other.multiply(this.dec);
         }
-        return this.multiply(other.rat);
+        return other.multiply(this.rat);
     }
 
     public ScalarWrapper multiply(int other) {
         if (this.isInt()) {
             return new ScalarWrapper(this.Int * other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec * other);
         }
         return new ScalarWrapper(this.rat.multiply(other));
     }
 
     public ScalarWrapper multiply(Integer other) {
-        int intOther = other;
-        return this.multiply(intOther);
+        return this.multiply(other.intValue());
+    }
+    
+    public ScalarWrapper multiply(double other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.Int * other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec * other);
+        }
+        return new ScalarWrapper(this.rat.multiply(other));
+    }
+
+    public ScalarWrapper multiply(Double other) {
+        return this.multiply(other.doubleValue());
     }
 
     public ScalarWrapper multiply(Rational other) {
-        Rational product;
         if (this.isInt()) {
-            product = other.multiply(this.Int);
+            Rational product = other.multiply(this.Int);
+            return new ScalarWrapper(product);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(other.multiply(this.dec));
+        } else {
+            Rational product = other.multiply(this.rat);
+            return new ScalarWrapper(product);
         }
-        else {
-            product = other.multiply(this.rat);
-        }
-
-        if (product.isWhole()) {
-            return new ScalarWrapper(product.intValue());
-        }
-        return new ScalarWrapper(product);
     }
 
     public ScalarWrapper divideBy(ScalarWrapper other) {
         if (other.isInt()) {
             return this.divideBy(other.Int);
+        } else if (other.isDouble()) {
+            return this.divideBy(other.dec);
+        } else {
+            return this.divideBy(other.rat);
         }
-        return this.divideBy(other.rat);
     }
 
     public ScalarWrapper divideBy(int other) {
         if (this.isInt()) {
             return new ScalarWrapper(this.Int / other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec / other);
         }
         Rational quotient = this.rat.divideBy(other);
         return new ScalarWrapper(quotient);
     }
 
     public ScalarWrapper divideBy(Integer other) {
-        int intOther = other;
-        return this.divideBy(intOther);
+        return this.divideBy(other.intValue());
+    }
+
+    public ScalarWrapper divideBy(double other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.Int / other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec / other);
+        }
+        double quotient = this.rat.divideBy(other);
+        return new ScalarWrapper(quotient);
+    }
+
+    public ScalarWrapper divideBy(Double other) {
+        return this.divideBy(other.doubleValue());
     }
 
     public ScalarWrapper divideBy(Rational other) {
-        Rational quotient;
         if (this.isInt()) {
-            quotient = other.divide(this.Int);
+            Rational quotient = other.divide(this.Int);
+            return new ScalarWrapper(quotient);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(other.divide(this.dec));         
+        } else {
+            Rational quotient = this.rat.divideBy(other);
+            return new ScalarWrapper(quotient);
         }
-        else {
-            quotient = this.rat.divideBy(other);
-        }
-
-        if (quotient.isWhole()) {
-            return new ScalarWrapper(quotient.intValue());
-        }
-        return new ScalarWrapper(quotient);
     }
 
     public ScalarWrapper divide(ScalarWrapper other) {
@@ -520,29 +574,38 @@ public class ScalarWrapper implements Cloneable {
     public ScalarWrapper divide(int other) {
         if (this.isInt()) {
             return new ScalarWrapper(other / this.Int);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(other / this.Int);
         }
         Rational quotient = this.rat.divide(other);
         return new ScalarWrapper(quotient);
     }
 
     public ScalarWrapper divide(Integer other) {
-        int intOther = other;
-        return this.divide(intOther);
+        return this.divide(other.intValue());
+    }
+
+    public ScalarWrapper divide(double other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(other / this.Int);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(other / this.Int);
+        }
+        double quotient = this.rat.divide(other);
+        return new ScalarWrapper(quotient);
     }
 
     public ScalarWrapper divide(Rational other) {
         Rational quotient;
         if (this.isInt()) {
             quotient = other.divideBy(this.Int);
-        }
-        else {
+            return new ScalarWrapper(quotient);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(other.divideBy(this.dec));
+        } else {
             quotient = this.rat.divide(other);
+            return new ScalarWrapper(quotient);
         }
-
-        if (quotient.isWhole()) {
-            return new ScalarWrapper(quotient.intValue());
-        }
-        return new ScalarWrapper(quotient);
     }
 
     /**
@@ -553,8 +616,9 @@ public class ScalarWrapper implements Cloneable {
     public ScalarWrapper clone() {
         if (this.isInt()) {
             return new ScalarWrapper(this.Int.intValue());
-        }
-        else {
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec.doubleValue());
+        } else {
             return new ScalarWrapper(this.rat.clone());
         }
     }
@@ -563,8 +627,7 @@ public class ScalarWrapper implements Cloneable {
     public String toString() {
         if (this.isInt()) {
             return this.Int.toString();
-        }
-        else {
+        } else {
             return this.rat.toString();
         }
     }
