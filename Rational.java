@@ -1,9 +1,12 @@
-public class Rational {
 
-    // ADD SUPPORT FOR DOUBLE INTERACTION
+public class Rational implements Cloneable {
+
+    // add constructors using Integer, double, Double, ScalarWrapper
+    // add iadd, isub, imul, idiv equivalents
     
     private int numerator;
     private int denominator;
+    private static final int contFractIterations = 7;
 
     /**
      * Constructs a Rational from two integers (ints)
@@ -13,17 +16,6 @@ public class Rational {
     public Rational(int numerator, int denominator) {
         this.numerator = numerator;
         this.denominator = denominator;
-        this.reduce();
-    }
-
-    /**
-     * Constructs a Rational from a Rational numerator and an integer (int) denominator
-     * @param numerator the numerator of the rational number (in Rational form)
-     * @param denominator the denominator of the rational number
-     */
-    public Rational(Rational numerator, int denominator) {
-        this.numerator = numerator.numerator;
-        this.denominator = numerator.denominator * denominator;
         this.reduce();
     }
 
@@ -39,6 +31,17 @@ public class Rational {
     }
 
     /**
+     * Constructs a Rational from a Rational numerator and an integer (int) denominator
+     * @param numerator the numerator of the rational number (in Rational form)
+     * @param denominator the denominator of the rational number
+     */
+    public Rational(Rational numerator, int denominator) {
+        this.numerator = numerator.numerator;
+        this.denominator = numerator.denominator * denominator;
+        this.reduce();
+    }
+
+    /**
      * Constructs a Rational from two other Rationals
      * @param numerator the numerator of the rational number (in Rational form)
      * @param denominator the denominator of the rational number (in Rational form)
@@ -50,12 +53,53 @@ public class Rational {
     }
 
     /**
+     * Constructs a Rational from a ScalarWrapper
+     * @param value the integer or rational value of the rational number
+     */
+    public Rational(ScalarWrapper value) {
+        if (value.isInt()) {
+            this.numerator = value.getInt();
+            this.denominator = 1;
+        }
+        else if (value.isDouble()) {
+            int[] contFract = continuedFraction(value.getDouble(), contFractIterations);
+            this.numerator = contFract[0];
+            this.denominator = contFract[1];
+        }
+        else {
+            this.numerator = value.getRat().getNumerator();
+            this.denominator = value.getRat().getDenominator();
+        }
+
+        this.reduce();
+    }
+
+    /**
      * Constructs a Rational from an integer (int)
      * @param value the integer value of the rational number
      */
     public Rational(int value) {
         this.numerator = value;
         this.denominator = 1;
+    }
+    
+    public Rational(Integer value) {
+        this.numerator = value;
+        this.denominator = 1;
+    }
+
+    public Rational(double value) {
+        int[] contFract = continuedFraction(value, contFractIterations);
+        this.numerator = contFract[0];
+        this.denominator = contFract[1];
+        this.reduce();
+    }
+
+    public Rational(Double value) {
+        int[] contFract = continuedFraction(value, contFractIterations);
+        this.numerator = contFract[0];
+        this.denominator = contFract[1];
+        this.reduce();
     }
 
     /**
@@ -204,12 +248,41 @@ public class Rational {
     }
 
     /**
+     * Compares this Rational against an Integer
+     * @param other the Integer to compare with
+     * @return true if the Rational and Integer are equal to the same double; false otherwise
+     */
+    public boolean equals(Integer other) {
+        double doubleOther = other;
+        return this.equals(doubleOther);
+    }
+
+    /**
      * Compares this Rational against a double
      * @param other the double to compare with
      * @return true if the Rational's value equals the double; false otherwise
      */
     public boolean equals(double other) {
         return this.value() == other;
+    }
+
+    /**
+     * Compares this Rational against a Double
+     * @param other the Double to compare with
+     * @return true if the Rational's value equals the Double; false otherwise
+     */
+    public boolean equals(Double other) {
+        return this.value() == other;
+    }
+
+    public boolean equals(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.equals(other.getInt());
+        }
+        else if (other.isDouble()) {
+            return this.equals(other.getDouble());
+        }
+        return this.equals(other.getRat());
     }
 
     /**
@@ -231,6 +304,11 @@ public class Rational {
         return this.value() < doubleOther;
     }
 
+    public boolean lessThan(Integer other) {
+        double doubleOther = other;
+        return this.value() < doubleOther;
+    }
+
     /**
      * Compares a Rational to a double and returns whether the Rational's value is less than the double
      * @param other the double to compare with
@@ -238,6 +316,20 @@ public class Rational {
      */
     public boolean lessThan(double other) {
         return this.value() < other;
+    }
+
+    public boolean lessThan(Double other) {
+        return this.value() < other;
+    }
+
+    public boolean lessThan(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.lessThan(other.getInt());
+        }
+        else if (other.isDouble()) {
+            return this.lessThan(other.getDouble());
+        }
+        return this.lessThan(other.getRat());
     }
 
     /**
@@ -259,6 +351,11 @@ public class Rational {
         return this.value() <= doubleOther;
     }
 
+    public boolean lessThanOrEquals(Integer other) {
+        double doubleOther = other;
+        return this.value() <= doubleOther;
+    }
+
     /**
      * Compares a Rational to a double and returns whether the Rational's value is less than or equal to the double
      * @param other the double to compare with
@@ -266,6 +363,20 @@ public class Rational {
      */
     public boolean lessThanOrEquals(double other) {
         return this.value() <= other;
+    }
+
+    public boolean lessThanOrEquals(Double other) {
+        return this.value() <= other;
+    }
+
+    public boolean lessThanOrEquals(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.lessThanOrEquals(other.getInt());
+        }
+        else if (other.isDouble()) {
+            return this.lessThanOrEquals(other.getDouble());
+        }
+        return this.lessThanOrEquals(other.getRat());
     }
 
     /**
@@ -286,6 +397,11 @@ public class Rational {
         double doubleOther = other;
         return this.value() > doubleOther;
     }
+    
+    public boolean greaterThan(Integer other) {
+        double doubleOther = other;
+        return this.value() > doubleOther;
+    }
 
     /**
      * Compares a Rational to a double and returns whether the Rational's value is less than the double
@@ -294,6 +410,20 @@ public class Rational {
      */
     public boolean greaterThan(double other) {
         return this.value() > other;
+    }
+    
+    public boolean greaterThan(Double other) {
+        return this.value() > other;
+    }
+
+    public boolean greaterThan(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.greaterThan(other.getInt());
+        }
+        else if (other.isDouble()) {
+            return this.greaterThan(other.getDouble());
+        }
+        return this.greaterThan(other.getRat());
     }
 
     /**
@@ -314,6 +444,11 @@ public class Rational {
         double doubleOther = other;
         return this.value() >= doubleOther;
     }
+    
+    public boolean greaterThanOrEquals(Integer other) {
+        double doubleOther = other;
+        return this.value() >= doubleOther;
+    }
 
     /**
      * Compares a Rational to a double and returns whether the Rational's value is less than or equal to the double
@@ -322,6 +457,20 @@ public class Rational {
      */
     public boolean greaterThanOrEquals(double other) {
         return this.value() >= other;
+    }
+    
+    public boolean greaterThanOrEquals(Double other) {
+        return this.value() >= other;
+    }
+
+    public boolean greaterThanOrEquals(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.greaterThanOrEquals(other.getInt());
+        }
+        else if (other.isDouble()) {
+            return this.greaterThanOrEquals(other.getDouble());
+        }
+        return this.greaterThanOrEquals(other.getRat());
     }
 
     /**
@@ -340,6 +489,17 @@ public class Rational {
         return new Rational(numer1 + numer2, denom);
     }
 
+    public ScalarWrapper add(ScalarWrapper other) {
+        if (other.isInt()) {
+            Rational p = this.add(other.getInt());
+            return new ScalarWrapper(p);
+        }
+        else if (other.isDouble()) {
+            return new ScalarWrapper(this.add(other.getDouble()));
+        }
+        return new ScalarWrapper(this.add(other.getRat()));
+    }
+
     /**
      * Adds a Rational and an int
      * @param other the int to add to this Rational
@@ -350,6 +510,27 @@ public class Rational {
         return new Rational(this.numerator + otherNumer, this.denominator);
     }
 
+    public Rational add(Integer other) {
+        int intOther = other;
+        return this.add(intOther);
+    }
+
+    public double add(double other) {
+        return this.value() + other;
+    }
+
+    public double add(Double other) {
+        return this.value() + other;
+    }
+    
+    public Rational addRat(double other) {
+        return new Rational(this.add(other));
+    }
+    
+    public Rational addRat(Double other) {
+        return new Rational(this.add(other));
+    }
+
     /**
      * Subtracts a Rational from this Rational
      * @param other the Rational to subtract from this Rational
@@ -357,6 +538,17 @@ public class Rational {
      */
     public Rational subtract(Rational other) {
         return this.add(other.negative());
+    }
+
+    public ScalarWrapper subtract(ScalarWrapper other) {
+        if (other.isInt()) {
+            Rational p = this.subtract(other.getInt());
+            return new ScalarWrapper(p);
+        }
+        else if (other.isDouble()) {
+            return new ScalarWrapper(this.subtract(other.getDouble()));
+        }
+        return new ScalarWrapper(this.subtract(other.getRat()));
     }
 
     /**
@@ -369,6 +561,42 @@ public class Rational {
         return new Rational(this.numerator - otherNumer, this.denominator);
     }
 
+    public Rational subtract(Integer other) {
+        int intOther = other;
+        return this.subtract(intOther);
+    }
+
+    public double subtract(double other) {
+        return this.value() - other;
+    }
+
+    public double subtract(Double other) {
+        return this.value() - other;
+    }
+    
+    public Rational subtractRat(double other) {
+        return new Rational(this.subtract(other));
+    }
+    
+    public Rational subtractRat(Double other) {
+        return new Rational(this.subtract(other));
+    }
+
+    public Rational subtractFrom(Rational other) {
+        return other.subtract(this);
+    }
+
+    public ScalarWrapper subtractFrom(ScalarWrapper other) {
+        if (other.isInt()) {
+            Rational p = this.subtractFrom(other.getInt());
+            return new ScalarWrapper(p);
+        }
+        else if (other.isDouble()) {
+            return new ScalarWrapper(this.subtractFrom(other.getDouble()));
+        }
+        return new ScalarWrapper(this.subtractFrom(other.getRat()));
+    }
+
     /**
      * Subtracts a Rational from an int
      * @param other the int to subtract this Rational from
@@ -376,6 +604,27 @@ public class Rational {
      */
     public Rational subtractFrom(int other) {
         return this.negative().add(other);
+    }
+
+    public Rational subtractFrom(Integer other) {
+        int intOther = other;
+        return this.subtractFrom(intOther);
+    }
+
+    public double subtractFrom(double other) {
+        return other - this.value();
+    }
+
+    public double subtractFrom(Double other) {
+        return other - this.value();
+    }
+    
+    public Rational subtractFromRat(double other) {
+        return new Rational(this.subtractFrom(other));
+    }
+    
+    public Rational subtractFromRat(Double other) {
+        return new Rational(this.subtractFrom(other));
     }
 
     /**
@@ -389,12 +638,64 @@ public class Rational {
     }
 
     /**
+     * Multiplies a Rational with a ScalarWrapper
+     * @param other the ScalarWrapper to multiply by this Rational
+     * @return the product of the Rational and the ScalarWrapper
+     */
+    public ScalarWrapper multiply(ScalarWrapper other) {
+        if (other.isInt()) {
+            Rational p = this.multiply(other.getInt());
+            return new ScalarWrapper(p);
+        }
+        else if (other.isDouble()) {
+            return new ScalarWrapper(this.multiply(other.getDouble()));
+        }
+        return new ScalarWrapper(this.multiply(other.getRat()));
+    }
+
+    /**
      * Multiplies a Rational with an int
      * @param other the int to multiply by this Rational
      * @return the product of the Rational and the int
      */
     public Rational multiply(int other) {
         return new Rational(this.numerator * other, this.denominator);
+    }
+    
+    public Rational multiply(Integer other) {
+        return new Rational(this.numerator * other, this.denominator);
+    }
+
+    public double multiply(double other) {
+        return this.value() * other;
+    }
+
+    public double multiply(Double other) {
+        return this.value() * other;
+    }
+    
+    public Rational multiplyRat(double other) {
+        return new Rational(this.multiply(other));
+    }
+    
+    public Rational multiplyRat(Double other) {
+        return new Rational(this.multiply(other));
+    }
+
+    /**
+     * Divides this Rational by a ScalarWrapper
+     * @param other the ScalarWrapper to divide this Rational by
+     * @return the quotient of the Rational and the ScalarWrapper
+     */
+    public ScalarWrapper divideBy(ScalarWrapper other) {
+        if (other.isInt()) {
+            Rational p = this.divideBy(other.getInt());
+            return new ScalarWrapper(p);
+        }
+        else if (other.isDouble()) {
+            return new ScalarWrapper(this.divideBy(other.getDouble()));
+        }
+        return new ScalarWrapper(this.divideBy(other.getRat()));
     }
 
     /**
@@ -416,6 +717,51 @@ public class Rational {
         return new Rational(this.numerator, this.denominator * other);
     }
 
+    public Rational divideBy(Integer other) {
+        int intOther = other;
+        return this.divideBy(intOther);
+    }
+
+    public double divideBy(double other) {
+        return this.value() / other;
+    }
+
+    public double divideBy(Double other) {
+        return this.value() / other;
+    }
+    
+    public Rational divideByRat(double other) {
+        return new Rational(this.divideBy(other));
+    }
+    
+    public Rational divideByRat(Double other) {
+        return new Rational(this.divideBy(other));
+    }
+
+    /**
+     * Divides a ScalarWrapper by this Rational
+     * @param other the ScalarWrapper to divide by this Rational
+     * @return the quotient of the ScalarWrapper and this Rational 
+     */
+    public ScalarWrapper divide(ScalarWrapper other) {
+        if (other.isInt()) {
+            return new ScalarWrapper(this.divide(other.getInt()));
+        }
+        else if (other.isDouble()) {
+            return new ScalarWrapper(this.divide(other.getDouble()));
+        }
+        return new ScalarWrapper(this.divide(other.getRat()));
+    }
+
+    /**
+     * Divides a Rational by another Rational, reflected
+     * @param other the Rational to divide by this Rational
+     * @return the quotient of the two Rationals
+     */
+    public Rational divide(Rational other) {
+        return this.invert().multiply(other);
+    }
+
     /**
      * Divides an int by a Rational
      * @param other the int to divide by this Rational
@@ -425,9 +771,28 @@ public class Rational {
         return this.invert().multiply(other);
     }
 
+    public Rational divide(Integer other) {
+        int intOther = other;
+        return this.divide(intOther);
+    }
+
+    public double divide(double other) {
+        return other / this.value();
+    }
+    
+    public Rational divideRat(double other) {
+        return new Rational(this.divide(other));
+    }
+
+    @Override
+    public Rational clone() {
+        return new Rational(this.numerator, this.denominator);
+    }
+
     /**
      * Returns a string representation of a Rational
      */
+    @Override
     public String toString() {
         return this.numerator + "/" + this.denominator;
     }
@@ -441,5 +806,50 @@ public class Rational {
     public static int gcd(int a, int b) {
         if (b == 0) return a;
         return gcd(b, a % b);
+    }
+
+    public static int[] continuedFraction(double value, int iterations) {
+        double b0 = Math.floor(value);
+        double err = value - b0;
+        double numer = b0;
+        double denom = 1;
+        double prevN1 = b0;
+        double prevD1 = 1;
+        double prevN2 = 1;
+        double prevD2 = 0;
+        double[] prevIter;
+
+        for (int i = 0; i < iterations; i++) {
+            if (err == 0) {
+                break;
+            }
+
+            prevIter = contFractIteration(err, prevN1, prevD1, prevN2, prevD2);
+            numer = prevIter[0];
+            denom = prevIter[1];
+            err = prevIter[2];
+
+            prevN2 = prevN1;
+            prevD2 = prevD1;
+            prevN1 = numer;
+            prevD1 = denom;
+        }
+
+        int numerInt = (int)numer;
+        int denomInt = (int)denom;
+        int[] ratComponents = {numerInt, denomInt};
+        return ratComponents;
+    }
+
+    public static double[] contFractIteration(double value, double prevN1, double prevD1, double prevN2, double prevD2) {
+        // prevN1 = numerator for n-1, prevD2 = denominator for n-2, etc.
+        double b = 1 / value;
+        double bN = Math.floor(b);
+        double err = b - bN;
+
+        double numer = (bN * prevN1) + prevN2;
+        double denom = (bN * prevD1) + prevD2;
+        double[] output = {numer, denom, err};
+        return output;
     }
 }
