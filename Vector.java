@@ -4,70 +4,79 @@ import java.util.stream.Stream;
 
 public class Vector implements Cloneable {
 
-    protected ScalarWrapper[] values;
-    protected int dim;
+    protected ScalarWrapper[] components;
+    protected final int dim;
     protected static final double PI = Math.acos(-1);
 
     /**
-     * Constructs a Vector from a list of ScalarWrappers
-     * @param values a list of components for the Vector
+     * Constructs an empty Vector of dimension dim
+     * @param dim the dimension of the Vector
      */
-    public Vector(ScalarWrapper[] values) {
-        this.values = values;
-        this.dim = values.length;
+    public Vector(int dim) {
+        this.components = new ScalarWrapper[dim];
+        this.dim = dim;
     }
 
     /**
-     * Constructs a Vector from a list of ints
-     * @param values a list of components for the Vector
+     * Constructs a Vector from an array of ScalarWrappers
+     * @param components an array of the Vector's components
      */
-    public Vector(int[] values) {
-        this.values = ScalarWrapper.wrapArray(values);
-        this.dim = values.length;
+    public Vector(ScalarWrapper[] components) {
+        this.components = components;
+        this.dim = components.length;
     }
 
     /**
-     * Constructs a Vector from a list of Integers
-     * @param values a list of components for the Vector
+     * Constructs a Vector from an array of ints
+     * @param components an array of the Vector's components
      */
-    public Vector(Integer[] values) {
-        this.values = ScalarWrapper.wrapArray(values);
-        this.dim = values.length;
+    public Vector(int[] components) {
+        this.components = ScalarWrapper.wrapArray(components);
+        this.dim = components.length;
     }
 
     /**
-     * Constructs a Vector from a list of doubles
-     * @param values a list of components for the Vector
+     * Constructs a Vector from an array of Integers
+     * @param components an array of the Vector's components
      */
-    public Vector(double[] values) {
-        this.values = ScalarWrapper.wrapArray(values);
-        this.dim = values.length;
+    public Vector(Integer[] components) {
+        this.components = ScalarWrapper.wrapArray(components);
+        this.dim = components.length;
     }
 
     /**
-     * Constructs a Vector from a list of Doubles
-     * @param values a list of components for the Vector
+     * Constructs a Vector from an array of doubles
+     * @param components an array of the Vector's components
      */
-    public Vector(Double[] values) {
-        this.values = ScalarWrapper.wrapArray(values);
-        this.dim = values.length;
+    public Vector(double[] components) {
+        this.components = ScalarWrapper.wrapArray(components);
+        this.dim = components.length;
     }
 
     /**
-     * Constructs a Vector from a list of Rationals
-     * @param values a list of components for the Vector
+     * Constructs a Vector from an array of Doubles
+     * @param components an array of the Vector's components
      */
-    public Vector(Rational[] values) {
-        this.values = ScalarWrapper.wrapArray(values);
-        this.dim = values.length;
+    public Vector(Double[] components) {
+        this.components = ScalarWrapper.wrapArray(components);
+        this.dim = components.length;
     }
 
     /**
-     * Returns the list of components of this Vector
-     * @return a list of this Vector's components
+     * Constructs a Vector from an array of Rationals
+     * @param components an array of the Vector's components
      */
-    public ScalarWrapper[] getValues() {
-        return this.values;
+    public Vector(Rational[] components) {
+        this.components = ScalarWrapper.wrapArray(components);
+        this.dim = components.length;
+    }
+
+    /**
+     * Accessor for components
+     * @return the components of this Vector
+     */
+    public ScalarWrapper[] getcomponents() {
+        return this.components;
     }
 
     /**
@@ -76,7 +85,7 @@ public class Vector implements Cloneable {
      * @return the ith component of this Vector
      */
     public ScalarWrapper get(int i) {
-        return this.values[i];
+        return this.components[i];
     }
 
     /**
@@ -85,7 +94,7 @@ public class Vector implements Cloneable {
      * @param newValue the value to set the component to
      */
     public void set(int i, ScalarWrapper newValue) {
-        this.values[i] = newValue;
+        this.components[i] = newValue;
     }
 
     /**
@@ -94,7 +103,7 @@ public class Vector implements Cloneable {
      * @param newValue the value to set the component to
      */
     public void set(int i, int newValue) {
-        this.values[i] = new ScalarWrapper(newValue);
+        this.components[i] = new ScalarWrapper(newValue);
     }
 
     /**
@@ -103,7 +112,7 @@ public class Vector implements Cloneable {
      * @param newValue the value to set the component to
      */
     public void set(int i, Integer newValue) {
-        this.values[i] = new ScalarWrapper(newValue);
+        this.components[i] = new ScalarWrapper(newValue);
     }
 
     /**
@@ -112,7 +121,7 @@ public class Vector implements Cloneable {
      * @param newValue the value to set the component to
      */
     public void set(int i, double newValue) {
-        this.values[i] = new ScalarWrapper(newValue);
+        this.components[i] = new ScalarWrapper(newValue);
     }
 
     /**
@@ -121,7 +130,7 @@ public class Vector implements Cloneable {
      * @param newValue the value to set the component to
      */
     public void set(int i, Double newValue) {
-        this.values[i] = new ScalarWrapper(newValue);
+        this.components[i] = new ScalarWrapper(newValue);
     }
 
     /**
@@ -130,7 +139,7 @@ public class Vector implements Cloneable {
      * @param newValue the value to set the component to
      */
     public void set(int i, Rational newValue) {
-        this.values[i] = new ScalarWrapper(newValue);
+        this.components[i] = new ScalarWrapper(newValue);
     }
 
     /**
@@ -143,7 +152,7 @@ public class Vector implements Cloneable {
 
     /**
      * Returns a version of this Vector with all components reduced and simplified
-     * @return
+     * @return a reduced and simplified version of this Vector
      */
     public Vector simplified() {
         Vector copy = this.clone();
@@ -162,7 +171,7 @@ public class Vector implements Cloneable {
 
     /**
      * Returns a version of this Vector with all Rationals reduced to lowest terms
-     * @return
+     * @return a reduced version of this Vector
      */
     public Vector reduced() {
         Vector copy = this.clone();
@@ -183,7 +192,7 @@ public class Vector implements Cloneable {
      * Converts all components of this Vector to doubles
      */
     public void convertToDoubles() {
-        for (ScalarWrapper component : this.values) {
+        for (ScalarWrapper component : this.components) {
             component.convertToDouble();
         }
     }
@@ -192,7 +201,7 @@ public class Vector implements Cloneable {
      * Converts all components of this Vector to Rationals
      */
     public void convertToRationals() {
-        for (ScalarWrapper component : this.values) {
+        for (ScalarWrapper component : this.components) {
             component.convertToRat();
         }
     }
@@ -201,7 +210,7 @@ public class Vector implements Cloneable {
      * Converts all components of this Vector to integers (if whole) or Rationals (otherwise)
      */
     public void convertToIntsOrRationals() {
-        for (ScalarWrapper component : this.values) {
+        for (ScalarWrapper component : this.components) {
             component.convertToIntOrRat();
         }
     }
@@ -248,6 +257,26 @@ public class Vector implements Cloneable {
     }
 
     /**
+     * Returns the negative version of this Vector
+     * @return the negative version of this Vector
+     */
+    public Vector negative() {
+        return this.multiply(-1);
+    }
+
+    /**
+     * Returns the absolute value of this Vector
+     * @return the absolute value of this Vector
+     */
+    public Vector absolute() {
+        Vector copy = this.clone();
+        for (int i = 0; i < this.dim; i++) {
+            copy.set(i, this.get(i).absolute());
+        }
+        return copy;
+    }
+
+    /**
      * Checks whether this Vector is a scalar multiple of another Vector
      * @param other the Vector to compare with
      * @return true if this Vector is a scalar multiple of other; false otherwise
@@ -278,23 +307,22 @@ public class Vector implements Cloneable {
     }
 
     /**
-     * Returns the negative version of this Vector
-     * @return the negative version of this Vector
+     * Checks whether two Vectors are equal
+     * @param other the Vector to compare with
+     * @return true if all components of this Vector are equal to their counterparts in other; false otherwise
      */
-    public Vector negative() {
-        return this.multiply(-1);
-    }
-
-    /**
-     * Returns the absolute value of this Vector
-     * @return the absolute value of this Vector
-     */
-    public Vector absolute() {
-        Vector copy = this.clone();
-        for (int i = 0; i < this.dim; i++) {
-            copy.set(i, this.get(i).absolute());
+    public boolean equals(Vector other) {
+        if (this.dim != other.dim) {
+            return false;
         }
-        return copy;
+
+        for (int i = 0; i < this.dim; i++) {
+            if (!this.get(i).equals(other.get(i))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -395,10 +423,18 @@ public class Vector implements Cloneable {
         return new Vector(product);
     }
 
-    /* public Matrix multiply(Matrix other) {
+    /**
+     * Multiplies a Vector by a Matrix
+     * @param other the Matrix to multiply this Vector with
+     * @return the product of the Vector and the Matrix
+     */
+    public Matrix multiply(Matrix other) {
+        if (other.getN() != 1) {
+            throw new IllegalArgumentException("Vector and Matrix are incompatible");
+        }
 
+        return this.toMatrix().multiply(other);
     }
-    */
 
     /**
      * Divides this Vector by a ScalarWrapper
@@ -637,7 +673,7 @@ public class Vector implements Cloneable {
      */
     @Override
     public Vector clone() {
-        Stream<ScalarWrapper> st = Arrays.stream(this.values);
+        Stream<ScalarWrapper> st = Arrays.stream(this.components);
         ScalarWrapper[] arr = st.map(val -> val.clone()).toArray(ScalarWrapper[]::new);
         return new Vector(arr);
     }
@@ -664,11 +700,13 @@ public class Vector implements Cloneable {
         boolean hasDouble = false;
         ArrayList<Integer> denominators = new ArrayList<>();
         for (int n = 0; n < this.dim; n++) {
+            if (this.get(n).isDouble()) {
+                this.get(n).convertToIntOrRat();
+            }
+            
             if (this.get(n).isRat()) {
                 hasRat = true;
                 denominators.add(this.get(n).getRat().getDenominator());
-            } else if (this.get(n).isDouble()) {
-                hasDouble = true;
             }
         }
 
@@ -677,7 +715,7 @@ public class Vector implements Cloneable {
             int lcm = denominators.get(0);
             if (denominators.size() > 1) {
                 for (int i = 1; i < denominators.size(); i++) {
-                    lcm = Rational.lcm(lcm, denominators.get(i));
+                    lcm = Util.lcm(lcm, denominators.get(i));
                 }
             }
 
@@ -685,22 +723,19 @@ public class Vector implements Cloneable {
             v.simplify();
         }
 
-        // If there are no doubles, divide the Vector by the greatest common denominator of all its components
-        if (!hasDouble) {
-            int gcd = v.get(0).getInt();
-            if (v.dim > 1) {
-                for (int i = 1; i < v.dim; i++) {
-                    gcd = Rational.gcd(gcd, v.get(i).getInt());
-                }
+        int gcd = v.get(0).getInt();
+        if (v.dim > 1) {
+            for (int i = 1; i < v.dim; i++) {
+                gcd = Util.gcd(gcd, v.get(i).getInt());
             }
-
-            v = v.divideBy(gcd);
         }
+
+        v = v.divideBy(gcd);
 
         ScalarWrapper mag2 = v.mag2(Gij);
         // if there are any doubles, the magnitude squared likely won't be an int...
         // fix this somehow??
-        return new NormalVector(this.values, mag2.getInt());
+        return new NormalVector(this.components, mag2.getInt());
     }
 
     /**
@@ -708,8 +743,7 @@ public class Vector implements Cloneable {
      * @return the Matrix form of this Vector
      */
     public Matrix toMatrix() {
-        Vector[] arr = {this};
-        return new Matrix(arr);
+        return new Matrix(this);
     }
 
     /**
@@ -811,72 +845,8 @@ public class Vector implements Cloneable {
      * @return the zero Vector of dimV
      */
     public static Vector zeroVector(int dimV) {
-        int[] values = new int[dimV];
-        return new Vector(values);
-    }
-
-    /**
-     * Checks whether a ScalarWrapper is a perfect square
-     * @param a the ScalarWrapper to check
-     * @return true if a is a perfect square; false otherwise
-     */
-    public static boolean perfectSquare(ScalarWrapper a) {
-        if (a.isInt()) {
-            return perfectSquare(a.getInt());
-        } else if (a.isDouble()) {
-            return perfectSquare(a.getDouble());
-        } else {
-            return perfectSquare(a.getRat());
-        }
-    }
-    
-    /**
-     * Checks whether an int is a perfect square
-     * @param a the int to check
-     * @return true if a is a perfect square; false otherwise
-     */
-    public static boolean perfectSquare(int a) {
-        double root = Math.sqrt(a);
-        return root % 1 == 0;
-    }
-
-    /**
-     * Checks whether an Integer is a perfect square
-     * @param a the Integer to check
-     * @return true if a is a perfect square; false otherwise
-     */
-    public static boolean perfectSquare(Integer a) {
-        return perfectSquare(a.intValue());
-    }
-
-    /**
-     * Checks whether a double is a perfect square
-     * @param a the double to check
-     * @return true if a is a perfect square; false otherwise
-     */
-    public static boolean perfectSquare(double a) {
-        double root = Math.sqrt(a);
-        return root % 1 == 0;
-    }
-
-    /**
-     * Checks whether a Double is a perfect square
-     * @param a the Double to check
-     * @return true if a is a perfect square; false otherwise
-     */
-    public static boolean perfectSquare(Double a) {
-        return perfectSquare(a.doubleValue());
-    }
-
-    /**
-     * Checks whether a Rational is a perfect square
-     * @param a the Rational to check
-     * @return true if a is a perfect square; false otherwise
-     */
-    public static boolean perfectSquare(Rational a) {
-        double nRoot = Math.sqrt(a.getNumerator());
-        double dRoot = Math.sqrt(a.getDenominator());
-        return (nRoot % 1 == 0 && dRoot % 1 == 0);
+        int[] components = new int[dimV];
+        return new Vector(components);
     }
 
     /* public static void main(String[] args) {

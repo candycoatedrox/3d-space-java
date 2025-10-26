@@ -66,6 +66,19 @@ public class Radical {
         return this.innerValue.sqrt();
     }
 
+    /**
+     * Creates and returns a deep copy of this Radical
+     * @return a deep copy of this Radical
+     */
+    @Override
+    public Radical clone() {
+        return new Radical(innerValue.clone());
+    }
+
+    /**
+     * Returns a String representation of this Radical
+     * @return a String representation of this Radical
+     */
     @Override
     public String toString() {
         return "√" + this.innerValue;

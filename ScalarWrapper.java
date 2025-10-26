@@ -945,7 +945,7 @@ public class ScalarWrapper implements Cloneable {
      * @return the square root of this ScalarWrapper
      */
     public ScalarWrapper root() {
-        if (Vector.perfectSquare(this)) {
+        if (Util.perfectSquare(this)) {
             if (this.isInt()) {
                 int root = (int)Math.sqrt(this.getInt());
                 return new ScalarWrapper(root);
@@ -991,23 +991,9 @@ public class ScalarWrapper implements Cloneable {
     }
 
     /**
-     * Wraps each member of a list of Integers
-     * @param values a list of Integers to wrap
-     * @return a list of wrapped Integers
-     */
-    public static ScalarWrapper[] wrapArray(Integer[] values) {
-        ScalarWrapper[] wrappedArray = new ScalarWrapper[values.length];
-        for (int i = 0; i < values.length; i++) {
-            wrappedArray[i] = new ScalarWrapper(values[i]);
-        }
-
-        return wrappedArray;
-    }
-
-    /**
-     * Wraps each member of a list of ints
-     * @param values a list of ints to wrap
-     * @return a list of wrapped ints
+     * Wraps each member of a array of ints
+     * @param values a array of ints to wrap
+     * @return a array of wrapped integers
      */
     public static ScalarWrapper[] wrapArray(int[] values) {
         ScalarWrapper[] wrappedArray = new ScalarWrapper[values.length];
@@ -1019,11 +1005,11 @@ public class ScalarWrapper implements Cloneable {
     }
 
     /**
-     * Wraps each member of a list of Doubles
-     * @param values a list of Doubles to wrap
-     * @return a list of wrapped Doubles
+     * Wraps each member of a array of Integers
+     * @param values a array of Integers to wrap
+     * @return a array of wrapped integers
      */
-    public static ScalarWrapper[] wrapArray(Double[] values) {
+    public static ScalarWrapper[] wrapArray(Integer[] values) {
         ScalarWrapper[] wrappedArray = new ScalarWrapper[values.length];
         for (int i = 0; i < values.length; i++) {
             wrappedArray[i] = new ScalarWrapper(values[i]);
@@ -1033,9 +1019,9 @@ public class ScalarWrapper implements Cloneable {
     }
 
     /**
-     * Wraps each member of a list of doubles
-     * @param values a list of doubles to wrap
-     * @return a list of wrapped doubles
+     * Wraps each member of a array of doubles
+     * @param values a array of doubles to wrap
+     * @return a array of wrapped doubles
      */
     public static ScalarWrapper[] wrapArray(double[] values) {
         ScalarWrapper[] wrappedArray = new ScalarWrapper[values.length];
@@ -1047,9 +1033,23 @@ public class ScalarWrapper implements Cloneable {
     }
 
     /**
-     * Wraps each member of a list of Rationals
-     * @param values a list of Rationals to wrap
-     * @return a list of wrapped Rationals
+     * Wraps each member of a array of Doubles
+     * @param values a array of Doubles to wrap
+     * @return a array of wrapped doubles
+     */
+    public static ScalarWrapper[] wrapArray(Double[] values) {
+        ScalarWrapper[] wrappedArray = new ScalarWrapper[values.length];
+        for (int i = 0; i < values.length; i++) {
+            wrappedArray[i] = new ScalarWrapper(values[i]);
+        }
+
+        return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a array of Rationals
+     * @param values a array of Rationals to wrap
+     * @return a array of wrapped Rationals
      */
     public static ScalarWrapper[] wrapArray(Rational[] values) {
         ScalarWrapper[] wrappedArray = new ScalarWrapper[values.length];
@@ -1058,6 +1058,105 @@ public class ScalarWrapper implements Cloneable {
         }
 
         return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a two-dimensional array of ints
+     * @param values a two-dimensional array of ints to wrap
+     * @return a two-dimensional array of wrapped integers
+     */
+    public static ScalarWrapper[][] wrapArray(int[][] values) {
+        ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values[0].length; j++) {
+                wrappedArray[i][j] = new ScalarWrapper(values[i][j]);
+            }
+        }
+
+        return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a two-dimensional array of Integers
+     * @param values a two-dimensional array of Integers to wrap
+     * @return a two-dimensional array of wrapped integers
+     */
+    public static ScalarWrapper[][] wrapArray(Integer[][] values) {
+        ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values[0].length; j++) {
+                wrappedArray[i][j] = new ScalarWrapper(values[i][j]);
+            }
+        }
+
+        return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a two-dimensional array of doubles
+     * @param values a two-dimensional array of doubles to wrap
+     * @return a two-dimensional array of wrapped doubles
+     */
+    public static ScalarWrapper[][] wrapArray(double[][] values) {
+        ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values[0].length; j++) {
+                wrappedArray[i][j] = new ScalarWrapper(values[i][j]);
+            }
+        }
+
+        return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a two-dimensional array of Doubles
+     * @param values a two-dimensional array of Doubles to wrap
+     * @return a two-dimensional array of wrapped doubles
+     */
+    public static ScalarWrapper[][] wrapArray(Double[][] values) {
+        ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values[0].length; j++) {
+                wrappedArray[i][j] = new ScalarWrapper(values[i][j]);
+            }
+        }
+
+        return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a two-dimensional array of Rationals
+     * @param values a two-dimensional array of Rationals to wrap
+     * @return a two-dimensional array of wrapped Rationals
+     */
+    public static ScalarWrapper[][] wrapArray(Rational[][] values) {
+        ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values[0].length; j++) {
+                wrappedArray[i][j] = new ScalarWrapper(values[i][j]);
+            }
+        }
+
+        return wrappedArray;
+    }
+
+    public static void permute(int[] intArray, int start) {
+        for(int i = start; i < intArray.length; i++){
+            int temp = intArray[start];
+            intArray[start] = intArray[i];
+            intArray[i] = temp;
+            permute(intArray, start + 1);
+            intArray[i] = intArray[start];
+            intArray[start] = temp;
+        }
+        if (start == intArray.length - 1) {
+            System.out.println(java.util.Arrays.toString(intArray));
+        }
+    }
+
+    public static void main(String[] args){
+        int intArr[] = {1, 2, 3};
+        permute(intArr, 0);
     }
 
 }
