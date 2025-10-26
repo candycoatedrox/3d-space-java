@@ -21,7 +21,7 @@ public class NormalVector extends Vector {
     } */
 
     /**
-     * Constructs a normalized vector
+     * Constructs a normalized vector from a list of ScalarWrappers and the magnitude of the original vector
      * @param values
      * @param divSqrt
      */
@@ -31,6 +31,21 @@ public class NormalVector extends Vector {
     }
 
     public NormalVector(int[] values, int divSqrt) {
+        super(values);
+        this.divSqrt = divSqrt;
+    }
+
+    public NormalVector(Integer[] values, int divSqrt) {
+        super(values);
+        this.divSqrt = divSqrt;
+    }
+
+    public NormalVector(double[] values, int divSqrt) {
+        super(values);
+        this.divSqrt = divSqrt;
+    }
+
+    public NormalVector(Double[] values, int divSqrt) {
         super(values);
         this.divSqrt = divSqrt;
     }
@@ -50,16 +65,20 @@ public class NormalVector extends Vector {
         return this.simpleVector().divideBy(mag);
     }
 
-    //@Override
+    @Override
     public NormalVector normalize() {
         return this;
     }
 
-    //@Override
+    @Override
     public NormalVector normalize(Matrix Gij) {
         return this;
     }
 
+    /**
+     * Creates and returns a deep copy of this NormalVector
+     * @return a deep copy of this NormalVector
+     */
     @Override
     public NormalVector clone() {
         Stream<ScalarWrapper> st = Arrays.stream(this.values);
@@ -67,6 +86,10 @@ public class NormalVector extends Vector {
         return new NormalVector(arr, this.divSqrt);
     }
 
+    /**
+     * Returns a String representation of this NormalVector
+     * @return a String representation of this NormalVector
+     */
     @Override
     public String toString() {
         String s = String.format("(1/√%s)(", this.divSqrt);

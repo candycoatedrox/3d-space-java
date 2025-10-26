@@ -290,7 +290,7 @@ public class ScalarWrapper implements Cloneable {
      * Calculates the reduced and simplified form of this ScalarWrapper
      * @return the reduced and simplified form of this ScalarWrapper
      */
-    public ScalarWrapper reduced() {
+    public ScalarWrapper simplified() {
         if (!this.isRat()) {
             return this;
         }
@@ -311,7 +311,7 @@ public class ScalarWrapper implements Cloneable {
     /**
      * Reduces and simplifies this ScalarWrapper
      */
-    public void reduce() {
+    public void simplify() {
         if (this.isRat()) {
             this.set(this.rat.reduced());
         }
@@ -325,7 +325,7 @@ public class ScalarWrapper implements Cloneable {
      * Calculates the reduced form of this ScalarWrapper
      * @return the reduced form of this ScalarWrapper
      */
-    public ScalarWrapper reducedPreserveType() {
+    public ScalarWrapper reduced() {
         if (!this.isRat()) {
             return this;
         }
@@ -336,7 +336,7 @@ public class ScalarWrapper implements Cloneable {
     /**
      * Reduces this ScalarWrapper, if it is a Rational
      */
-    public void reducePreserveType() {
+    public void reduce() {
         if (this.isRat()) {
             this.set(this.rat.reduced());
         }
@@ -923,6 +923,40 @@ public class ScalarWrapper implements Cloneable {
         } else {
             quotient = this.rat.divide(other);
             return new ScalarWrapper(quotient);
+        }
+    }
+
+    /**
+     * Calculates the square root of this ScalarWrapper
+     * @return the square root of this ScalarWrapper
+     */
+    public double sqrt() {
+        if (this.isInt()) {
+            return Math.sqrt(this.getInt());
+        } else if (this.isDouble()) {
+            return Math.sqrt(this.getDouble());
+        } else {
+            return Math.sqrt(this.getRat().value());
+        }
+    }
+
+    /**
+     * Calculates and simplifies the square root of this ScalarWrapper as much as possible
+     * @return the square root of this ScalarWrapper
+     */
+    public ScalarWrapper root() {
+        if (Vector.perfectSquare(this)) {
+            if (this.isInt()) {
+                int root = (int)Math.sqrt(this.getInt());
+                return new ScalarWrapper(root);
+            } else if (this.isDouble()) {
+                double root = Math.sqrt(this.getDouble());
+                return new ScalarWrapper(root);
+            } else {
+                return this.getRat().root();
+            }
+        } else {
+            return new ScalarWrapper(this.sqrt());
         }
     }
 

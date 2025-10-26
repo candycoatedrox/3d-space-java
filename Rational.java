@@ -736,8 +736,7 @@ public class Rational implements Cloneable {
      * @return true if the rational number is whole; false otherwise
      */
     public boolean isWhole() {
-        Rational thisReduced = this;
-        thisReduced.reduce();
+        Rational thisReduced = this.reduced();
         return thisReduced.denominator == 1;
     }
 
@@ -1542,6 +1541,29 @@ public class Rational implements Cloneable {
     }
 
     /**
+     * Calculates the square root of this Rational as a double
+     * @return the square root of this Rational as a double
+     */
+    public double sqrt() {
+        return Math.sqrt(this.value());
+    }
+
+    /**
+     * Calculates the square root of this Rational as either a Rational or a double
+     * @return the square root of this Rational as either a Rational or a double
+     */
+    public ScalarWrapper root() {
+        if (Vector.perfectSquare(this)) {
+            int numer = (int)Math.sqrt(this.numerator);
+            int denom = (int)Math.sqrt(this.denominator);
+            Rational rat = new Rational(numer, denom);
+            return new ScalarWrapper(rat);
+        } else {
+            return new ScalarWrapper(this.sqrt());
+        }
+    }
+
+    /**
      * Creates and returns a deep copy of this Rational
      * @return a deep copy of this Rational
      */
@@ -1557,17 +1579,6 @@ public class Rational implements Cloneable {
     @Override
     public String toString() {
         return this.numerator + "/" + this.denominator;
-    }
-
-    /**
-     * Returns the greatest common denominator of two integers
-     * @param a an integer
-     * @param b an integer
-     * @return the greatest common denominator of the two integers
-     */
-    public static int gcd(int a, int b) {
-        if (b == 0) return a;
-        return gcd(b, a % b);
     }
 
     /**
@@ -1628,5 +1639,89 @@ public class Rational implements Cloneable {
         double denom = (bN * prevD1) + prevD2;
         double[] output = {numer, denom, err};
         return output;
+    }
+
+    /**
+     * Returns the greatest common denominator of two integers
+     * @param a an integer
+     * @param b an integer
+     * @return the greatest common denominator of the two integers
+     */
+    public static int gcd(int a, int b) {
+        if (b == 0) return a;
+        return gcd(b, a % b);
+    }
+
+    /**
+     * Returns the greatest common denominator of two integers
+     * @param a an integer
+     * @param b an integer
+     * @return the greatest common denominator of the two integers
+     */
+    public static int gcd(int a, Integer b) {
+        if (b == 0) return a;
+        return gcd(b, a % b);
+    }
+
+    /**
+     * Returns the greatest common denominator of two integers
+     * @param a an integer
+     * @param b an integer
+     * @return the greatest common denominator of the two integers
+     */
+    public static int gcd(Integer a, int b) {
+        if (b == 0) return a;
+        return gcd(b, a % b);
+    }
+
+    /**
+     * Returns the greatest common denominator of two integers
+     * @param a an integer
+     * @param b an integer
+     * @return the greatest common denominator of the two integers
+     */
+    public static int gcd(Integer a, Integer b) {
+        if (b == 0) return a;
+        return gcd(b, a % b);
+    }
+
+    /**
+     * Returns the least common multiple of two integers
+     * @param a an integer
+     * @param b an integer
+     * @return the least common multiple of the two integers
+     */
+    public static int lcm(int a, int b) {
+        return (a * b) / gcd(a, b);
+    }
+
+    /**
+     * Returns the least common multiple of two integers
+     * @param a an integer
+     * @param b an integer
+     * @return the least common multiple of the two integers
+     */
+    public static int lcm(int a, Integer b) {
+        return (a * b) / gcd(a, b);
+    }
+
+    /**
+     * Returns the least common multiple of two integers
+     * @param a an integer
+     * @param b an integer
+     * @return the least common multiple of the two integers
+     */
+    public static int lcm(Integer a, int b) {
+        return (a * b) / gcd(a, b);
+    }
+
+    /**
+     * Returns the least common multiple of two integers
+     * @param a an integer
+     * @param b an integer
+     * @return the least common multiple of the two integers
+     */
+    public static int lcm(Integer a, Integer b) {
+        return (a * b) / gcd(a, b);
     }
 }

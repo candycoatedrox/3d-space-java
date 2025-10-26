@@ -96,10 +96,10 @@ public class Matrix {
         return this.n;
     }
 
-    public void reduce() {
+    public void simplify() {
         for (int i = 0; i < this.k; i++) {
             for (int j = 0; j < this.n; j++) {
-                this.get(i, j).reduce();
+                this.get(i, j).simplify();
             }
         }
     }

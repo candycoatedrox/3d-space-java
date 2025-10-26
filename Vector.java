@@ -1,9 +1,8 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class Vector implements Cloneable {
-
-    // ADD DOUBLE SUPPORT
 
     protected ScalarWrapper[] values;
     protected int dim;
@@ -146,18 +145,18 @@ public class Vector implements Cloneable {
      * Returns a version of this Vector with all components reduced and simplified
      * @return
      */
-    public Vector reduced() {
+    public Vector simplified() {
         Vector copy = this.clone();
-        copy.reduce();
+        copy.simplify();
         return copy;
     }
 
     /**
      * Reduces and simplifies all components of this Vector
      */
-    public void reduce() {
+    public void simplify() {
         for (int i = 0; i < this.dim; i++) {
-            this.get(i).reduce();
+            this.get(i).simplify();
         }
     }
 
@@ -165,18 +164,18 @@ public class Vector implements Cloneable {
      * Returns a version of this Vector with all Rationals reduced to lowest terms
      * @return
      */
-    public Vector reducedPreserveType() {
+    public Vector reduced() {
         Vector copy = this.clone();
-        copy.reducePreserveType();
+        copy.reduce();
         return copy;
     }
 
     /**
      * Reduces all Rationals in this Vector to lowest terms
      */
-    public void reducePreserveType() {
+    public void reduce() {
         for (int i = 0; i < this.dim; i++) {
-            this.get(i).reducePreserveType();
+            this.get(i).reduce();
         }
     }
 
@@ -245,7 +244,7 @@ public class Vector implements Cloneable {
 
         double root = Math.sqrt(mag2.getDouble());
         ScalarWrapper wrapper = new ScalarWrapper(root);
-        return wrapper.reduced();
+        return wrapper.simplified();
     }
 
     /**
@@ -580,6 +579,59 @@ public class Vector implements Cloneable {
     }
 
     /**
+     * Returns the projection of another Vector onto this Vector
+     * @param other the Vector to project onto this Vector
+     * @return the projection of the two Vectors
+     */
+    public Vector projection(Vector other) {
+        if (this.dim != other.dim) {
+            throw new IllegalArgumentException("Vectors must share dimension");
+        }
+        
+        Matrix Gij = Matrix.identityMatrix(this.dim);
+        return this.projection(other, Gij);
+    }
+
+    /**
+     * Returns the projection of another Vector onto this Vector in a given inner product space
+     * @param other the Vector to project onto this Vector
+     * @param Gij the Matrix representing a given inner product
+     * @return the projection of the two Vectors in the given inner product space
+     */
+    public Vector projection(Vector other, Matrix Gij) {
+        ScalarWrapper scalarFactor = innerProduct(this, other).divideBy(this.mag2(Gij));
+        return this.multiply(scalarFactor);
+    }
+
+    /**
+     * Returns the projection of this Vector onto another Vector
+     * @param other the Vector to project this Vector onto
+     * @return the projection of the two Vectors
+     */
+    public Vector projectionOnto(Vector other) {
+        if (this.dim != other.dim) {
+            throw new IllegalArgumentException("Vectors must share dimension");
+        }
+        
+        Matrix Gij = Matrix.identityMatrix(this.dim);
+        return other.projection(this, Gij);
+    }
+
+    /**
+     * Returns the projection of this Vector onto another Vector in a given inner product space
+     * @param other the Vector to project this Vector onto
+     * @param Gij the Matrix representing a given inner product
+     * @return the projection of the two Vectors in the given inner product space
+     */
+    public Vector projectionOnto(Vector other, Matrix Gij) {
+        if (this.dim != other.dim) {
+            throw new IllegalArgumentException("Vectors must share dimension");
+        }
+
+        return other.projection(this, Gij);
+    }
+
+    /**
      * Creates and returns a deep copy of this Vector
      * @return a deep copy of this Vector
      */
@@ -606,8 +658,48 @@ public class Vector implements Cloneable {
      */
     public NormalVector normalize(Matrix Gij) {
         Vector v = this;
-        // add that part getting rid of fractional components from the Python ver here
+
+        // Simplify the vector as much as possible without changing direction
+        boolean hasRat = false;
+        boolean hasDouble = false;
+        ArrayList<Integer> denominators = new ArrayList<>();
+        for (int n = 0; n < this.dim; n++) {
+            if (this.get(n).isRat()) {
+                hasRat = true;
+                denominators.add(this.get(n).getRat().getDenominator());
+            } else if (this.get(n).isDouble()) {
+                hasDouble = true;
+            }
+        }
+
+        // Turn all Rationals into integers
+        if (hasRat) {
+            int lcm = denominators.get(0);
+            if (denominators.size() > 1) {
+                for (int i = 1; i < denominators.size(); i++) {
+                    lcm = Rational.lcm(lcm, denominators.get(i));
+                }
+            }
+
+            v = v.multiply(lcm);
+            v.simplify();
+        }
+
+        // If there are no doubles, divide the Vector by the greatest common denominator of all its components
+        if (!hasDouble) {
+            int gcd = v.get(0).getInt();
+            if (v.dim > 1) {
+                for (int i = 1; i < v.dim; i++) {
+                    gcd = Rational.gcd(gcd, v.get(i).getInt());
+                }
+            }
+
+            v = v.divideBy(gcd);
+        }
+
         ScalarWrapper mag2 = v.mag2(Gij);
+        // if there are any doubles, the magnitude squared likely won't be an int...
+        // fix this somehow??
         return new NormalVector(this.values, mag2.getInt());
     }
 
