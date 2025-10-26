@@ -637,7 +637,7 @@ public class Rational implements Cloneable {
     }
 
     /**
-     * Reduces a rational number to lowest terms
+     * Reduces this Rational to lowest terms
      */
     public void reduce() {
         if (this.numerator == this.denominator) {
@@ -656,7 +656,7 @@ public class Rational implements Cloneable {
     }
 
     /**
-     * Returns a rational number reduced to lowest terms
+     * Returns this Rational reduced to lowest terms
      * @return the reduced form of this Rational
      */
     public Rational reduced() {
@@ -705,7 +705,7 @@ public class Rational implements Cloneable {
     }
 
     /**
-     * Returns an inverted version of a rational number
+     * Returns an inverted version of this Rational
      * @return the inverted version of this Rational
      */
     public Rational invert() {
@@ -713,7 +713,7 @@ public class Rational implements Cloneable {
     }
 
     /**
-     * Returns a rational number with its sign flipped
+     * Returns this Rational with its sign flipped
      * @return the negative version of this Rational
      */
     public Rational negative() {
@@ -721,7 +721,7 @@ public class Rational implements Cloneable {
     }
 
     /**
-     * Returns the absolute value of a rational number
+     * Returns the absolute value of this Rational
      * @return the absolute value of this Rational
      */
     public Rational absolute() {
