@@ -176,16 +176,16 @@ public class Matrix {
         return new Matrix(matrix);
     }
 
-    public static void main(String[] args) {
+    /* public static void main(String[] args) {
         ScalarWrapper[] r1 = {new ScalarWrapper(1), new ScalarWrapper(2)};
         ScalarWrapper[] r2 = {new ScalarWrapper(3), new ScalarWrapper(4)};
         ScalarWrapper[][] m = {r1, r2};
 
         Matrix newMatrix = new Matrix(m);
-        //System.out.println(newMatrix);
+        System.out.println(newMatrix);
 
         Matrix z = zeroMatrix(3, 2);
         System.out.println(z);
-    }
+    } */
 
 }

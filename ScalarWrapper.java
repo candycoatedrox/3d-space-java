@@ -696,7 +696,7 @@ public class ScalarWrapper implements Cloneable {
 
     /**
      * Multiplies this ScalarWrapper with another ScalarWrapper
-     * @param other the ScalarWrapper to multiply by this ScalarWrapper
+     * @param other the ScalarWrapper to multiply with this ScalarWrapper
      * @return the product of this ScalarWrapper and other
      */
     public ScalarWrapper multiply(ScalarWrapper other) {
@@ -710,7 +710,7 @@ public class ScalarWrapper implements Cloneable {
 
     /**
      * Multiplies this ScalarWrapper with an int
-     * @param other the int to multiply by this ScalarWrapper
+     * @param other the int to multiply with this ScalarWrapper
      * @return the product of this ScalarWrapper and other
      */
     public ScalarWrapper multiply(int other) {
@@ -724,7 +724,7 @@ public class ScalarWrapper implements Cloneable {
 
     /**
      * Multiplies this ScalarWrapper with an Integer
-     * @param other the Integer to multiply by this ScalarWrapper
+     * @param other the Integer to multiply with this ScalarWrapper
      * @return the product of this ScalarWrapper and other
      */
     public ScalarWrapper multiply(Integer other) {
@@ -733,7 +733,7 @@ public class ScalarWrapper implements Cloneable {
     
     /**
      * Multiplies this ScalarWrapper with a double
-     * @param other the double to multiply by this ScalarWrapper
+     * @param other the double to multiply with this ScalarWrapper
      * @return the product of this ScalarWrapper and other
      */
     public ScalarWrapper multiply(double other) {
@@ -747,7 +747,7 @@ public class ScalarWrapper implements Cloneable {
 
     /**
      * Multiplies this ScalarWrapper with a Double
-     * @param other the Double to multiply by this ScalarWrapper
+     * @param other the Double to multiply with this ScalarWrapper
      * @return the product of this ScalarWrapper and other
      */
     public ScalarWrapper multiply(Double other) {
@@ -756,7 +756,7 @@ public class ScalarWrapper implements Cloneable {
 
     /**
      * Multiplies this ScalarWrapper with a Rational
-     * @param other the Rational to multiply by this ScalarWrapper
+     * @param other the Rational to multiply with this ScalarWrapper
      * @return the product of this ScalarWrapper and other
      */
     public ScalarWrapper multiply(Rational other) {

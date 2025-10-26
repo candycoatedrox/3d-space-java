@@ -1308,7 +1308,7 @@ public class Rational implements Cloneable {
 
     /**
      * Multiplies two Rationals together
-     * @param other the Rational to multiply by this Rational
+     * @param other the Rational to multiply with this Rational
      * @return the product of this Rational and other
      */
     public Rational multiply(Rational other) {
@@ -1318,7 +1318,7 @@ public class Rational implements Cloneable {
 
     /**
      * Multiplies this Rational with a ScalarWrapper
-     * @param other the ScalarWrapper to multiply by this Rational
+     * @param other the ScalarWrapper to multiply with this Rational
      * @return the product of this Rational and other
      */
     public ScalarWrapper multiply(ScalarWrapper other) {
@@ -1333,7 +1333,7 @@ public class Rational implements Cloneable {
 
     /**
      * Multiplies this Rational with an int
-     * @param other the int to multiply by this Rational
+     * @param other the int to multiply with this Rational
      * @return the product of this Rational and other
      */
     public Rational multiply(int other) {
@@ -1342,7 +1342,7 @@ public class Rational implements Cloneable {
     
     /**
      * Multiplies this Rational with an Integer
-     * @param other the Integer to multiply by this Rational
+     * @param other the Integer to multiply with this Rational
      * @return the product of this Rational and other
      */
     public Rational multiply(Integer other) {
@@ -1351,7 +1351,7 @@ public class Rational implements Cloneable {
 
     /**
      * Multiplies this Rational with a double
-     * @param other the double to multiply by this Rational
+     * @param other the double to multiply with this Rational
      * @return the product of this Rational and other as a double
      */
     public double multiply(double other) {
@@ -1360,7 +1360,7 @@ public class Rational implements Cloneable {
 
     /**
      * Multiplies this Rational with a Double
-     * @param other the Double to multiply by this Rational
+     * @param other the Double to multiply with this Rational
      * @return the product of this Rational and other as a double
      */
     public double multiply(Double other) {
@@ -1369,7 +1369,7 @@ public class Rational implements Cloneable {
     
     /**
      * Multiplies this Rational with a double and returns a Rational
-     * @param other the double to multiply by this Rational
+     * @param other the double to multiply with this Rational
      * @return the product of this Rational and other as a Rational
      */
     public Rational multiplyRat(double other) {
@@ -1378,7 +1378,7 @@ public class Rational implements Cloneable {
     
     /**
      * Multiplies this Rational with a Double and returns a Rational
-     * @param other the Double to multiply by this Rational
+     * @param other the Double to multiply with this Rational
      * @return the product of this Rational and other as a Rational
      */
     public Rational multiplyRat(Double other) {
@@ -1542,7 +1542,7 @@ public class Rational implements Cloneable {
     }
 
     /**
-     * Returns a deep copy of this Rational
+     * Creates and returns a deep copy of this Rational
      * @return a deep copy of this Rational
      */
     @Override
@@ -1551,8 +1551,8 @@ public class Rational implements Cloneable {
     }
 
     /**
-     * Returns a string representation of this Rational
-     * @return a string representation of this Rational
+     * Returns a String representation of this Rational
+     * @return a String representation of this Rational
      */
     @Override
     public String toString() {

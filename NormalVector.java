@@ -1,6 +1,24 @@
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 public class NormalVector extends Vector {
 
     private int divSqrt;
+
+    // refuses to recognize Vector as a class and not a constructor???
+    /* public NormalVector(Vector v) {
+        Vector copy = v.clone();
+        this.values = copy.values;
+        this.dim = v.dim;
+        this.divSqrt = v.mag2().getInt();
+    }
+
+    public NormalVector(Vector v, Matrix Gij) {
+        Vector copy = v.clone();
+        this.values = copy.values;
+        this.dim = v.dim;
+        this.divSqrt = v.mag2(Gij).getInt();
+    } */
 
     /**
      * Constructs a normalized vector
@@ -43,6 +61,13 @@ public class NormalVector extends Vector {
     }
 
     @Override
+    public NormalVector clone() {
+        Stream<ScalarWrapper> st = Arrays.stream(this.values);
+        ScalarWrapper[] arr = st.map(val -> val.clone()).toArray(ScalarWrapper[]::new);
+        return new NormalVector(arr, this.divSqrt);
+    }
+
+    @Override
     public String toString() {
         String s = String.format("(1/√%s)(", this.divSqrt);
         for (int i = 0; i < this.dim; i++) {
@@ -54,6 +79,13 @@ public class NormalVector extends Vector {
         s += ")";
 
         return s;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {2, 5};
+        Vector testVector = new Vector(arr);
+        NormalVector testNormal = testVector.normalize();
+        System.out.println(testNormal);
     }
 
 }
