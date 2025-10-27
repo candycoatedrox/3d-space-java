@@ -72,6 +72,37 @@ public class Vector implements Cloneable {
     }
 
     /**
+     * Constructs a Vector from the origin to a given Point
+     * @param p the terminal point of the Vector
+     */
+    public Vector(Point p) {
+        ScalarWrapper[] vector = new ScalarWrapper[3];
+
+        for (int i = 0; i < 3; i++) {
+            vector[i] = p.getCoordinate(i);
+        }
+
+        this.components = vector;
+        this.dim = 3;
+    }
+
+    /**
+     * Constructs a Vector from one Point to another
+     * @param p the initial point of the Vector
+     * @param q the terminal point of the Vector
+     */
+    public Vector(Point p, Point q) {
+        ScalarWrapper[] vector = new ScalarWrapper[3];
+
+        for (int i = 0; i < 3; i++) {
+            vector[i] = q.getCoordinate(i).subtract(p.getCoordinate(i));
+        }
+
+        this.components = vector;
+        this.dim = 3;
+    }
+
+    /**
      * Accessor for components
      * @return the components of this Vector
      */
