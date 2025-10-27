@@ -254,6 +254,293 @@ public class ArrayPermutation {
 
         return false;
     }
+    
+    /**
+     * Checks whether an array of ScalarWrappers is in order
+     * @param arr the array to check
+     * @return true if indices is in order; false otherwise
+     */
+    private static boolean inOrder(ScalarWrapper[] arr) {
+        ScalarWrapper[] target = Arrays.copyOf(arr, arr.length);
+        Arrays.sort(target);
+
+        if (Arrays.equals(arr, target)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks whether a given ordering of an array of ScalarWrappers is an even or odd number of swaps away from being in order
+     * @param arr the array to check
+     * @return true if arr is an even number of swaps away from being in order; false otherwise
+     */
+    public static boolean orderIsEven(ScalarWrapper[] arr) {
+        ScalarWrapper[] arrCopy = Arrays.copyOf(arr, arr.length);
+        int swaps = 0;
+
+        while (!inOrder(arrCopy)) {
+            for (int i = 0; i < arrCopy.length - 1; i++) {
+                if (arrCopy[i].greaterThan(arrCopy[i+1])) {
+                    swaps += 1;
+                    Util.swap(arrCopy, i, i+1);
+                }
+            }
+        }
+
+        if (swaps % 2 == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * Checks whether an array of ints is in order
+     * @param arr the array to check
+     * @return true if indices is in order; false otherwise
+     */
+    private static boolean inOrder(int[] arr) {
+        int[] target = Arrays.copyOf(arr, arr.length);
+        Arrays.sort(target);
+
+        if (Arrays.equals(arr, target)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks whether a given ordering of an array of ints is an even or odd number of swaps away from being in order
+     * @param arr the array to check
+     * @return true if arr is an even number of swaps away from being in order; false otherwise
+     */
+    public static boolean orderIsEven(int[] arr) {
+        int[] arrCopy = Arrays.copyOf(arr, arr.length);
+        int swaps = 0;
+
+        while (!inOrder(arrCopy)) {
+            for (int i = 0; i < arrCopy.length - 1; i++) {
+                if (arrCopy[i] > arrCopy[i+1]) {
+                    swaps += 1;
+                    Util.swap(arrCopy, i, i+1);
+                }
+            }
+        }
+
+        if (swaps % 2 == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks whether an array of Integers is in order
+     * @param arr the array to check
+     * @return true if indices is in order; false otherwise
+     */
+    private static boolean inOrder(Integer[] arr) {
+        Integer[] target = Arrays.copyOf(arr, arr.length);
+        Arrays.sort(target);
+
+        if (Arrays.equals(arr, target)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks whether a given ordering of an array of Integers is an even or odd number of swaps away from being in order
+     * @param arr the array to check
+     * @return true if arr is an even number of swaps away from being in order; false otherwise
+     */
+    public static boolean orderIsEven(Integer[] arr) {
+        Integer[] arrCopy = Arrays.copyOf(arr, arr.length);
+        int swaps = 0;
+
+        while (!inOrder(arrCopy)) {
+            for (int i = 0; i < arrCopy.length - 1; i++) {
+                if (arrCopy[i] > arrCopy[i+1]) {
+                    swaps += 1;
+                    Util.swap(arrCopy, i, i+1);
+                }
+            }
+        }
+
+        if (swaps % 2 == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks whether an array of doubles is in order
+     * @param arr the array to check
+     * @return true if indices is in order; false otherwise
+     */
+    private static boolean inOrder(double[] arr) {
+        double[] target = Arrays.copyOf(arr, arr.length);
+        Arrays.sort(target);
+
+        if (Arrays.equals(arr, target)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks whether a given ordering of an array of doubles is an even or odd number of swaps away from being in order
+     * @param arr the array to check
+     * @return true if arr is an even number of swaps away from being in order; false otherwise
+     */
+    public static boolean orderIsEven(double[] arr) {
+        double[] arrCopy = Arrays.copyOf(arr, arr.length);
+        int swaps = 0;
+
+        while (!inOrder(arrCopy)) {
+            for (int i = 0; i < arrCopy.length - 1; i++) {
+                if (arrCopy[i] > arrCopy[i+1]) {
+                    swaps += 1;
+                    Util.swap(arrCopy, i, i+1);
+                }
+            }
+        }
+
+        if (swaps % 2 == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks whether an array of Doubles is in order
+     * @param arr the array to check
+     * @return true if indices is in order; false otherwise
+     */
+    private static boolean inOrder(Double[] arr) {
+        Double[] target = Arrays.copyOf(arr, arr.length);
+        Arrays.sort(target);
+
+        if (Arrays.equals(arr, target)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks whether a given ordering of an array of Doubles is an even or odd number of swaps away from being in order
+     * @param arr the array to check
+     * @return true if arr is an even number of swaps away from being in order; false otherwise
+     */
+    public static boolean orderIsEven(Double[] arr) {
+        Double[] arrCopy = Arrays.copyOf(arr, arr.length);
+        int swaps = 0;
+
+        while (!inOrder(arrCopy)) {
+            for (int i = 0; i < arrCopy.length - 1; i++) {
+                if (arrCopy[i] > arrCopy[i+1]) {
+                    swaps += 1;
+                    Util.swap(arrCopy, i, i+1);
+                }
+            }
+        }
+
+        if (swaps % 2 == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks whether an array of Rationals is in order
+     * @param arr the array to check
+     * @return true if indices is in order; false otherwise
+     */
+    private static boolean inOrder(Rational[] arr) {
+        Rational[] target = Arrays.copyOf(arr, arr.length);
+        Arrays.sort(target);
+
+        if (Arrays.equals(arr, target)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks whether a given ordering of an array of Rationals is an even or odd number of swaps away from being in order
+     * @param arr the array to check
+     * @return true if arr is an even number of swaps away from being in order; false otherwise
+     */
+    public static boolean orderIsEven(Rational[] arr) {
+        Rational[] arrCopy = Arrays.copyOf(arr, arr.length);
+        int swaps = 0;
+
+        while (!inOrder(arrCopy)) {
+            for (int i = 0; i < arrCopy.length - 1; i++) {
+                if (arrCopy[i].greaterThan(arrCopy[i+1])) {
+                    swaps += 1;
+                    Util.swap(arrCopy, i, i+1);
+                }
+            }
+        }
+
+        if (swaps % 2 == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks whether an array of Radicals is in order
+     * @param arr the array to check
+     * @return true if indices is in order; false otherwise
+     */
+    private static boolean inOrder(Radical[] arr) {
+        Radical[] target = Arrays.copyOf(arr, arr.length);
+        Arrays.sort(target);
+
+        if (Arrays.equals(arr, target)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks whether a given ordering of an array of Radicals is an even or odd number of swaps away from being in order
+     * @param arr the array to check
+     * @return true if arr is an even number of swaps away from being in order; false otherwise
+     */
+    public static boolean orderIsEven(Radical[] arr) {
+        Radical[] arrCopy = Arrays.copyOf(arr, arr.length);
+        int swaps = 0;
+
+        while (!inOrder(arrCopy)) {
+            for (int i = 0; i < arrCopy.length - 1; i++) {
+                if (arrCopy[i].greaterThan(arrCopy[i+1])) {
+                    swaps += 1;
+                    Util.swap(arrCopy, i, i+1);
+                }
+            }
+        }
+
+        if (swaps % 2 == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Returns a string representation of a given ArrayList of arrays of ints

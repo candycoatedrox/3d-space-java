@@ -767,6 +767,20 @@ public class Rational implements Cloneable {
     }
 
     /**
+     * Compares this Rational against a ScalarWrapper
+     * @param other the ScalarWrapper to compare with
+     * @return true if this Rational's value equals the ScalarWrapper; false otherwise
+     */
+    public boolean equals(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.equals(other.getInt());
+        } else if (other.isDouble()) {
+            return this.equals(other.getDouble());
+        }
+        return this.equals(other.getRat());
+    }
+
+    /**
      * Compares this Rational against an int
      * @param other the int to compare with
      * @return true if this Rational and int are equal to the same double; false otherwise
@@ -805,17 +819,12 @@ public class Rational implements Cloneable {
     }
 
     /**
-     * Compares this Rational against a ScalarWrapper
-     * @param other the ScalarWrapper to compare with
-     * @return true if this Rational's value equals the ScalarWrapper; false otherwise
+     * Compares this Rational against a Radical
+     * @param other the Radical to compare with
+     * @return true if this Rational's value equals the double; false otherwise
      */
-    public boolean equals(ScalarWrapper other) {
-        if (other.isInt()) {
-            return this.equals(other.getInt());
-        } else if (other.isDouble()) {
-            return this.equals(other.getDouble());
-        }
-        return this.equals(other.getRat());
+    public boolean equals(Radical other) {
+        return this.value() == other.trueValue();
     }
 
     /**
@@ -825,6 +834,20 @@ public class Rational implements Cloneable {
      */
     public boolean lessThan(Rational other) {
         return this.value() < other.value();
+    }
+
+    /**
+     * Compares this Rational to a ScalarWrapper and returns whether this Rational's value is less than the ScalarWrapper
+     * @param other the ScalarWrapper to compare with
+     * @return true if this Rational's value is less than other
+     */
+    public boolean lessThan(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.lessThan(other.getInt());
+        } else if (other.isDouble()) {
+            return this.lessThan(other.getDouble());
+        }
+        return this.lessThan(other.getRat());
     }
 
     /**
@@ -866,17 +889,12 @@ public class Rational implements Cloneable {
     }
 
     /**
-     * Compares this Rational to a ScalarWrapper and returns whether this Rational's value is less than the ScalarWrapper
-     * @param other the ScalarWrapper to compare with
+     * Compares this Rational to a Radical and returns whether this Rational's value is less than the Radical
+     * @param other the Radical to compare with
      * @return true if this Rational's value is less than other
      */
-    public boolean lessThan(ScalarWrapper other) {
-        if (other.isInt()) {
-            return this.lessThan(other.getInt());
-        } else if (other.isDouble()) {
-            return this.lessThan(other.getDouble());
-        }
-        return this.lessThan(other.getRat());
+    public boolean lessThan(Radical other) {
+        return this.value() < other.trueValue();
     }
 
     /**
@@ -886,6 +904,20 @@ public class Rational implements Cloneable {
      */
     public boolean lessThanOrEquals(Rational other) {
         return this.value() <= other.value();
+    }
+
+    /**
+     * Compares this Rational to a ScalarWrapper and returns whether this Rational's value is less than or equal to the ScalarWrapper
+     * @param other the ScalarWrapper to compare with
+     * @return true if this Rational's value is less than or equal to other
+     */
+    public boolean lessThanOrEquals(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.lessThanOrEquals(other.getInt());
+        } else if (other.isDouble()) {
+            return this.lessThanOrEquals(other.getDouble());
+        }
+        return this.lessThanOrEquals(other.getRat());
     }
 
     /**
@@ -927,17 +959,12 @@ public class Rational implements Cloneable {
     }
 
     /**
-     * Compares this Rational to a ScalarWrapper and returns whether this Rational's value is less than or equal to the ScalarWrapper
-     * @param other the ScalarWrapper to compare with
+     * Compares this Rational to a Radical and returns whether this Rational's value is less than or equal to the Radical
+     * @param other the Radical to compare with
      * @return true if this Rational's value is less than or equal to other
      */
-    public boolean lessThanOrEquals(ScalarWrapper other) {
-        if (other.isInt()) {
-            return this.lessThanOrEquals(other.getInt());
-        } else if (other.isDouble()) {
-            return this.lessThanOrEquals(other.getDouble());
-        }
-        return this.lessThanOrEquals(other.getRat());
+    public boolean lessThanOrEquals(Radical other) {
+        return this.value() <= other.trueValue();
     }
 
     /**
@@ -947,6 +974,20 @@ public class Rational implements Cloneable {
      */
     public boolean greaterThan(Rational other) {
         return this.value() > other.value();
+    }
+
+    /**
+     * Compares this Rational to a ScalarWrapper and returns whether this Rational's value is less than the ScalarWrapper
+     * @param other the ScalarWrapper to compare with
+     * @return true if this Rational's value is less than other
+     */
+    public boolean greaterThan(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.greaterThan(other.getInt());
+        } else if (other.isDouble()) {
+            return this.greaterThan(other.getDouble());
+        }
+        return this.greaterThan(other.getRat());
     }
 
     /**
@@ -988,17 +1029,12 @@ public class Rational implements Cloneable {
     }
 
     /**
-     * Compares this Rational to a ScalarWrapper and returns whether this Rational's value is less than the ScalarWrapper
-     * @param other the ScalarWrapper to compare with
-     * @return true if this Rational's value is less than other
+     * Compares this Rational to a Radical and returns whether this Rational's value is greater than the Radical
+     * @param other the Radical to compare with
+     * @return true if this Rational's value is greater than other
      */
-    public boolean greaterThan(ScalarWrapper other) {
-        if (other.isInt()) {
-            return this.greaterThan(other.getInt());
-        } else if (other.isDouble()) {
-            return this.greaterThan(other.getDouble());
-        }
-        return this.greaterThan(other.getRat());
+    public boolean greaterThan(Radical other) {
+        return this.value() > other.trueValue();
     }
 
     /**
@@ -1008,6 +1044,20 @@ public class Rational implements Cloneable {
      */
     public boolean greaterThanOrEquals(Rational other) {
         return this.value() >= other.value();
+    }
+
+    /**
+     * Compares this Rational to a ScalarWrapper and returns whether this Rational's value is less than or equal to the ScalarWrapper
+     * @param other the ScalarWrapper to compare with
+     * @return true if this Rational's value is less than or equal to other
+     */
+    public boolean greaterThanOrEquals(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.greaterThanOrEquals(other.getInt());
+        } else if (other.isDouble()) {
+            return this.greaterThanOrEquals(other.getDouble());
+        }
+        return this.greaterThanOrEquals(other.getRat());
     }
 
     /**
@@ -1049,17 +1099,12 @@ public class Rational implements Cloneable {
     }
 
     /**
-     * Compares this Rational to a ScalarWrapper and returns whether this Rational's value is less than or equal to the ScalarWrapper
-     * @param other the ScalarWrapper to compare with
-     * @return true if this Rational's value is less than or equal to other
+     * Compares this Rational to a Radical and returns whether this Rational's value is greater than or equal to the Radical
+     * @param other the Radical to compare with
+     * @return true if this Rational's value is greater than or equal to other
      */
-    public boolean greaterThanOrEquals(ScalarWrapper other) {
-        if (other.isInt()) {
-            return this.greaterThanOrEquals(other.getInt());
-        } else if (other.isDouble()) {
-            return this.greaterThanOrEquals(other.getDouble());
-        }
-        return this.greaterThanOrEquals(other.getRat());
+    public boolean greaterThanOrEquals(Radical other) {
+        return this.value() >= other.trueValue();
     }
 
     /**
@@ -1538,6 +1583,14 @@ public class Rational implements Cloneable {
      */
     public Rational divideRat(Double other) {
         return new Rational(this.divide(other));
+    }
+
+    /**
+     * Calculate the square of this Rational
+     * @return this Rational squared
+     */
+    public Rational squared() {
+        return this.multiply(this);
     }
 
     /**

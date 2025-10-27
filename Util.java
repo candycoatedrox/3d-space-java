@@ -360,8 +360,4 @@ public class Util {
         return null;
     }
 
-    /* public static boolean orderIsEven(ScalarWrapper[] targetOrder) {
-
-    } */
-
 }
