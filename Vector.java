@@ -343,12 +343,30 @@ public class Vector implements Cloneable {
     }
 
     /**
+     * Adds this Vector and a NormalVector
+     * @param other the NormalVector to add to this Vector
+     * @return the sum of this Vector and other
+     */
+    public Vector add(NormalVector other) {
+        return this.add(other.trueValue());
+    }
+
+    /**
      * Subtracts another Vector from this Vector
      * @param other the Vector to subtract from this Vector
      * @return the difference between this Vector and other
      */
     public Vector subtract(Vector other) {
         return this.add(other.negative());
+    }
+
+    /**
+     * Subtracts a NormalVectorVector from this Vector
+     * @param other the NormalVector to subtract from this Vector
+     * @return the difference between this Vector and other
+     */
+    public Vector subtract(NormalVector other) {
+        return this.add(other.trueValue());
     }
 
     /**
@@ -424,6 +442,15 @@ public class Vector implements Cloneable {
     }
 
     /**
+     * Multiplies this Vector with a Radical
+     * @param other the Radical to multiply with this Vector
+     * @return the product of this Vector and other
+     */
+    public Vector multiply(Radical other) {
+        return this.multiply(other.value());
+    }
+
+    /**
      * Multiplies a Vector by a Matrix
      * @param other the Matrix to multiply this Vector with
      * @return the product of the Vector and the Matrix
@@ -495,6 +522,15 @@ public class Vector implements Cloneable {
      */
     public Vector divideBy(Rational other) {
         return this.multiply(other.invert());
+    }
+
+    /**
+     * Divides a Vector by a Radical
+     * @param other the Radical to divide this Vector by
+     * @return the quotient of this Vector and other
+     */
+    public Vector divideBy(Radical other) {
+        return this.divideBy(other.value());
     }
 
     /**
@@ -697,7 +733,6 @@ public class Vector implements Cloneable {
 
         // Simplify the vector as much as possible without changing direction
         boolean hasRat = false;
-        boolean hasDouble = false;
         ArrayList<Integer> denominators = new ArrayList<>();
         for (int n = 0; n < this.dim; n++) {
             if (this.get(n).isDouble()) {

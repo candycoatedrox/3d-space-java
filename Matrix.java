@@ -612,14 +612,36 @@ public class Matrix {
         return this.multiply(other.invert());
     }
 
-    /* public ScalarWrapper determinant() {
+    /**
+     * Calculates the determinant of this Matrix
+     * @return the determinant
+     * @throws IllegalArgumentException if this Matrix is not square
+     */
+    public ScalarWrapper determinant() throws IllegalArgumentException {
         if (!this.isSquare()) {
             throw new IllegalArgumentException("Matrix must be square");
         }
 
         ScalarWrapper det = new ScalarWrapper(0);
         ScalarWrapper temp;
-    } */
+        int i;
+        ArrayList<int[]> permutations = ArrayPermutation.permutations(Util.getZeroToN(this.k));
+
+        for (int[] order : permutations) {
+            temp = new ScalarWrapper(1);
+            for (int j = 0; j < this.k; j++) {
+                i = order[j];
+                temp = temp.multiply(this.get(i,j));
+            }
+
+            if (!ArrayPermutation.orderIsEven(order)) {
+                temp = temp.negative();
+            }
+            det = det.add(temp);
+        }
+
+        return det;
+    }
 
     /**
      * Creates and returns a deep copy of this Matrix
