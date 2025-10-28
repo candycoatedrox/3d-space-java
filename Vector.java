@@ -76,14 +76,14 @@ public class Vector implements Cloneable {
      * @param p the terminal point of the Vector
      */
     public Vector(Point p) {
-        ScalarWrapper[] vector = new ScalarWrapper[3];
+        ScalarWrapper[] vector = new ScalarWrapper[p.getDim()];
 
-        for (int i = 0; i < 3; i++) {
-            vector[i] = p.getCoordinate(i);
+        for (int i = 0; i < p.getDim(); i++) {
+            vector[i] = p.get(i);
         }
 
         this.components = vector;
-        this.dim = 3;
+        this.dim = vector.length;
     }
 
     /**
@@ -92,14 +92,18 @@ public class Vector implements Cloneable {
      * @param q the terminal point of the Vector
      */
     public Vector(Point p, Point q) {
-        ScalarWrapper[] vector = new ScalarWrapper[3];
+        if (p.getDim() != q.getDim()) {
+            throw new IllegalArgumentException("Points must share dimension");
+        }
 
-        for (int i = 0; i < 3; i++) {
-            vector[i] = q.getCoordinate(i).subtract(p.getCoordinate(i));
+        ScalarWrapper[] vector = new ScalarWrapper[p.getDim()];
+
+        for (int i = 0; i < p.getDim(); i++) {
+            vector[i] = q.get(i).subtract(p.get(i));
         }
 
         this.components = vector;
-        this.dim = 3;
+        this.dim = vector.length;
     }
 
     /**
@@ -363,7 +367,7 @@ public class Vector implements Cloneable {
      */
     public Vector add(Vector other) {
         if (this.dim != other.dim) {
-            throw new RuntimeException("Vectors must share dimension");
+            throw new IllegalArgumentException("Vectors must share dimension");
         }
 
         ScalarWrapper[] sum = new ScalarWrapper[this.dim];
@@ -383,6 +387,23 @@ public class Vector implements Cloneable {
     }
 
     /**
+     * Adds this Vector to a Point
+     * @param other the initial Point of the vector
+     * @return the terminal Point of the vector
+     */
+    public Point add(Point other) {
+        if (this.dim != other.getDim()) {
+            throw new IllegalArgumentException("Point and Vector must share dimension");
+        }
+
+        ScalarWrapper[] sum = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            sum[i] = this.get(i).add(other.get(i));
+        }
+        return new Point(sum);
+    }
+
+    /**
      * Subtracts another Vector from this Vector
      * @param other the Vector to subtract from this Vector
      * @return the difference between this Vector and other
@@ -397,7 +418,16 @@ public class Vector implements Cloneable {
      * @return the difference between this Vector and other
      */
     public Vector subtract(NormalVector other) {
-        return this.add(other.trueValue());
+        return this.subtract(other.trueValue());
+    }
+
+    /**
+     * Subtracts this Vector from a Point
+     * @param other the initial Point of the vector
+     * @return the terminal Point of the vector
+     */
+    public Point subtractFrom(Point other) {
+        return this.add(other.negative());
     }
 
     /**
@@ -813,19 +843,27 @@ public class Vector implements Cloneable {
     }
 
     /**
+     * Returns the terminal Point of this Vector when its initial point is the origin
+     * @return the terminal Point of this Vector when its initial point is the origin
+     */
+    public Point terminalPoint() {
+        return new Point(this.components);
+    }
+
+    /**
      * Returns a String representation of this Vector
      * @return a String representation of this Vector
      */
     @Override
     public String toString() {
-        String s = "(";
+        String s = "<";
         for (int i = 0; i < this.dim; i++) {
             if (i != 0) {
                 s += " ";
             }
             s += this.get(i);
         }
-        s += ")";
+        s += ">";
 
         return s;
     }

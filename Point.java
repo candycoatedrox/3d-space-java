@@ -1,67 +1,219 @@
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 public class Point {
     
-    private ScalarWrapper x;
-    private ScalarWrapper y;
-    private ScalarWrapper z;
+    private ScalarWrapper[] coordinates;
+    private final int dim;
 
     /**
-     * Constructs a Point from three ScalarWrapper coordinates
+     * Constructs a Point in n dimensions from an array of n ScalarWrappers
+     * @param coordinates a list of the point's coordinates
+     */
+    public Point(ScalarWrapper[] coordinates) {
+        this.coordinates = coordinates;
+        this.dim = coordinates.length;
+    }
+
+    /**
+     * Constructs a Point in n dimensions from an array of n ints
+     * @param coordinates a list of the point's coordinates
+     */
+    public Point(int[] coordinates) {
+        this.coordinates = ScalarWrapper.wrapArray(coordinates);
+        this.dim = coordinates.length;
+    }
+
+    /**
+     * Constructs a Point in n dimensions from an array of n Integers
+     * @param coordinates a list of the point's coordinates
+     */
+    public Point(Integer[] coordinates) {
+        this.coordinates = ScalarWrapper.wrapArray(coordinates);
+        this.dim = coordinates.length;
+    }
+
+    /**
+     * Constructs a Point in n dimensions from an array of n doubles
+     * @param coordinates a list of the point's coordinates
+     */
+    public Point(double[] coordinates) {
+        this.coordinates = ScalarWrapper.wrapArray(coordinates);
+        this.dim = coordinates.length;
+    }
+
+    /**
+     * Constructs a Point in n dimensions from an array of n Doubles
+     * @param coordinates a list of the point's coordinates
+     */
+    public Point(Double[] coordinates) {
+        this.coordinates = ScalarWrapper.wrapArray(coordinates);
+        this.dim = coordinates.length;
+    }
+
+    /**
+     * Constructs a Point in n dimensions from an array of n Rationals
+     * @param coordinates a list of the point's coordinates
+     */
+    public Point(Rational[] coordinates) {
+        this.coordinates = ScalarWrapper.wrapArray(coordinates);
+        this.dim = coordinates.length;
+    }
+
+    // add 2D, 3D constructors for all combos of classes... eek
+
+    /**
+     * Constructs a 2D Point from two ScalarWrapper coordinates
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(ScalarWrapper x, ScalarWrapper y) {
+        ScalarWrapper[] c = {x, y};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from two int coordinates
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(int x, int y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from two Integer coordinates
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Integer x, Integer y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from two double coordinates
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(double x, double y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from two Double coordinates
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Double x, Double y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from two Rational coordinates
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Rational x, Rational y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 3D Point from three ScalarWrapper coordinates
      * @param x the x coordinate of the Point
      * @param y the y coordinate of the Point
      * @param z the z coordinate of the Point
      */
     public Point(ScalarWrapper x, ScalarWrapper y, ScalarWrapper z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        ScalarWrapper[] c = {x, y, z};
+        this.coordinates = c;
+        this.dim = 3;
     }
 
     /**
-     * Constructs a Point from three int coordinates
+     * Constructs a 3D Point from three int coordinates
      * @param x the x coordinate of the Point
      * @param y the y coordinate of the Point
      * @param z the z coordinate of the Point
      */
     public Point(int x, int y, int z) {
-        this.x = new ScalarWrapper(x);
-        this.y = new ScalarWrapper(y);
-        this.z = new ScalarWrapper(z);
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
+        this.coordinates = c;
+        this.dim = 3;
     }
 
     /**
-     * Constructs a Point from three Integer coordinates
+     * Constructs a 3D Point from three Integer coordinates
      * @param x the x coordinate of the Point
      * @param y the y coordinate of the Point
      * @param z the z coordinate of the Point
      */
     public Point(Integer x, Integer y, Integer z) {
-        this.x = new ScalarWrapper(x);
-        this.y = new ScalarWrapper(y);
-        this.z = new ScalarWrapper(z);
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
+        this.coordinates = c;
+        this.dim = 3;
     }
 
     /**
-     * Constructs a Point from three double coordinates
+     * Constructs a 3D Point from three double coordinates
      * @param x the x coordinate of the Point
      * @param y the y coordinate of the Point
      * @param z the z coordinate of the Point
      */
     public Point(double x, double y, double z) {
-        this.x = new ScalarWrapper(x);
-        this.y = new ScalarWrapper(y);
-        this.z = new ScalarWrapper(z);
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
+        this.coordinates = c;
+        this.dim = 3;
     }
 
     /**
-     * Constructs a Point from three Double coordinates
+     * Constructs a 3D Point from three Double coordinates
      * @param x the x coordinate of the Point
      * @param y the y coordinate of the Point
      * @param z the z coordinate of the Point
      */
     public Point(Double x, Double y, Double z) {
-        this.x = new ScalarWrapper(x);
-        this.y = new ScalarWrapper(y);
-        this.z = new ScalarWrapper(z);
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
+        this.coordinates = c;
+        this.dim = 3;
+    }
+
+    /**
+     * Constructs a 3D Point from three Rational coordinates
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     * @param z the z coordinate of the Point
+     */
+    public Point(Rational x, Rational y, Rational z) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
+        this.coordinates = c;
+        this.dim = 3;
+    }
+
+    /**
+     * Accessor for coordinates
+     * @return the coordinates of this Point
+     */
+    public ScalarWrapper[] getCoordinates() {
+        return this.coordinates;
+    }
+
+    /**
+     * Accessor for dim
+     * @return the dimension of this Point
+     */
+    public int getDim() {
+        return this.dim;
     }
 
     /**
@@ -69,184 +221,351 @@ public class Point {
      * @param i the index of the coordinate
      * @return the coordinate value
      */
-    public ScalarWrapper getCoordinate(int i) {
-        if (i == 0) {
-            return this.x;
-        } else if (i == 1) {
-            return this.y;
-        } else if (i == 2) {
-            return this.z;
+    public ScalarWrapper get(int i) {
+        return this.coordinates[i];
+    }
+
+    /**
+     * Sets the ith coordinate of this Point to the specified ScalarWrapper
+     * @param i the index of the coordinate being set
+     * @param newValue the new value of the coordinate
+     */
+    public void set(int i, ScalarWrapper newValue) {
+        this.coordinates[i] = newValue;
+    }
+
+    /**
+     * Sets the ith coordinate of this Point to the specified int
+     * @param i the index of the coordinate being set
+     * @param newValue the new value of the coordinate
+     */
+    public void set(int i, int newValue) {
+        this.coordinates[i] = new ScalarWrapper(newValue);
+    }
+
+    /**
+     * Sets the ith coordinate of this Point to the specified Integer
+     * @param i the index of the coordinate being set
+     * @param newValue the new value of the coordinate
+     */
+    public void set(int i, Integer newValue) {
+        this.coordinates[i] = new ScalarWrapper(newValue);
+    }
+
+    /**
+     * Sets the ith coordinate of this Point to the specified double
+     * @param i the index of the coordinate being set
+     * @param newValue the new value of the coordinate
+     */
+    public void set(int i, double newValue) {
+        this.coordinates[i] = new ScalarWrapper(newValue);
+    }
+
+    /**
+     * Sets the ith coordinate of this Point to the specified Double
+     * @param i the index of the coordinate being set
+     * @param newValue the new value of the coordinate
+     */
+    public void set(int i, Double newValue) {
+        this.coordinates[i] = new ScalarWrapper(newValue);
+    }
+
+    /**
+     * Sets the ith coordinate of this Point to the specified Rational
+     * @param i the index of the coordinate being set
+     * @param newValue the new value of the coordinate
+     */
+    public void set(int i, Rational newValue) {
+        this.coordinates[i] = new ScalarWrapper(newValue);
+    }
+
+    /**
+     * Returns the first (x) coordinate of this Point
+     * @return the x coordinate of this Point
+     */
+    public ScalarWrapper getX() {
+        return this.get(0);
+    }
+
+    /**
+     * Sets the first (x) coordinate of this Point to the specified ScalarWrapper
+     * @param newValue the new value of x
+     */
+    public void setX(ScalarWrapper newValue) {
+        this.set(0, newValue);
+    }
+
+    /**
+     * Sets the first (x) coordinate of this Point to the specified int
+     * @param newValue the new value of x
+     */
+    public void setX(int newValue) {
+        this.set(0, newValue);
+    }
+
+    /**
+     * Sets the first (x) coordinate of this Point to the specified Integer
+     * @param newValue the new value of x
+     */
+    public void setX(Integer newValue) {
+        this.set(0, newValue);
+    }
+
+    /**
+     * Sets the first (x) coordinate of this Point to the specified double
+     * @param newValue the new value of x
+     */
+    public void setX(double newValue) {
+        this.set(0, newValue);
+    }
+
+    /**
+     * Sets the first (x) coordinate of this Point to the specified Double
+     * @param newValue the new value of x
+     */
+    public void setX(Double newValue) {
+        this.set(0, newValue);
+    }
+
+    /**
+     * Sets the first (x) coordinate of this Point to the specified Rational
+     * @param newValue the new value of x
+     */
+    public void setX(Rational newValue) {
+        this.set(0, newValue);
+    }
+
+    /**
+     * Returns the second (y) coordinate of this Point
+     * @return the y coordinate of this Point
+     */
+    public ScalarWrapper getY() {
+        if (this.dim >= 2) {
+            return this.get(1);
         } else {
-            throw new IllegalArgumentException("Index must be 0, 1, or 2");
+            throw new IllegalArgumentException("Point must have at least dimension 2");
         }
     }
 
     /**
-     * Accessor for x
-     * @return the x coordinate of this Point
-     */
-    public ScalarWrapper getX() {
-        return this.x;
-    }
-
-    /**
-     * Manipulator for x (ScalarWrapper)
-     * @param newValue the new value of x
-     */
-    public void setX(ScalarWrapper newValue) {
-        this.x = newValue;
-    }
-
-    /**
-     * Manipulator for x (int)
-     * @param newValue the new value of x
-     */
-    public void setX(int newValue) {
-        this.x = new ScalarWrapper(newValue);
-    }
-
-    /**
-     * Manipulator for x (Integer)
-     * @param newValue the new value of x
-     */
-    public void setX(Integer newValue) {
-        this.x = new ScalarWrapper(newValue);
-    }
-
-    /**
-     * Manipulator for x (double)
-     * @param newValue the new value of x
-     */
-    public void setX(double newValue) {
-        this.x = new ScalarWrapper(newValue);
-    }
-
-    /**
-     * Manipulator for x (Double)
-     * @param newValue the new value of x
-     */
-    public void setX(Double newValue) {
-        this.x = new ScalarWrapper(newValue);
-    }
-
-    /**
-     * Manipulator for x (Rational)
-     * @param newValue the new value of x
-     */
-    public void setX(Rational newValue) {
-        this.x = new ScalarWrapper(newValue);
-    }
-
-    /**
-     * Accessor for y
-     * @return the y coordinate of this Point
-     */
-    public ScalarWrapper getY() {
-        return this.y;
-    }
-
-    /**
-     * Manipulator for y (ScalarWrapper)
-     * @param newValue the new value of x
+     * Sets the second (y) coordinate of this Point to the specified ScalarWrapper
+     * @param newValue the new value of y
      */
     public void setY(ScalarWrapper newValue) {
-        this.y =newValue;
+        if (this.dim >= 2) {
+            this.set(1, newValue);
+        } else {
+            throw new IllegalArgumentException("Point must have at least dimension 2");
+        }
     }
 
     /**
-     * Manipulator for y (int)
-     * @param newValue the new value of x
+     * Sets the second (y) coordinate of this Point to the specified int
+     * @param newValue the new value of y
      */
     public void setY(int newValue) {
-        this.y =new ScalarWrapper(newValue);
+        if (this.dim >= 2) {
+            this.set(1, newValue);
+        } else {
+            throw new IllegalArgumentException("Point must have at least dimension 2");
+        }
     }
 
     /**
-     * Manipulator for y (Integer)
-     * @param newValue the new value of x
+     * Sets the second (y) coordinate of this Point to the specified Integer
+     * @param newValue the new value of y
      */
     public void setY(Integer newValue) {
-        this.y =new ScalarWrapper(newValue);
+        if (this.dim >= 2) {
+            this.set(1, newValue);
+        } else {
+            throw new IllegalArgumentException("Point must have at least dimension 2");
+        }
     }
 
     /**
-     * Manipulator for y (double)
-     * @param newValue the new value of x
+     * Sets the second (y) coordinate of this Point to the specified double
+     * @param newValue the new value of y
      */
     public void setY(double newValue) {
-        this.y =new ScalarWrapper(newValue);
+        if (this.dim >= 2) {
+            this.set(1, newValue);
+        } else {
+            throw new IllegalArgumentException("Point must have at least dimension 2");
+        }
     }
 
     /**
-     * Manipulator for y (Double)
-     * @param newValue the new value of x
+     * Sets the second (y) coordinate of this Point to the specified Double
+     * @param newValue the new value of y
      */
     public void setY(Double newValue) {
-        this.y =new ScalarWrapper(newValue);
+        if (this.dim >= 2) {
+            this.set(1, newValue);
+        } else {
+            throw new IllegalArgumentException("Point must have at least dimension 2");
+        }
     }
 
     /**
-     * Manipulator for y (Rational)
-     * @param newValue the new value of x
+     * Sets the second (y) coordinate of this Point to the specified Rational
+     * @param newValue the new value of y
      */
     public void setY(Rational newValue) {
-        this.y =new ScalarWrapper(newValue);
+        if (this.dim >= 2) {
+            this.set(1, newValue);
+        } else {
+            throw new IllegalArgumentException("Point must have at least dimension 2");
+        }
     }
 
     /**
-     * Accessor for z
+     * Returns the third (z) coordinate of this Point
      * @return the z coordinate of this Point
      */
     public ScalarWrapper getZ() {
-        return this.x;
+        if (this.dim >= 3) {
+            return this.get(2);
+        } else {
+            throw new IllegalArgumentException("Point must have at least dimension 3");
+        }
     }
 
     /**
-     * Manipulator for z (ScalarWrapper)
-     * @param newValue the new value of x
+     * Sets the third (z) coordinate of this Point to the specified ScalarWrapper
+     * @param newValue the new value of z
      */
     public void setZ(ScalarWrapper newValue) {
-        this.z = newValue;
+        if (this.dim >= 3) {
+            this.set(2, newValue);
+        } else {
+            throw new IllegalArgumentException("Point must have at least dimension 3");
+        }
     }
 
     /**
-     * Manipulator for z (int)
-     * @param newValue the new value of x
+     * Sets the third (z) coordinate of this Point to the specified int
+     * @param newValue the new value of z
      */
     public void setZ(int newValue) {
-        this.z = new ScalarWrapper(newValue);
+        if (this.dim >= 3) {
+            this.set(2, newValue);
+        } else {
+            throw new IllegalArgumentException("Point must have at least dimension 3");
+        }
     }
 
     /**
-     * Manipulator for z (Integer)
-     * @param newValue the new value of x
+     * Sets the third (z) coordinate of this Point to the specified Integer
+     * @param newValue the new value of z
      */
     public void setZ(Integer newValue) {
-        this.z = new ScalarWrapper(newValue);
+        if (this.dim >= 3) {
+            this.set(2, newValue);
+        } else {
+            throw new IllegalArgumentException("Point must have at least dimension 3");
+        }
     }
 
     /**
-     * Manipulator for z (double)
-     * @param newValue the new value of x
+     * Sets the third (z) coordinate of this Point to the specified double
+     * @param newValue the new value of z
      */
     public void setZ(double newValue) {
-        this.z = new ScalarWrapper(newValue);
+        if (this.dim >= 3) {
+            this.set(2, newValue);
+        } else {
+            throw new IllegalArgumentException("Point must have at least dimension 3");
+        }
     }
 
     /**
-     * Manipulator for z (Double)
-     * @param newValue the new value of x
+     * Sets the third (z) coordinate of this Point to the specified Double
+     * @param newValue the new value of z
      */
     public void setZ(Double newValue) {
-        this.z = new ScalarWrapper(newValue);
+        if (this.dim >= 3) {
+            this.set(2, newValue);
+        } else {
+            throw new IllegalArgumentException("Point must have at least dimension 3");
+        }
     }
 
     /**
-     * Manipulator for z (Rational)
-     * @param newValue the new value of x
+     * Sets the third (z) coordinate of this Point to the specified Rational
+     * @param newValue the new value of z
      */
     public void setZ(Rational newValue) {
-        this.z = new ScalarWrapper(newValue);
+        if (this.dim >= 3) {
+            this.set(2, newValue);
+        } else {
+            throw new IllegalArgumentException("Point must have at least dimension 3");
+        }
+    }
+
+    /**
+     * Returns a version of this Point with all coordinates reduced and simplified
+     * @return a reduced and simplified version of this Point
+     */
+    public Point simplified() {
+        Point copy = this.clone();
+        copy.simplify();
+        return copy;
+    }
+
+    /**
+     * Reduces and simplifies all coordinates of this Point
+     */
+    public void simplify() {
+        for (int i = 0; i < this.dim; i++) {
+            this.get(i).simplify();
+        }
+    }
+
+    /**
+     * Returns a version of this Point with all Rationals reduced to lowest terms
+     * @return a reduced version of this Point
+     */
+    public Point reduced() {
+        Point copy = this.clone();
+        copy.reduce();
+        return copy;
+    }
+
+    /**
+     * Reduces all Rationals in this Point to lowest terms
+     */
+    public void reduce() {
+        for (int i = 0; i < this.dim; i++) {
+            this.get(i).reduce();
+        }
+    }
+
+    /**
+     * Converts all coordinates of this Point to doubles
+     */
+    public void convertToDoubles() {
+        for (ScalarWrapper coordinate : this.coordinates) {
+            coordinate.convertToDouble();
+        }
+    }
+
+    /**
+     * Converts all coordinates of this Point to Rationals
+     */
+    public void convertToRationals() {
+        for (ScalarWrapper coordinate : this.coordinates) {
+            coordinate.convertToRat();
+        }
+    }
+
+    /**
+     * Converts all coordinates of this Point to integers (if whole) or Rationals (otherwise)
+     */
+    public void convertToIntsOrRationals() {
+        for (ScalarWrapper coordinate : this.coordinates) {
+            coordinate.convertToIntOrRat();
+        }
     }
 
     /**
@@ -262,7 +581,11 @@ public class Point {
      * @return the absolute value of this Point
      */
     public Point absolute() {
-        return new Point(this.x.absolute(), this.y.absolute(), this.z.absolute());
+        Point copy = this.clone();
+        for (int i = 0; i < this.dim; i++) {
+            copy.set(i, this.get(i).absolute());
+        }
+        return copy;
     }
 
     /**
@@ -271,7 +594,17 @@ public class Point {
      * @return true if this Point is equal to other; false otherwise
      */
     public boolean equals(Point other) {
-        return (this.x.equals(other.x) && this.y.equals(other.y) && this.z.equals(other.z));
+        if (this.dim != other.dim) {
+            return false;
+        }
+
+        for (int i = 0; i < this.dim; i++) {
+            if (!this.get(i).equals(other.get(i))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -280,7 +613,15 @@ public class Point {
      * @return the sum of this Point and other
      */
     public Point add(Point other) {
-        return new Point(this.x.add(other.x), this.y.add(other.y), this.z.add(other.z));
+        if (this.dim != other.dim) {
+            throw new IllegalArgumentException("Points must share dimension");
+        }
+
+        ScalarWrapper[] sum = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            sum[i] = this.get(i).add(other.get(i));
+        }
+        return new Point(sum);
     }
 
     /**
@@ -289,7 +630,15 @@ public class Point {
      * @return the sum of this Point and other
      */
     public Point add(Vector other) {
-        return new Point(this.x.add(other.get(0)), this.y.add(other.get(1)), this.z.add(other.get(2)));
+        if (this.dim != other.getDim()) {
+            throw new IllegalArgumentException("Point and Vector must share dimension");
+        }
+
+        ScalarWrapper[] sum = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            sum[i] = this.get(i).add(other.get(i));
+        }
+        return new Point(sum);
     }
 
     /**
@@ -334,7 +683,11 @@ public class Point {
      * @return the product of this Point and other
      */
     public Point multiply(ScalarWrapper other) {
-        return new Point(this.x.multiply(other), this.y.multiply(other), this.z.multiply(other));
+        ScalarWrapper[] product = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            product[i] = this.get(i).multiply(other);
+        }
+        return new Point(product);
     }
 
     /**
@@ -343,7 +696,11 @@ public class Point {
      * @return the product of this Point and other
      */
     public Point multiply(int other) {
-        return new Point(this.x.multiply(other), this.y.multiply(other), this.z.multiply(other));
+        ScalarWrapper[] product = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            product[i] = this.get(i).multiply(other);
+        }
+        return new Point(product);
     }
 
     /**
@@ -352,7 +709,11 @@ public class Point {
      * @return the product of this Point and other
      */
     public Point multiply(Integer other) {
-        return new Point(this.x.multiply(other), this.y.multiply(other), this.z.multiply(other));
+        ScalarWrapper[] product = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            product[i] = this.get(i).multiply(other);
+        }
+        return new Point(product);
     }
 
     /**
@@ -361,7 +722,11 @@ public class Point {
      * @return the product of this Point and other
      */
     public Point multiply(double other) {
-        return new Point(this.x.multiply(other), this.y.multiply(other), this.z.multiply(other));
+        ScalarWrapper[] product = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            product[i] = this.get(i).multiply(other);
+        }
+        return new Point(product);
     }
 
     /**
@@ -370,7 +735,11 @@ public class Point {
      * @return the product of this Point and other
      */
     public Point multiply(Double other) {
-        return new Point(this.x.multiply(other), this.y.multiply(other), this.z.multiply(other));
+        ScalarWrapper[] product = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            product[i] = this.get(i).multiply(other);
+        }
+        return new Point(product);
     }
 
     /**
@@ -379,7 +748,11 @@ public class Point {
      * @return the product of this Point and other
      */
     public Point multiply(Rational other) {
-        return new Point(this.x.multiply(other), this.y.multiply(other), this.z.multiply(other));
+        ScalarWrapper[] product = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            product[i] = this.get(i).multiply(other);
+        }
+        return new Point(product);
     }
 
     /**
@@ -388,7 +761,11 @@ public class Point {
      * @return the product of this Point and other
      */
     public Point divideBy(ScalarWrapper other) {
-        return new Point(this.x.divideBy(other), this.y.divideBy(other), this.z.divideBy(other));
+        ScalarWrapper[] product = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            product[i] = this.get(i).divideBy(other);
+        }
+        return new Point(product);
     }
 
     /**
@@ -397,7 +774,11 @@ public class Point {
      * @return the product of this Point and other
      */
     public Point divideBy(int other) {
-        return new Point(this.x.divideBy(other), this.y.divideBy(other), this.z.divideBy(other));
+        ScalarWrapper[] product = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            product[i] = this.get(i).divideBy(other);
+        }
+        return new Point(product);
     }
 
     /**
@@ -406,7 +787,11 @@ public class Point {
      * @return the product of this Point and other
      */
     public Point divideBy(Integer other) {
-        return new Point(this.x.divideBy(other), this.y.divideBy(other), this.z.divideBy(other));
+        ScalarWrapper[] product = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            product[i] = this.get(i).divideBy(other);
+        }
+        return new Point(product);
     }
 
     /**
@@ -415,7 +800,11 @@ public class Point {
      * @return the product of this Point and other
      */
     public Point divideBy(double other) {
-        return new Point(this.x.divideBy(other), this.y.divideBy(other), this.z.divideBy(other));
+        ScalarWrapper[] product = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            product[i] = this.get(i).divideBy(other);
+        }
+        return new Point(product);
     }
 
     /**
@@ -424,7 +813,11 @@ public class Point {
      * @return the product of this Point and other
      */
     public Point divideBy(Double other) {
-        return new Point(this.x.divideBy(other), this.y.divideBy(other), this.z.divideBy(other));
+        ScalarWrapper[] product = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            product[i] = this.get(i).divideBy(other);
+        }
+        return new Point(product);
     }
 
     /**
@@ -433,7 +826,11 @@ public class Point {
      * @return the product of this Point and other
      */
     public Point divideBy(Rational other) {
-        return new Point(this.x.divideBy(other), this.y.divideBy(other), this.z.divideBy(other));
+        ScalarWrapper[] product = new ScalarWrapper[this.dim];
+        for (int i = 0; i < this.dim; i++) {
+            product[i] = this.get(i).divideBy(other);
+        }
+        return new Point(product);
     }
 
     /**
@@ -442,11 +839,9 @@ public class Point {
      */
     @Override
     public Point clone() {
-        ScalarWrapper x = this.x.clone();
-        ScalarWrapper y = this.y.clone();
-        ScalarWrapper z = this.z.clone();
-
-        return new Point(x, y, z);
+        Stream<ScalarWrapper> st = Arrays.stream(this.coordinates);
+        ScalarWrapper[] arr = st.map(val -> val.clone()).toArray(ScalarWrapper[]::new);
+        return new Point(arr);
     }
 
     /**
@@ -455,15 +850,26 @@ public class Point {
      */
     @Override
     public String toString() {
-        return "(" + this.x + ", " + this.y + ", " + this.z + ")";
+        String s = "(";
+        for (int i = 0; i < this.dim; i++) {
+            if (i != 0) {
+                s += " ";
+            }
+            s += this.get(i);
+        }
+        s += ")";
+
+        return s;
     }
 
     /**
-     * Returns the origin point (0, 0, 0)
+     * Returns the origin point in n dimensions
+     * @param n the dimension of the point
      * @return the origin point
      */
-    public static Point origin() {
-        return new Point(0, 0, 0);
+    public static Point origin(int n) {
+        int[] coordinates = new int[n];
+        return new Point(coordinates);
     }
 
 }
