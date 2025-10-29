@@ -834,6 +834,15 @@ public class Point {
     }
 
     /**
+     * Checks if this Point is on a given Line
+     * @param other the Line to compare with
+     * @return true if this Point is on other; false otherwise
+     */
+    public boolean isOnLine(Line other) {
+        return other.includesPoint(this);
+    }
+
+    /**
      * Creates and returns a deep copy of this Point
      * @return a deep copy of this Point
      */

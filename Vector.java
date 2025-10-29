@@ -224,6 +224,61 @@ public class Vector implements Cloneable {
     }
 
     /**
+     * Returns a version of this Vector simplified into the smallest Vector in the same direction with integer components, ignoring magnitude
+     * @return a simplified Vector in the same direction as this Vector
+     */
+    public Vector simplifiedIgnoreMagnitude() {
+        Vector v = this.clone();
+
+        // Simplify the vector as much as possible without changing direction
+        boolean hasRat = false;
+        ArrayList<Integer> denominators = new ArrayList<>();
+        for (int n = 0; n < this.dim; n++) {
+            if (this.get(n).isDouble()) {
+                this.get(n).convertToIntOrRat();
+            }
+            
+            if (this.get(n).isRat()) {
+                hasRat = true;
+                denominators.add(this.get(n).getRat().getDenominator());
+            }
+        }
+
+        // Turn all Rationals into integers
+        if (hasRat) {
+            int lcm = denominators.get(0);
+            if (denominators.size() > 1) {
+                for (int i = 1; i < denominators.size(); i++) {
+                    lcm = Util.lcm(lcm, denominators.get(i));
+                }
+            }
+
+            v = v.multiply(lcm);
+            v.simplify();
+        }
+
+        int gcd = v.get(0).getInt();
+        if (v.dim > 1) {
+            for (int i = 1; i < v.dim; i++) {
+                gcd = Util.gcd(gcd, v.get(i).getInt());
+            }
+        }
+
+        v = v.divideBy(gcd);
+        return v;
+    }
+
+    /**
+     * Simplifies this Vector into the smallest Vector in the same direction with integer components, ignoring magnitude
+     */
+    public void simplifyIgnoreMagnitude() {
+        Vector v = this.simplifiedIgnoreMagnitude();
+        for (int i = 0; i < this.dim; i++) {
+            this.set(i, v.get(i));
+        }
+    }
+
+    /**
      * Converts all components of this Vector to doubles
      */
     public void convertToDoubles() {
@@ -712,6 +767,20 @@ public class Vector implements Cloneable {
     }
 
     /**
+     * Calculates the slope of this 2D Vector (as delta-y/delta-x)
+     * @return the slope of this 2D Vector
+     * @throws IllegalArgumentException if this Vector is not 2D
+     */
+    public ScalarWrapper slope() {
+        if (this.dim != 2) {
+            throw new IllegalArgumentException("Vector must be 2D");
+        }
+
+        ScalarWrapper slope = this.get(0).divideBy(this.get(1));
+        return slope;
+    }
+
+    /**
      * Returns the projection of another Vector onto this Vector
      * @param other the Vector to project onto this Vector
      * @return the projection of the two Vectors
@@ -790,7 +859,7 @@ public class Vector implements Cloneable {
      * @return the unit vector in the direction of this Vector in the given inner product space
      */
     public NormalVector normalize(Matrix Gij) {
-        Vector v = this;
+        Vector v = this.clone();
 
         // Simplify the vector as much as possible without changing direction
         boolean hasRat = false;

@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "."
+    ],
+    "java.project.referencedLibraries": [
+        "c:\\Users\\piper\\Documents\\GitHub\\3d-space-java\\lib\\junit-4.13.2.jar",
+        "c:\\Users\\piper\\Documents\\GitHub\\3d-space-java\\lib\\hamcrest-core-1.3.jar"
+    ]
+}
