@@ -74,11 +74,143 @@ public class Point {
     }
 
     /**
+     * Constructs a 2D Point from a ScalarWrapper coordinate and an int coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(ScalarWrapper x, int y) {
+        ScalarWrapper[] c = {x, new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a ScalarWrapper coordinate and an Integer coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(ScalarWrapper x, Integer y) {
+        ScalarWrapper[] c = {x, new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a ScalarWrapper coordinate and a double coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(ScalarWrapper x, double y) {
+        ScalarWrapper[] c = {x, new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a ScalarWrapper coordinate and a Double coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(ScalarWrapper x, Double y) {
+        ScalarWrapper[] c = {x, new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a ScalarWrapper coordinate and a Rational coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(ScalarWrapper x, Rational y) {
+        ScalarWrapper[] c = {x, new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from an int coordinate and a ScalarWrapper coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(int x, ScalarWrapper y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), y};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
      * Constructs a 2D Point from two int coordinates
      * @param x the x coordinate of the Point
      * @param y the y coordinate of the Point
      */
     public Point(int x, int y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from an int coordinate and an Integer coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(int x, Integer y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from an int coordinate and a double coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(int x, double y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from an int coordinate and a Double coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(int x, Double y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from an int coordinate and a Rational coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(int x, Rational y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from an Integer coordinate and a ScalarWrapper coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Integer x, ScalarWrapper y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), y};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from an Integer coordinate and an int coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Integer x, int y) {
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
         this.dim = 2;
@@ -96,6 +228,72 @@ public class Point {
     }
 
     /**
+     * Constructs a 2D Point from an Integer coordinate and a double coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Integer x, double y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from an Integer coordinate and a Double coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Integer x, Double y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from an Integer coordinate and a Rational coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Integer x, Rational y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a double coordinate and a ScalarWrapper coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(double x, ScalarWrapper y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), y};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a double coordinate and an int coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(double x, int y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a double coordinate and an Integer coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(double x, Integer y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
      * Constructs a 2D Point from two double coordinates
      * @param x the x coordinate of the Point
      * @param y the y coordinate of the Point
@@ -107,11 +305,143 @@ public class Point {
     }
 
     /**
+     * Constructs a 2D Point from a double coordinate and a Double coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(double x, Double y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a double coordinate and a Rational coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(double x, Rational y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a Double coordinate and a ScalarWrapper coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Double x, ScalarWrapper y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), y};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a Double coordinate and an int coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Double x, int y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a Double coordinate and an Integer coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Double x, Integer y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a Double coordinate and a double coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Double x, double y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
      * Constructs a 2D Point from two Double coordinates
      * @param x the x coordinate of the Point
      * @param y the y coordinate of the Point
      */
     public Point(Double x, Double y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a Double coordinate and a Rational coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Double x, Rational y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a Rational coordinate and a ScalarWrapper coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Rational x, ScalarWrapper y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), y};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a Rational coordinate and an int coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Rational x, int y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a Rational coordinate and an Integer coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Rational x, Integer y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a Rational coordinate and a double coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Rational x, double y) {
+        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
+        this.coordinates = c;
+        this.dim = 2;
+    }
+
+    /**
+     * Constructs a 2D Point from a Rational coordinate and a Double coordinate
+     * @param x the x coordinate of the Point
+     * @param y the y coordinate of the Point
+     */
+    public Point(Rational x, Double y) {
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
         this.dim = 2;
