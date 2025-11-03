@@ -186,6 +186,22 @@ public class Vector implements Cloneable {
     }
 
     /**
+     * Checks whether this Vector is 2D
+     * @return true if this Vector is 2D; false otherwise
+     */
+    public boolean is2D() {
+        return this.dim == 2;
+    }
+
+    /**
+     * Checks whether this Vector is 3D
+     * @return true if this Vector is 3D; false otherwise
+     */
+    public boolean is3D() {
+        return this.dim == 3;
+    }
+
+    /**
      * Returns a version of this Vector with all components reduced and simplified
      * @return a reduced and simplified version of this Vector
      */
@@ -372,7 +388,7 @@ public class Vector implements Cloneable {
      * @return true if this Vector is a scalar multiple of other; false otherwise
      */
     public boolean isScalarMultOf(Vector other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -387,7 +403,7 @@ public class Vector implements Cloneable {
      * @return true if this Vector is a scalar multiple of other in the given inner product space; false otherwise
      */
     public boolean isScalarMultOf(Vector other, Matrix Gij) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -402,7 +418,7 @@ public class Vector implements Cloneable {
      * @return true if all components of this Vector are equal to their counterparts in other; false otherwise
      */
     public boolean equals(Vector other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             return false;
         }
 
@@ -421,7 +437,7 @@ public class Vector implements Cloneable {
      * @return the sum of this Vector and other
      */
     public Vector add(Vector other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -447,7 +463,7 @@ public class Vector implements Cloneable {
      * @return the terminal Point of the vector
      */
     public Point add(Point other) {
-        if (this.dim != other.getDim()) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Point and Vector must share dimension");
         }
 
@@ -654,8 +670,8 @@ public class Vector implements Cloneable {
      * @param other the Vector to compare with
      * @return true if this Vector is orthogonal to other; false otherwise
      */
-    public boolean orthogonalTo(Vector other) {
-        if (this.dim != other.dim) {
+    public boolean isOrthogonal(Vector other) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -669,7 +685,7 @@ public class Vector implements Cloneable {
      * @param Gij the Matrix representing a given inner product
      * @return true if this Vector is orthogonal to other in the given inner product space; false otherwise
      */
-    public boolean orthogonalTo(Vector other, Matrix Gij) {
+    public boolean isOrthogonal(Vector other, Matrix Gij) {
         return (innerProduct(this, other, Gij).equals(0));
     }
 
@@ -679,7 +695,7 @@ public class Vector implements Cloneable {
      * @return the cosine of the angle between the two Vectors
      */
     public double cosAngle(Vector other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -688,13 +704,13 @@ public class Vector implements Cloneable {
     }
 
     /**
-     * Calculates the cosine of the angle between this Vector and another Vector
+     * Calculates the cosine of the angle between this Vector and another Vector in a given inner product space
      * @param other the other Vector making up the angle
      * @param Gij the Matrix representing a given inner product
      * @return the cosine of the angle between the two Vectors
      */
     public double cosAngle(Vector other, Matrix Gij) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
         
@@ -708,7 +724,7 @@ public class Vector implements Cloneable {
      * @return the angle between the two Vectors
      */
     public double angle(Vector other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -717,13 +733,13 @@ public class Vector implements Cloneable {
     }
 
     /**
-     * Calculates the angle between this Vector and another Vector
+     * Calculates the angle between this Vector and another Vector in a given inner product space
      * @param other the other Vector making up the angle
      * @param Gij the Matrix representing a given inner product
      * @return the angle between the two Vectors
      */
     public double angle(Vector other, Matrix Gij) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
         
@@ -736,7 +752,7 @@ public class Vector implements Cloneable {
      * @return the angle between the two Vectors, divided by pi
      */
     public ScalarWrapper angleMultipleOfPi(Vector other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -745,13 +761,13 @@ public class Vector implements Cloneable {
     }
 
     /**
-     * Calculates the angle between this Vector and another Vector as a multiple of pi
+     * Calculates the angle between this Vector and another Vector as a multiple of pi in a given inner product space
      * @param other the other Vector making up the angle
      * @param Gij the Matrix representing a given inner product
      * @return the angle between the two Vectors, divided by pi
      */
     public ScalarWrapper angleMultipleOfPi(Vector other, Matrix Gij) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -786,7 +802,7 @@ public class Vector implements Cloneable {
      * @return the projection of the two Vectors
      */
     public Vector projection(Vector other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
         
@@ -811,7 +827,7 @@ public class Vector implements Cloneable {
      * @return the projection of the two Vectors
      */
     public Vector projectionOnto(Vector other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
         
@@ -826,11 +842,26 @@ public class Vector implements Cloneable {
      * @return the projection of the two Vectors in the given inner product space
      */
     public Vector projectionOnto(Vector other, Matrix Gij) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
         return other.projection(this, Gij);
+    }
+
+    /**
+     * Returns the projection of this 3D Vector onto a Plane
+     * @param other the Plane to project onto
+     * @return the projection of this Vector onto other
+     * @throws IllegalArgumentException if this Vector is not 3D
+     */
+    public Vector projectionOnto(Plane other) {
+        if (!this.is3D()) {
+            throw new IllegalArgumentException("Vector must be 3D");
+        }
+
+        Vector normalComponent = this.projectionOnto(other.getNormalVector());
+        return this.subtract(normalComponent);
     }
 
     /**
@@ -859,48 +890,21 @@ public class Vector implements Cloneable {
      * @return the unit vector in the direction of this Vector in the given inner product space
      */
     public NormalVector normalize(Matrix Gij) {
-        Vector v = this.clone();
-
-        // Simplify the vector as much as possible without changing direction
-        boolean hasRat = false;
-        ArrayList<Integer> denominators = new ArrayList<>();
-        for (int n = 0; n < this.dim; n++) {
-            if (this.get(n).isDouble()) {
-                this.get(n).convertToIntOrRat();
-            }
-            
-            if (this.get(n).isRat()) {
-                hasRat = true;
-                denominators.add(this.get(n).getRat().getDenominator());
-            }
-        }
-
-        // Turn all Rationals into integers
-        if (hasRat) {
-            int lcm = denominators.get(0);
-            if (denominators.size() > 1) {
-                for (int i = 1; i < denominators.size(); i++) {
-                    lcm = Util.lcm(lcm, denominators.get(i));
-                }
-            }
-
-            v = v.multiply(lcm);
-            v.simplify();
-        }
-
-        int gcd = v.get(0).getInt();
-        if (v.dim > 1) {
-            for (int i = 1; i < v.dim; i++) {
-                gcd = Util.gcd(gcd, v.get(i).getInt());
-            }
-        }
-
-        v = v.divideBy(gcd);
+        Vector v = this.simplifiedIgnoreMagnitude();
 
         ScalarWrapper mag2 = v.mag2(Gij);
         // if there are any doubles, the magnitude squared likely won't be an int...
         // fix this somehow??
         return new NormalVector(this.components, mag2.getInt());
+    }
+
+    public Vector trueNormalize() {
+        Matrix Gij = Matrix.identityMatrix(this.dim);
+        return this.trueNormalize(Gij);
+    }
+
+    public Vector trueNormalize(Matrix Gij) {
+        return this.normalize().trueValue();
     }
 
     /**

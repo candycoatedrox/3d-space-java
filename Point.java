@@ -217,6 +217,22 @@ public class Point {
     }
 
     /**
+     * Checks whether this Point is 2D
+     * @return true if this Point is 2D; false otherwise
+     */
+    public boolean is2D() {
+        return this.dim == 2;
+    }
+
+    /**
+     * Checks whether this Point is 3D
+     * @return true if this Point is 3D; false otherwise
+     */
+    public boolean is3D() {
+        return this.dim == 3;
+    }
+
+    /**
      * Returns the ith coordinate of this Point
      * @param i the index of the coordinate
      * @return the coordinate value
@@ -338,6 +354,7 @@ public class Point {
     /**
      * Returns the second (y) coordinate of this Point
      * @return the y coordinate of this Point
+     * @throws IllegalArgumentException if this Point is not at least 2D
      */
     public ScalarWrapper getY() {
         if (this.dim >= 2) {
@@ -350,6 +367,7 @@ public class Point {
     /**
      * Sets the second (y) coordinate of this Point to the specified ScalarWrapper
      * @param newValue the new value of y
+     * @throws IllegalArgumentException if this Point is not at least 2D
      */
     public void setY(ScalarWrapper newValue) {
         if (this.dim >= 2) {
@@ -362,6 +380,7 @@ public class Point {
     /**
      * Sets the second (y) coordinate of this Point to the specified int
      * @param newValue the new value of y
+     * @throws IllegalArgumentException if this Point is not at least 2D
      */
     public void setY(int newValue) {
         if (this.dim >= 2) {
@@ -374,6 +393,7 @@ public class Point {
     /**
      * Sets the second (y) coordinate of this Point to the specified Integer
      * @param newValue the new value of y
+     * @throws IllegalArgumentException if this Point is not at least 2D
      */
     public void setY(Integer newValue) {
         if (this.dim >= 2) {
@@ -386,6 +406,7 @@ public class Point {
     /**
      * Sets the second (y) coordinate of this Point to the specified double
      * @param newValue the new value of y
+     * @throws IllegalArgumentException if this Point is not at least 2D
      */
     public void setY(double newValue) {
         if (this.dim >= 2) {
@@ -398,6 +419,7 @@ public class Point {
     /**
      * Sets the second (y) coordinate of this Point to the specified Double
      * @param newValue the new value of y
+     * @throws IllegalArgumentException if this Point is not at least 2D
      */
     public void setY(Double newValue) {
         if (this.dim >= 2) {
@@ -410,6 +432,7 @@ public class Point {
     /**
      * Sets the second (y) coordinate of this Point to the specified Rational
      * @param newValue the new value of y
+     * @throws IllegalArgumentException if this Point is not at least 2D
      */
     public void setY(Rational newValue) {
         if (this.dim >= 2) {
@@ -422,6 +445,7 @@ public class Point {
     /**
      * Returns the third (z) coordinate of this Point
      * @return the z coordinate of this Point
+     * @throws IllegalArgumentException if this Point is not at least 3D
      */
     public ScalarWrapper getZ() {
         if (this.dim >= 3) {
@@ -434,6 +458,7 @@ public class Point {
     /**
      * Sets the third (z) coordinate of this Point to the specified ScalarWrapper
      * @param newValue the new value of z
+     * @throws IllegalArgumentException if this Point is not at least 3D
      */
     public void setZ(ScalarWrapper newValue) {
         if (this.dim >= 3) {
@@ -446,6 +471,7 @@ public class Point {
     /**
      * Sets the third (z) coordinate of this Point to the specified int
      * @param newValue the new value of z
+     * @throws IllegalArgumentException if this Point is not at least 3D
      */
     public void setZ(int newValue) {
         if (this.dim >= 3) {
@@ -458,6 +484,7 @@ public class Point {
     /**
      * Sets the third (z) coordinate of this Point to the specified Integer
      * @param newValue the new value of z
+     * @throws IllegalArgumentException if this Point is not at least 3D
      */
     public void setZ(Integer newValue) {
         if (this.dim >= 3) {
@@ -470,6 +497,7 @@ public class Point {
     /**
      * Sets the third (z) coordinate of this Point to the specified double
      * @param newValue the new value of z
+     * @throws IllegalArgumentException if this Point is not at least 3D
      */
     public void setZ(double newValue) {
         if (this.dim >= 3) {
@@ -482,6 +510,7 @@ public class Point {
     /**
      * Sets the third (z) coordinate of this Point to the specified Double
      * @param newValue the new value of z
+     * @throws IllegalArgumentException if this Point is not at least 3D
      */
     public void setZ(Double newValue) {
         if (this.dim >= 3) {
@@ -494,6 +523,7 @@ public class Point {
     /**
      * Sets the third (z) coordinate of this Point to the specified Rational
      * @param newValue the new value of z
+     * @throws IllegalArgumentException if this Point is not at least 3D
      */
     public void setZ(Rational newValue) {
         if (this.dim >= 3) {
@@ -594,7 +624,7 @@ public class Point {
      * @return true if this Point is equal to other; false otherwise
      */
     public boolean equals(Point other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             return false;
         }
 
@@ -611,9 +641,10 @@ public class Point {
      * Adds this Point and another Point
      * @param other the Point to add to this Point
      * @return the sum of this Point and other
+     * @throws IllegalArgumentException if this Point and other do not share dimension
      */
     public Point add(Point other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Points must share dimension");
         }
 
@@ -628,9 +659,10 @@ public class Point {
      * Adds this Point and a Vector
      * @param other the Vector to add to this Point
      * @return the sum of this Point and other
+     * @throws IllegalArgumentException if this Point and other do not share dimension
      */
     public Point add(Vector other) {
-        if (this.dim != other.getDim()) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Point and Vector must share dimension");
         }
 
@@ -645,6 +677,7 @@ public class Point {
      * Adds this Point and a NormalVector
      * @param other the NormalVector to add to this Point
      * @return the sum of this Point and other
+     * @throws IllegalArgumentException if this Point and other do not share dimension
      */
     public Point add(NormalVector other) {
         return this.add(other.trueValue());
@@ -654,6 +687,7 @@ public class Point {
      * Subtracts another Point from this Point
      * @param other the Point to subtract from this Point
      * @return the difference between this Point and other
+     * @throws IllegalArgumentException if this Point and other do not share dimension
      */
     public Point subtract(Point other) {
         return this.add(other.negative());
@@ -663,6 +697,7 @@ public class Point {
      * Subtracts a Vector from this Point
      * @param other the Vector to subtract from this Point
      * @return the difference between this Point and other
+     * @throws IllegalArgumentException if this Point and other do not share dimension
      */
     public Point subtract(Vector other) {
         return this.add(other.negative());
@@ -672,6 +707,7 @@ public class Point {
      * Subtracts a NormalVector from this Point
      * @param other the NormalVector to subtract from this Point
      * @return the difference between this Point and other
+     * @throws IllegalArgumentException if this Point and other do not share dimension
      */
     public Point subtract(NormalVector other) {
         return this.add(other.negative());
@@ -837,8 +873,27 @@ public class Point {
      * Checks if this Point is on a given Line
      * @param other the Line to compare with
      * @return true if this Point is on other; false otherwise
+     * @throws IllegalArgumentException if this Point and other do not share dimension
      */
     public boolean isOnLine(Line other) {
+        if (!Util.sameDimension(this, other)) {
+            throw new IllegalArgumentException("Point and Line must share dimension");
+        }
+
+        return other.includesPoint(this);
+    }
+
+    /**
+     * Checks if this Point is on a given Plane
+     * @param other the Plane to compare with
+     * @return true if this Point is on other; false otherwise
+     * @throws IllegalArgumentException if this Point is not 3D
+     */
+    public boolean isOnPlane(Plane other) {
+        if (!this.is3D()) {
+            throw new IllegalArgumentException("Point must be 3D");
+        }
+
         return other.includesPoint(this);
     }
 

@@ -1,7 +1,6 @@
 public class Line {
 
     // can be 2+D
-    
     protected final int dim;
     protected Point basePoint;
     protected Vector directionVector;
@@ -23,8 +22,10 @@ public class Line {
             this.dim = basePoint.getDim();
         }
 
+        Vector d = directionVector.simplifiedIgnoreMagnitude();
+
         this.basePoint = basePoint;
-        this.directionVector = directionVector;
+        this.directionVector = d;
     }
     
     /**
@@ -42,8 +43,11 @@ public class Line {
             this.dim = basePoint.getDim();
         }
 
+        Vector d = new Vector(basePoint, directionTerminal);
+        d.simplifyIgnoreMagnitude();
+
         this.basePoint = basePoint;
-        this.directionVector = new Vector(basePoint, directionTerminal);
+        this.directionVector = d;
     }
     
     /**
@@ -62,8 +66,11 @@ public class Line {
             this.dim = basePoint.getDim();
         }
 
+        Vector d = new Vector(directionInitial, directionTerminal);
+        d.simplifyIgnoreMagnitude();
+
         this.basePoint = basePoint;
-        this.directionVector = new Vector(directionInitial, directionTerminal);
+        this.directionVector = d;
     }
 
     /**
@@ -72,6 +79,22 @@ public class Line {
      */
     public int getDim() {
         return this.dim;
+    }
+
+    /**
+     * Checks whether this Line is 2D
+     * @return true if this Vector is 2D; false otherwise
+     */
+    public boolean is2D() {
+        return this.dim == 2;
+    }
+
+    /**
+     * Checks whether this Line is 3D
+     * @return true if this Vector is 3D; false otherwise
+     */
+    public boolean is3D() {
+        return this.dim == 3;
     }
 
     /**
@@ -128,8 +151,8 @@ public class Line {
     }
 
     /**
-     * Returns the ith coordinate of the base point of this Line
-     * @return the ith coordinate of basePoint
+     * Returns the ith component of the direction vector of this Line
+     * @return the ith component of directionVector
      */
     public ScalarWrapper getFromDirection(int i) {
         return this.directionVector.get(i);
@@ -181,9 +204,10 @@ public class Line {
      * Returns an integer corresponding to the interaction between this Line and another
      * @param other the Line to compare with
      * @return 0 if this Line and other are equal; 1 if they are parallel; 2 if they are intersecting; 3 if they are skew
+     * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public int interactionType(Line other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
 
@@ -201,10 +225,10 @@ public class Line {
     /**
      * Compares this Line to another Line
      * @param other the Line to compare with
-     * @return true if this Line is effectively equal to other; false otherwise
+     * @return true if this Line is equivalent to other; false otherwise
      */
     public boolean equals(Line other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             return false;
         } else {
             return this.inSameDirection(other) && this.includesPoint(other.basePoint);
@@ -212,12 +236,13 @@ public class Line {
     }
 
     /**
-     * Checks whether this Line is in the same direction as a Line
+     * Checks whether this Line is in the same direction as another Line
      * @param other the Line to compare with
      * @return true if this Line is in the same direction as other; false otherwise
+     * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public boolean inSameDirection(Line other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
         
@@ -228,9 +253,10 @@ public class Line {
      * Checks whether this Line is in the same direction as a Vector
      * @param other the Vector to compare with
      * @return true if this Line is in the same direction as other; false otherwise
+     * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public boolean inSameDirection(Vector other) {
-        if (this.dim != other.getDim()) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Line and Vector must share dimension");
         }
 
@@ -238,12 +264,13 @@ public class Line {
     }
 
     /**
-     * Checks whether this Line is parallel (and not equal) to another Line
+     * Checks whether this Line is parallel (but not equal) to another Line
      * @param other the Line to compare with
      * @return true if this Line and other are parallel and not equal; false otherwise
+     * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public boolean isParallel(Line other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
 
@@ -251,12 +278,69 @@ public class Line {
     }
 
     /**
+     * Checks whether this Line is orthogonal to another Line
+     * @param other the Line to compare with
+     * @return true if this Line is orthogonal to other; false otherwise
+     * @throws IllegalArgumentException if this Line and other do not share dimension
+     */
+    public boolean isOrthogonal(Line other) {
+        if (!Util.sameDimension(this, other)) {
+            throw new IllegalArgumentException("Lines must share dimension");
+        }
+
+        return this.directionVector.isOrthogonal(other.directionVector);
+    }
+
+    /**
+     * Checks whether this Line is orthogonal to a Vector
+     * @param other the Vector to compare with
+     * @return true if this Line is orthogonal to other; false otherwise
+     * @throws IllegalArgumentException if this Line and other do not share dimension
+     */
+    public boolean isOrthogonal(Vector other) {
+        if (!Util.sameDimension(this, other)) {
+            throw new IllegalArgumentException("Lines must share dimension");
+        }
+
+        return this.directionVector.isOrthogonal(other);
+    }
+
+    /**
+     * Checks whether this Line is orthogonal to a Plane
+     * @param other the Plane to compare with
+     * @return true if this Line is orthogonal to other; false otherwise
+     * @throws IllegalArgumentException if this Line is not 3D
+     */
+    public boolean isOrthogonal(Plane other) {
+        if (!this.is3D()) {
+            throw new IllegalArgumentException("Line must be 3D");
+        }
+
+        return other.isOrthogonal(this);
+    }
+
+    /**
+     * Checks whether this Line is skew to another Line
+     * @param other the Line to compare with
+     * @return true if this Line is skew to other; false otherwise
+     * @throws IllegalArgumentException if this Line and other do not share dimension
+     */
+    public boolean isSkew(Line other) {
+        if (!Util.sameDimension(this, other)) {
+            throw new IllegalArgumentException("Lines must share dimension");
+        }
+
+        return !this.isParallel(other) && !this.intersects(other);
+    }
+
+    /**
      * Checks whether this Line intersects with another Line (at one point or at all points)
      * @param other the Line to compare with
      * @return true if this Line and other intersect; false otherwise
+     * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public boolean intersects(Line other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
 
@@ -272,15 +356,31 @@ public class Line {
     }
 
     /**
+     * Checks whether this Line intersects with a Plane (at one point or at all points)
+     * @param other the Plane to compare with
+     * @return true if this Line and other intersect; false otherwise
+     * @throws IllegalArgumentException if this Line is not 3D
+     */
+    public boolean intersects(Plane other) {
+        if (!this.is3D()) {
+            throw new IllegalArgumentException("Line must be 3D");
+        }
+        
+        return other.intersects(this);
+    }
+
+    /**
      * Returns the intersection Point between this Line and another Line
      * @param other the Line to compare with
      * @return the intersection Point between this Line and other
+     * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public Point intersection(Line other) {
-        if (this.dim != other.dim) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
 
+        // EEK. THIS ONLY WORKS IN 3D BC OF CROSS PRODUCT. FIGURE THAT OUT???
         Vector basePoints = new Vector(this.basePoint, other.basePoint);
         Vector hVec = Vector.crossProduct(other.directionVector, basePoints);
         ScalarWrapper h = hVec.mag();
@@ -311,21 +411,148 @@ public class Line {
      * Returns the intersection Point between this Line and a Plane
      * @param other the Plane to compare with
      * @return the intersection Point between this Line and other
+     * @throws IllegalArgumentException if this Line is not 3D
      */
-    // FILL AFTER PLANE IS SET UP
-    /* public Point intersection(Plane other) {
-        if (this.dim != 3) {
+    public Point intersection(Plane other) {
+        if (!this.is3D()) {
             throw new IllegalArgumentException("Line must be 3D");
         }
-    } */
+
+        return other.intersection(this);
+    }
+
+    /**
+     * Calculates the cosine of the angle between this Line and another Line
+     * @param other the other Line making up the angle
+     * @return the cosine of the angle between this Line and other
+     * @throws IllegalArgumentException if this Line and other do not share dimension
+     */
+    public double cosAngle(Line other) {
+        if (!Util.sameDimension(this, other)) {
+            throw new IllegalArgumentException("Lines must share dimension");
+        }
+
+        return this.directionVector.cosAngle(other.directionVector);
+    }
+
+    /**
+     * Calculates the cosine of the angle between this Line and a Vector
+     * @param other the Vector making up the angle with this Line
+     * @return the cosine of the angle between this Line and other
+     * @throws IllegalArgumentException if this Line and other do not share dimension
+     */
+    public double cosAngle(Vector other) {
+        if (!Util.sameDimension(this, other)) {
+            throw new IllegalArgumentException("Line and Vector must share dimension");
+        }
+
+        return this.directionVector.cosAngle(other);
+    }
+
+    /**
+     * Calculates the angle between this Line and another Line
+     * @param other the other Line making up the angle
+     * @return the angle between this Line and other
+     * @throws IllegalArgumentException if this Line and other do not share dimension
+     */
+    public double angle(Line other) {
+        if (!Util.sameDimension(this, other)) {
+            throw new IllegalArgumentException("Lines must share dimension");
+        }
+
+        double angle = Math.acos(this.cosAngle(other));
+
+        // Find the smallest angle between the lines
+        if (angle > Vector.PI / 2) {
+            angle = (Vector.PI / 2) - angle;
+        }
+
+        return angle;
+    }
+
+    /**
+     * Calculates the angle between this Line and a Vector
+     * @param other the Vector making up the angle with this Line
+     * @return the angle between this Line and other
+     * @throws IllegalArgumentException if this Line and other do not share dimension
+     */
+    public double angle(Vector other) {
+        if (!Util.sameDimension(this, other)) {
+            throw new IllegalArgumentException("Line and Vector must share dimension");
+        }
+
+        return this.directionVector.angle(other);
+    }
+
+    /**
+     * Calculates the angle between this Line and another Line as a multiple of pi
+     * @param other the other Line making up the angle
+     * @return the angle between this Line and other, divided by pi
+     * @throws IllegalArgumentException if this Line and other do not share dimension
+     */
+    public ScalarWrapper angleMultipleOfPi(Line other) {
+        if (!Util.sameDimension(this, other)) {
+            throw new IllegalArgumentException("Lines must share dimension");
+        }
+
+        double multiple = this.angle(other) / Vector.PI;
+        Rational multipleRat = new Rational(multiple);
+        if (multipleRat.equals(multiple)) { // if multiple is rational
+            ScalarWrapper wrapper = new ScalarWrapper(multipleRat);
+            wrapper.convertToIntOrRat();
+            return wrapper;
+        } else {
+            return new ScalarWrapper(multiple);
+        }
+    }
+
+    /**
+     * Calculates the angle between this Line and a Vector as a multiple of pi
+     * @param other the Vector making up the angle with this Line
+     * @return the angle between this Line and other, divided by pi
+     * @throws IllegalArgumentException if this Line and other do not share dimension
+     */
+    public ScalarWrapper angleMultipleOfPi(Vector other) {
+        if (!Util.sameDimension(this, other)) {
+            throw new IllegalArgumentException("Line and Vector must share dimension");
+        }
+
+        double multiple = this.angle(other) / Vector.PI;
+        Rational multipleRat = new Rational(multiple);
+        if (multipleRat.equals(multiple)) { // if multiple is rational
+            ScalarWrapper wrapper = new ScalarWrapper(multipleRat);
+            wrapper.convertToIntOrRat();
+            return wrapper;
+        } else {
+            return new ScalarWrapper(multiple);
+        }
+    }
+
+    /**
+     * Returns the projection of this Line onto a Plane
+     * @param other the Plane to project onto
+     * @return the projection of this Line onto other
+     * @throws IllegalArgumentException if this Line is not 3D
+     */
+    public Line projectionOnto(Plane other) {
+        if (!this.is3D()) {
+            throw new IllegalArgumentException("Line must be 3D");
+        }
+
+        Vector normalComponent = this.directionVector.projectionOnto(other.getNormalVector());
+        Vector direction = this.directionVector.subtract(normalComponent);
+
+        return new Line(this.intersection(other), direction);
+    }
 
     /**
      * Checks if a given Point is on this Line
      * @param other the Point to compare with
      * @return true if other is on this Line; false otherwise
+     * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public boolean includesPoint(Point other) {
-        if (this.dim != other.getDim()) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Line and Point must share dimension");
         }
 
@@ -337,12 +564,27 @@ public class Line {
     }
 
     /**
+     * Checks if this Line is on a given Plane
+     * @param other the Plane to compare with
+     * @return true if this Line is on other; false otherwise
+     * @throws IllegalArgumentException if this Line is not 3D
+     */
+    public boolean isOnPlane(Plane other) {
+        if (!this.is3D()) {
+            throw new IllegalArgumentException("Line must be 3D");
+        }
+
+        return other.includesLine(this);
+    }
+
+    /**
      * Returns the value of t at a given Point on this Line
      * @param other a Point on this Line
      * @return the value of t at other
+     * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public ScalarWrapper solveForT(Point other) {
-        if (this.dim != other.getDim()) {
+        if (!Util.sameDimension(this, other)) {
             throw new IllegalArgumentException("Line and Point must share dimension");
         }
 
@@ -361,27 +603,54 @@ public class Line {
      * Returns this Line with its base point shifted by a given Vector
      * @param delta the direction and distance to shift this Line
      * @return this Line, shifted
+     * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public Line shifted(Vector delta) {
         if (this.dim != delta.getDim()) {
-            throw new IllegalArgumentException("Line and Point must share dimension");
+            throw new IllegalArgumentException("Line and Vector must share dimension");
         }
 
-        Line copy = this.clone();
-        copy.shift(delta);
-        return copy;
+        return new Line(this.basePoint.add(delta), this.directionVector);
     }
 
     /**
      * Shifts the base point of this Line by a given Vector
      * @param delta the direction and distance to shift this Line
+     * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public void shift(Vector delta) {
         if (this.dim != delta.getDim()) {
-            throw new IllegalArgumentException("Line and Point must share dimension");
+            throw new IllegalArgumentException("Line and Vector must share dimension");
         }
         
         this.basePoint = this.basePoint.add(delta);
+    }
+
+    /**
+     * Returns this Line shifted to a new base point
+     * @param newBase the basePoint of the shifted Line
+     * @return this Line, shifted
+     * @throws IllegalArgumentException if this Line and other do not share dimension
+     */
+    public Line shiftedTo(Point newBase) {
+        if (this.dim != newBase.getDim()) {
+            throw new IllegalArgumentException("Line and Point must share dimension");
+        }
+
+        return new Line(newBase, this.directionVector);
+    }
+
+    /**
+     * Shifts the base point of this Line to a given Point
+     * @param newBase the new basePoint of this Line
+     * @throws IllegalArgumentException if this Line and other do not share dimension
+     */
+    public void shiftTo(Point newBase) {
+        if (this.dim != newBase.getDim()) {
+            throw new IllegalArgumentException("Line and Point must share dimension");
+        }
+        
+        this.basePoint = newBase;
     }
     
     /**

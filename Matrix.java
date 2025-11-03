@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
+
 public class Matrix {
     
     // Outer arrays = rows
@@ -162,12 +163,12 @@ public class Matrix {
     
     /**
      * Returns the ith/jth component of this Matrix
-     * @param i the row index of the component
-     * @param j the column index of the component
+     * @param i the column index of the component
+     * @param j the row index of the component
      * @return the ith/jth component of this Matrix
      */
     public ScalarWrapper get(int i, int j) {
-        return this.components[i][j];
+        return this.components[j][i];
     }
 
     /**
@@ -214,62 +215,62 @@ public class Matrix {
 
     /**
      * Sets the ith/jth component of a Matrix to a given ScalarWrapper
-     * @param i the row index of the component
-     * @param j the column index of the component
+     * @param i the column index of the component
+     * @param j the row index of the component
      * @param newValue the value to set the component to
      */
     public void set(int i, int j, ScalarWrapper newValue) {
-        this.components[i][j] = newValue;
+        this.components[j][i] = newValue;
     }
 
     /**
      * Sets the ith/jth component of a Matrix to a given int
-     * @param i the row index of the component
-     * @param j the column index of the component
+     * @param i the column index of the component
+     * @param j the row index of the component
      * @param newValue the value to set the component to
      */
     public void set(int i, int j, int newValue) {
-        this.components[i][j] = new ScalarWrapper(newValue);
+        this.components[j][i] = new ScalarWrapper(newValue);
     }
 
     /**
      * Sets the ith/jth component of a Matrix to a given Integer
-     * @param i the row index of the component
-     * @param j the column index of the component
+     * @param i the column index of the component
+     * @param j the row index of the component
      * @param newValue the value to set the component to
      */
     public void set(int i, int j, Integer newValue) {
-        this.components[i][j] = new ScalarWrapper(newValue);
+        this.components[j][i] = new ScalarWrapper(newValue);
     }
 
     /**
      * Sets the ith/jth component of a Matrix to a given double
-     * @param i the row index of the component
-     * @param j the column index of the component
+     * @param i the column index of the component
+     * @param j the row index of the component
      * @param newValue the value to set the component to
      */
     public void set(int i, int j, double newValue) {
-        this.components[i][j] = new ScalarWrapper(newValue);
+        this.components[j][i] = new ScalarWrapper(newValue);
     }
 
     /**
      * Sets the ith/jth component of a Matrix to a given Double
-     * @param i the row index of the component
-     * @param j the column index of the component
+     * @param i the column index of the component
+     * @param j the row index of the component
      * @param newValue the value to set the component to
      */
     public void set(int i, int j, Double newValue) {
-        this.components[i][j] = new ScalarWrapper(newValue);
+        this.components[j][i] = new ScalarWrapper(newValue);
     }
 
     /**
      * Sets the ith/jth component of a Matrix to a given Rational
-     * @param i the row index of the component
-     * @param j the column index of the component
+     * @param i the column index of the component
+     * @param j the row index of the component
      * @param newValue the value to set the component to
      */
     public void set(int i, int j, Rational newValue) {
-        this.components[i][j] = new ScalarWrapper(newValue);
+        this.components[j][i] = new ScalarWrapper(newValue);
     }
 
     /**
@@ -610,6 +611,116 @@ public class Matrix {
      */
     public Matrix divideBy(Rational other) {
         return this.multiply(other.invert());
+    }
+
+    public Vector solveSystemOfEquations(ScalarWrapper[] rightSide) {
+        return this.solveSystemOfEquations(new Vector(rightSide));
+    }
+
+    public Vector solveSystemOfEquations(Vector rightSide) {
+        // solves (this)<x,y,z> = <rightSide>, outputs <x,y,z>
+        // n = number of variables
+        // k = number of equations
+
+        if (!this.isSquare()) {
+            // TECHNICALLY not necessary (some systems where k!=n CAN be solved)
+            // but idk how to deal with all that. maybe I'll fix it later
+            throw new IllegalArgumentException("Matrix must be square");
+        } else if (this.k != rightSide.getDim()) {
+            throw new IllegalArgumentException("Vector dimension must be equal to Matrix k");
+        }
+
+        Vector[] equations = new Vector[this.k];
+        ScalarWrapper[] components;
+        for (int i = 0; i < this.k; i++) {
+            components = new ScalarWrapper[this.n + 1];
+
+            for (int j = 0; j < this.n; j++) {
+                components[j] = this.get(i, j);
+            }
+            components[this.n] = rightSide.get(i);
+
+            equations[i] = new Vector(components);
+        }
+
+        return gaussJordan(equations);
+    }
+
+    public static Vector gaussJordan(Vector[] equations) {
+        // each in equations is a Vector of dimension n+1, where n is the number of variables
+        // ex. n = 3; <1, 2, 3, 8> --> x + 2y + 3z = 8
+        // outputs a Vector of dimension n
+
+        for (Vector v : equations) {
+            if (!Util.sameDimension(v, equations[0])) {
+                throw new IllegalArgumentException("Equations have inconsistent dimension");
+            }
+        }
+
+        int n = equations[0].getDim() - 1;
+
+        // THROW EXCEPTION IF N > K (variables > equations) IDK HOW TO DEAL WITH THAT
+        if (equations.length != n) {
+            throw new IllegalArgumentException("Number of equations must equal number of variables");
+        }
+
+        Vector[] currentEquations = equations;
+        for (int i = 0; i < equations.length; i++) {
+            currentEquations = gaussJordanIteration(equations, i);
+        }
+
+        // check if each vector has one non-zero component before the final component
+        // make sure each non-zero component is UNIQUE from other equations
+        // (ex. if one has a value of x, no other equation has a nonzero value for x)
+        // if not, return null, if true, return those components 
+
+        boolean foundValue;
+        boolean[] hasValue = new boolean[n];
+        ScalarWrapper[] values = new ScalarWrapper[n];
+        for (Vector equation : currentEquations) {
+            foundValue = false;
+
+            for (int i = 0; i < n; i++) {
+                if (!equation.get(i).equals(0)) {
+                    if (foundValue) {
+                        return null;
+                    } else if (hasValue[i]) {
+                        return null;
+                    }
+
+                    hasValue[i] = true;
+                    values[i] = equation.get(n);
+                }
+            }
+        }
+
+        for (ScalarWrapper value : values) {
+            if (value == null) {
+                return null;
+            }
+        }
+
+        return new Vector(values);
+    }
+
+    private static Vector[] gaussJordanIteration(Vector[] equations, int start) {
+        Vector[] eq = new Vector[equations.length];
+
+        ScalarWrapper leadingCoefficient = equations[start].get(start);
+        Vector leadingEquation = equations[start].divideBy(leadingCoefficient);
+
+        Vector leadingSubtract;
+        for (int i = 0; i < equations.length; i++) {
+            if (i == start) {
+                eq[i] = leadingEquation;
+            } else {
+                leadingCoefficient = equations[i].get(start);
+                leadingSubtract = leadingEquation.multiply(leadingCoefficient);
+                eq[i] = equations[i].subtract(leadingSubtract);
+            }
+        }
+
+        return eq;
     }
 
     /**
