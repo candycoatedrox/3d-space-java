@@ -1026,11 +1026,12 @@ public class Vector implements Cloneable {
         return new Vector(components);
     }
 
-    /* public static void main(String[] args) {
-        int[] arr = {2, 5};
-        ScalarWrapper[] testArr = ScalarWrapper.wrapArray(arr);
-        Vector testVector = new Vector(arr);
-        System.out.println(testVector);
-    } */
+    public static void main(String[] args) {
+        int[] arr1 = {-2, 5, 0};
+        int[] arr2 = {0, 5, -3};
+        Vector vector1 = new Vector(arr1);
+        Vector vector2 = new Vector(arr2);
+        System.out.println(crossProduct(vector1, vector2));
+    }
 
 }

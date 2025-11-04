@@ -1303,6 +1303,53 @@ public class ScalarWrapper implements Cloneable {
         }
     }
 
+    public ScalarWrapper mod(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.mod(other.getInt());
+        } else if (other.isDouble()) {
+            return this.mod(other.getDouble());
+        } else {
+            return this.mod(other.getRat());
+        }
+    }
+
+    public ScalarWrapper mod(int other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.getInt() % other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.getDouble() % other);
+        } else {
+            return new ScalarWrapper(this.getRat().mod(other));
+        }
+    }
+
+    public ScalarWrapper mod(Integer other) {
+        return this.mod(other.intValue());
+    }
+
+    public ScalarWrapper mod(double other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.getInt() % other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.getDouble() % other);
+        } else {
+            return new ScalarWrapper(this.getRat().mod(other));
+        }
+    }
+
+    public ScalarWrapper mod(Double other) {
+        return this.mod(other.doubleValue());
+    }
+
+    public ScalarWrapper mod(Rational other) {
+        if (this.isRat()) {
+            return new ScalarWrapper(this.getRat().mod(other));
+        } else {
+            int quotient = this.divide(other).intValue();
+            return this.subtract(other.multiply(quotient));
+        }
+    }
+
     /**
      * Divides another ScalarWrapper by this ScalarWrapper
      * @param other the ScalarWrapper to divide by this ScalarWrapper

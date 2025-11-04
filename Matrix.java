@@ -643,10 +643,10 @@ public class Matrix {
             equations[i] = new Vector(components);
         }
 
-        return gaussJordan(equations);
+        return new Vector(gaussJordan(equations));
     }
 
-    public static Vector gaussJordan(Vector[] equations) {
+    public static Point gaussJordan(Vector[] equations) {
         // each in equations is a Vector of dimension n+1, where n is the number of variables
         // ex. n = 3; <1, 2, 3, 8> --> x + 2y + 3z = 8
         // outputs a Vector of dimension n
@@ -700,7 +700,7 @@ public class Matrix {
             }
         }
 
-        return new Vector(values);
+        return new Point(values);
     }
 
     private static Vector[] gaussJordanIteration(Vector[] equations, int start) {
@@ -843,6 +843,54 @@ public class Matrix {
             matrix[r] = st.map(val -> val.clone()).toArray(ScalarWrapper[]::new);
         }
 
+        return new Matrix(matrix);
+    }
+
+    // rotation matrices are currently only set up in 2D. fix that
+
+    public static Matrix rotationMatrixMultipleOfPi(ScalarWrapper radiansMultiple) {
+        return rotationMatrix(radiansMultiple, true);
+    }
+
+    public static Matrix rotationMatrixMultipleOfPi(ScalarWrapper radiansMultiple, boolean counterclockwise) {
+        if (radiansMultiple.greaterThan(2)) {
+            radiansMultiple = radiansMultiple.mod(2);
+        }
+        if (!counterclockwise) {
+            radiansMultiple = radiansMultiple.subtractFrom(2);
+        }
+
+        if (radiansMultiple.equals(0)) {
+            return identityMatrix(2);
+        } else if (radiansMultiple.equals(0.5)) {
+            int[][] matrix = {{0, -1}, {1, 0}};
+            return new Matrix(matrix);
+        } else if (radiansMultiple.equals(1)) {
+            return identityMatrix(2).negative();
+        } else if (radiansMultiple.equals(1.5)) {
+            int[][] matrix = {{0, 1}, {-1, 0}};
+            return new Matrix(matrix);
+        } else {
+            double radMultiple = radiansMultiple.doubleValue();
+            double[][] matrix = {{Math.cos(radMultiple * Vector.PI), -Math.sin(radMultiple * Vector.PI)}, {Math.sin(radMultiple * Vector.PI), Math.cos(radMultiple * Vector.PI)}};
+            return new Matrix(matrix);
+        }
+    }
+
+    public static Matrix rotationMatrix(ScalarWrapper radians) {
+        return rotationMatrix(radians, true);
+    }
+
+    public static Matrix rotationMatrix(ScalarWrapper radians, boolean counterclockwise) {
+        if (radians.greaterThan(2*Vector.PI)) {
+            radians = radians.mod(2*Vector.PI);
+        }
+        if (!counterclockwise) {
+            radians = radians.subtractFrom(2*Vector.PI);
+        }
+
+        double rad = radians.doubleValue();
+        double[][] matrix = {{Math.cos(rad * Vector.PI), -Math.sin(rad * Vector.PI)}, {Math.sin(rad * Vector.PI), Math.cos(rad * Vector.PI)}};
         return new Matrix(matrix);
     }
 

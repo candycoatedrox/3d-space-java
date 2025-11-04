@@ -9,8 +9,8 @@ public class Line {
     
     /**
      * Constructs a Line from a Point and a Vector
-     * @param basePoint the base point of the Line
-     * @param directionVector the direction vector of the Line
+     * @param basePoint a Point on the Line
+     * @param directionVector a Vector describing the direction of the Line
      * @throws IllegalArgumentException if basePoint and directionVector have different dimensions or fewer than 2 components
      */
     public Line(Point basePoint, Vector directionVector) {
@@ -193,7 +193,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line is not 2D
      */
     public ScalarWrapper slope() {
-        if (this.dim != 2) {
+        if (!this.is2D()) {
             throw new IllegalArgumentException("Line must be 2D");
         }
 
@@ -606,7 +606,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public Line shifted(Vector delta) {
-        if (this.dim != delta.getDim()) {
+        if (!Util.sameDimension(this, delta)) {
             throw new IllegalArgumentException("Line and Vector must share dimension");
         }
 
@@ -619,7 +619,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public void shift(Vector delta) {
-        if (this.dim != delta.getDim()) {
+        if (!Util.sameDimension(this, delta)) {
             throw new IllegalArgumentException("Line and Vector must share dimension");
         }
         
@@ -633,7 +633,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public Line shiftedTo(Point newBase) {
-        if (this.dim != newBase.getDim()) {
+        if (!Util.sameDimension(this, newBase)) {
             throw new IllegalArgumentException("Line and Point must share dimension");
         }
 
@@ -646,7 +646,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public void shiftTo(Point newBase) {
-        if (this.dim != newBase.getDim()) {
+        if (!Util.sameDimension(this, newBase)) {
             throw new IllegalArgumentException("Line and Point must share dimension");
         }
         
@@ -660,6 +660,19 @@ public class Line {
     @Override
     public Line clone() {
         return new Line(this.basePoint.clone(), this.directionVector.clone());
+    }
+
+    /**
+     * Returns this Line as a Line2D
+     * @return a Line2D equivalent to this Line
+     * @throws IllegalArgumentException if this Line is not 2D
+     */
+    public Line2D toLine2D() {
+        if (!this.is2D()) {
+            throw new IllegalArgumentException("Line must be 2D");
+        }
+
+        return new Line2D(this.basePoint, this.directionVector);
     }
 
     /**

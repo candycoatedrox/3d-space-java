@@ -1509,6 +1509,89 @@ public class Rational implements Cloneable {
     }
 
     /**
+     * Calculates the remainder of the quotient of this Rational and a ScalarWrapper
+     * @param other the ScalarWrapper to take the mod of
+     * @return the remainder of the quotient of this Rational and other
+     */
+    public ScalarWrapper mod(ScalarWrapper other) {
+        if (other.isInt()) {
+            Rational p = this.mod(other.getInt());
+            return new ScalarWrapper(p);
+        } else if (other.isDouble()) {
+            return new ScalarWrapper(this.mod(other.getDouble()));
+        } else {
+            return new ScalarWrapper(this.mod(other.getRat()));
+        }
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this Rational and another Rational
+     * @param other the Rational to take the mod of
+     * @return the remainder of the quotient of this Rational and other
+     */
+    public Rational mod(Rational other) {
+        int quotient = this.divideBy(other).intValue();
+        return this.subtract(other.multiply(quotient));
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this Rational and an int
+     * @param other the int to take the mod of
+     * @return the remainder of the quotient of this Rational and other
+     */
+    public Rational mod(int other) {
+        int quotient = this.divideBy(other).intValue();
+        return this.subtract(other * quotient);
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this Rational and an Integer
+     * @param other the Integer to take the mod of
+     * @return the remainder of the quotient of this Rational and other
+     */
+    public Rational mod(Integer other) {
+        return this.mod(other.intValue());
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this Rational and a double
+     * @param other the double to take the mod of
+     * @return the remainder of the quotient of this Rational and other
+     */
+    public double mod(double other) {
+        int quotient = (int)this.divideBy(other);
+        return this.subtract(other * quotient);
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this Rational and a Double
+     * @param other the Double to take the mod of
+     * @return the remainder of the quotient of this Rational and other
+     */
+    public double mod(Double other) {
+        return this.mod(other.doubleValue());
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this Rational and a double and returns a Rational
+     * @param other the double to take the mod of
+     * @return the remainder of the quotient of this Rational and other as a Rational
+     */
+    public Rational modRat(double other) {
+        int quotient = this.divideByRat(other).intValue();
+        return this.subtractRat(other * quotient);
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this Rational and a Double and returns a Rational
+     * @param other the Double to take the mod of
+     * @return the remainder of the quotient of this Rational and other as a Rational
+     */
+    public Rational modRat(Double other) {
+        return this.modRat(other.doubleValue());
+    }
+
+    /**
      * Divides a ScalarWrapper by this Rational
      * @param other the ScalarWrapper to divide by this Rational
      * @return the quotient of this Rational and other
