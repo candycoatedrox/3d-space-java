@@ -157,14 +157,14 @@ public class RationalTest {
     public void absolutePos() {
         Rational testRat = new Rational(2, 3);
         Rational testAbs = testRat.absolute();
-        assertTrue(testAbs.value() > 0);
+        assertTrue(testAbs.doubleValue() > 0);
     }
 
     @Test
     public void absoluteNeg() {
         Rational testRat = new Rational(-2, 3);
         Rational testAbs = testRat.absolute();
-        assertTrue(testAbs.value() > 0);
+        assertTrue(testAbs.doubleValue() > 0);
     }
 
     @Test
@@ -182,7 +182,7 @@ public class RationalTest {
     @Test
     public void doubleValue() {
         Rational testRat = new Rational(3, 2);
-        assertEquals(1.5, testRat.value(), 0.01);
+        assertEquals(1.5, testRat.doubleValue(), 0.01);
     }
 
     @Test

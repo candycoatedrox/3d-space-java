@@ -1,4 +1,4 @@
-public class Radical {
+public class Radical extends Number implements Cloneable, Comparable<Radical> {
 
     private ScalarWrapper innerValue;
 
@@ -59,7 +59,7 @@ public class Radical {
     }
 
     /**
-     * Returns true value of this Radical, simplified
+     * Returns the true value of this Radical, simplified
      * @return the true value of this Radical, simplified
      */
     public ScalarWrapper value() {
@@ -67,11 +67,57 @@ public class Radical {
     }
 
     /**
-     * Returns true value of this Radical
-     * @return the true value of this Radical
+     * Returns the double value of this Radical
+     * @return the double value of this Radical
      */
-    public double trueValue() {
+    @Override
+    public double doubleValue() {
         return this.innerValue.sqrt();
+    }
+
+    /**
+     * Returns the (rounded) int value of this Radical
+     * @return the (rounded) int value of this Radical
+     */
+    @Override
+    public int intValue() {
+        int iValue = (int)this.doubleValue();
+        return iValue;
+    }
+
+    /**
+     * Returns the float value of this ScalarWrapper
+     * @return the float value of this ScalarWrapper
+     */
+    @Override
+    public float floatValue() {
+        float fValue = (float)this.doubleValue();
+        return fValue;
+    }
+
+    /**
+     * Returns the (rounded) long value of this ScalarWrapper
+     * @return the (rounded) long value of this ScalarWrapper
+     */
+    @Override
+    public long longValue() {
+        long lValue = this.intValue();
+        return lValue;
+    }
+
+    /**
+     * Compares two Radicals numerically
+     * @param other the Radical to compare with
+     * @return 0 if this is equal to other; -1 if this is less than other; 1 if this is greater than other
+     */
+    public int compareTo(Radical other) {
+        if (this.equals(other)) {
+            return 0;
+        } else if (this.lessThan(other)) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
     
     /**
@@ -80,7 +126,7 @@ public class Radical {
      * @return true if the value of this Radical is equal to the value of other; false otherwise
      */
     public boolean equals(Radical other) {
-        return this.trueValue() == other.trueValue();
+        return this.doubleValue() == other.doubleValue();
     }
     
     /**
@@ -89,7 +135,7 @@ public class Radical {
      * @return true if the value of this Radical is equal to the value of other; false otherwise
      */
     public boolean equals(ScalarWrapper other) {
-        return this.trueValue() == other.doubleValue();
+        return this.doubleValue() == other.doubleValue();
     }
     
     /**
@@ -98,7 +144,7 @@ public class Radical {
      * @return true if the value of this Radical is equal to other; false otherwise
      */
     public boolean equals(int other) {
-        return this.trueValue() == other;
+        return this.doubleValue() == other;
     }
     
     /**
@@ -107,7 +153,7 @@ public class Radical {
      * @return true if the value of this Radical is equal to other; false otherwise
      */
     public boolean equals(Integer other) {
-        return this.trueValue() == other;
+        return this.doubleValue() == other;
     }
     
     /**
@@ -116,7 +162,7 @@ public class Radical {
      * @return true if the value of this Radical is equal to other; false otherwise
      */
     public boolean equals(double other) {
-        return this.trueValue() == other;
+        return this.doubleValue() == other;
     }
     
     /**
@@ -125,7 +171,7 @@ public class Radical {
      * @return true if the value of this Radical is equal to other; false otherwise
      */
     public boolean equals(Double other) {
-        return this.trueValue() == other;
+        return this.doubleValue() == other;
     }
     
     /**
@@ -134,7 +180,7 @@ public class Radical {
      * @return true if the value of this Radical is equal to the value of other; false otherwise
      */
     public boolean equals(Rational other) {
-        return this.trueValue() == other.value();
+        return this.doubleValue() == other.doubleValue();
     }
     
     /**
@@ -143,7 +189,7 @@ public class Radical {
      * @return true if the value of this Radical is less than the value of other; false otherwise
      */
     public boolean lessThan(Radical other) {
-        return this.trueValue() < other.trueValue();
+        return this.doubleValue() < other.doubleValue();
     }
     
     /**
@@ -152,7 +198,7 @@ public class Radical {
      * @return true if the value of this Radical is less than the value of other; false otherwise
      */
     public boolean lessThan(ScalarWrapper other) {
-        return this.trueValue() < other.doubleValue();
+        return this.doubleValue() < other.doubleValue();
     }
     
     /**
@@ -161,7 +207,7 @@ public class Radical {
      * @return true if the value of this Radical is less than other; false otherwise
      */
     public boolean lessThan(int other) {
-        return this.trueValue() < other;
+        return this.doubleValue() < other;
     }
     
     /**
@@ -170,7 +216,7 @@ public class Radical {
      * @return true if the value of this Radical is less than other; false otherwise
      */
     public boolean lessThan(Integer other) {
-        return this.trueValue() < other;
+        return this.doubleValue() < other;
     }
     
     /**
@@ -179,7 +225,7 @@ public class Radical {
      * @return true if the value of this Radical is less than other; false otherwise
      */
     public boolean lessThan(double other) {
-        return this.trueValue() < other;
+        return this.doubleValue() < other;
     }
     
     /**
@@ -188,7 +234,7 @@ public class Radical {
      * @return true if the value of this Radical is less than other; false otherwise
      */
     public boolean lessThan(Double other) {
-        return this.trueValue() < other;
+        return this.doubleValue() < other;
     }
     
     /**
@@ -197,7 +243,7 @@ public class Radical {
      * @return true if the value of this Radical is less than the value of other; false otherwise
      */
     public boolean lessThan(Rational other) {
-        return this.trueValue() < other.value();
+        return this.doubleValue() < other.doubleValue();
     }
     
     /**
@@ -206,7 +252,7 @@ public class Radical {
      * @return true if the value of this Radical is less than or equal to the value of other; false otherwise
      */
     public boolean lessThanOrEquals(Radical other) {
-        return this.trueValue() <= other.trueValue();
+        return this.doubleValue() <= other.doubleValue();
     }
     
     /**
@@ -215,7 +261,7 @@ public class Radical {
      * @return true if the value of this Radical is less than or equal to the value of other; false otherwise
      */
     public boolean lessThanOrEquals(ScalarWrapper other) {
-        return this.trueValue() <= other.doubleValue();
+        return this.doubleValue() <= other.doubleValue();
     }
     
     /**
@@ -224,7 +270,7 @@ public class Radical {
      * @return true if the value of this Radical is less than or equal to other; false otherwise
      */
     public boolean lessThanOrEquals(int other) {
-        return this.trueValue() <= other;
+        return this.doubleValue() <= other;
     }
     
     /**
@@ -233,7 +279,7 @@ public class Radical {
      * @return true if the value of this Radical is less than or equal to other; false otherwise
      */
     public boolean lessThanOrEquals(Integer other) {
-        return this.trueValue() <= other;
+        return this.doubleValue() <= other;
     }
     
     /**
@@ -242,7 +288,7 @@ public class Radical {
      * @return true if the value of this Radical is less than or equal to other; false otherwise
      */
     public boolean lessThanOrEquals(double other) {
-        return this.trueValue() <= other;
+        return this.doubleValue() <= other;
     }
     
     /**
@@ -251,7 +297,7 @@ public class Radical {
      * @return true if the value of this Radical is less than or equal to other; false otherwise
      */
     public boolean lessThanOrEquals(Double other) {
-        return this.trueValue() <= other;
+        return this.doubleValue() <= other;
     }
     
     /**
@@ -260,7 +306,7 @@ public class Radical {
      * @return true if the value of this Radical is less than or equal to the value of other; false otherwise
      */
     public boolean lessThanOrEquals(Rational other) {
-        return this.trueValue() <= other.value();
+        return this.doubleValue() <= other.doubleValue();
     }
     
     /**
@@ -269,7 +315,7 @@ public class Radical {
      * @return true if the value of this Radical is greater than the value of other; false otherwise
      */
     public boolean greaterThan(Radical other) {
-        return this.trueValue() > other.trueValue();
+        return this.doubleValue() > other.doubleValue();
     }
     
     /**
@@ -278,7 +324,7 @@ public class Radical {
      * @return true if the value of this Radical is greater than the value of other; false otherwise
      */
     public boolean greaterThan(ScalarWrapper other) {
-        return this.trueValue() > other.doubleValue();
+        return this.doubleValue() > other.doubleValue();
     }
     
     /**
@@ -287,7 +333,7 @@ public class Radical {
      * @return true if the value of this Radical is greater than other; false otherwise
      */
     public boolean greaterThan(int other) {
-        return this.trueValue() > other;
+        return this.doubleValue() > other;
     }
     
     /**
@@ -296,7 +342,7 @@ public class Radical {
      * @return true if the value of this Radical is greater than other; false otherwise
      */
     public boolean greaterThan(Integer other) {
-        return this.trueValue() > other;
+        return this.doubleValue() > other;
     }
     
     /**
@@ -305,7 +351,7 @@ public class Radical {
      * @return true if the value of this Radical is greater than other; false otherwise
      */
     public boolean greaterThan(double other) {
-        return this.trueValue() > other;
+        return this.doubleValue() > other;
     }
     
     /**
@@ -314,7 +360,7 @@ public class Radical {
      * @return true if the value of this Radical is greater than other; false otherwise
      */
     public boolean greaterThan(Double other) {
-        return this.trueValue() > other;
+        return this.doubleValue() > other;
     }
     
     /**
@@ -323,7 +369,7 @@ public class Radical {
      * @return true if the value of this Radical is greater than the value of other; false otherwise
      */
     public boolean greaterThan(Rational other) {
-        return this.trueValue() > other.value();
+        return this.doubleValue() > other.doubleValue();
     }
     
     /**
@@ -332,7 +378,7 @@ public class Radical {
      * @return true if the value of this Radical is greater than or equal to the value of other; false otherwise
      */
     public boolean greaterThanOrEquals(Radical other) {
-        return this.trueValue() >= other.trueValue();
+        return this.doubleValue() >= other.doubleValue();
     }
     
     /**
@@ -341,7 +387,7 @@ public class Radical {
      * @return true if the value of this Radical is greater than or equal to the value of other; false otherwise
      */
     public boolean greaterThanOrEquals(ScalarWrapper other) {
-        return this.trueValue() >= other.doubleValue();
+        return this.doubleValue() >= other.doubleValue();
     }
     
     /**
@@ -350,7 +396,7 @@ public class Radical {
      * @return true if the value of this Radical is greater than or equal to other; false otherwise
      */
     public boolean greaterThanOrEquals(int other) {
-        return this.trueValue() >= other;
+        return this.doubleValue() >= other;
     }
     
     /**
@@ -359,7 +405,7 @@ public class Radical {
      * @return true if the value of this Radical is greater than or equal to other; false otherwise
      */
     public boolean greaterThanOrEquals(Integer other) {
-        return this.trueValue() >= other;
+        return this.doubleValue() >= other;
     }
     
     /**
@@ -368,7 +414,7 @@ public class Radical {
      * @return true if the value of this Radical is greater than or equal to other; false otherwise
      */
     public boolean greaterThanOrEquals(double other) {
-        return this.trueValue() >= other;
+        return this.doubleValue() >= other;
     }
     
     /**
@@ -377,7 +423,7 @@ public class Radical {
      * @return true if the value of this Radical is greater than or equal to other; false otherwise
      */
     public boolean greaterThanOrEquals(Double other) {
-        return this.trueValue() >= other;
+        return this.doubleValue() >= other;
     }
     
     /**
@@ -386,7 +432,7 @@ public class Radical {
      * @return true if the value of this Radical is greater than or equal to the value of other; false otherwise
      */
     public boolean greaterThanOrEquals(Rational other) {
-        return this.trueValue() >= other.value();
+        return this.doubleValue() >= other.doubleValue();
     }
 
     /**

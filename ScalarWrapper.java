@@ -1,4 +1,4 @@
-public class ScalarWrapper implements Cloneable {
+public class ScalarWrapper extends Number implements Cloneable, Comparable<ScalarWrapper> {
 
     private Integer Int = null;
     private Double dec = null;
@@ -375,7 +375,7 @@ public class ScalarWrapper implements Cloneable {
             double d = this.Int;
             this.set(d);
         } else if (this.isRat()) {
-            this.set(this.rat.value());
+            this.set(this.rat.doubleValue());
         }
     }
 
@@ -405,6 +405,7 @@ public class ScalarWrapper implements Cloneable {
      * Returns the int value of the ScalarWrapper
      * @return the int value of the ScalarWrapper
      */
+    @Override
     public int intValue() {
         int value;
 
@@ -424,6 +425,7 @@ public class ScalarWrapper implements Cloneable {
      * Returns the double value of the ScalarWrapper
      * @return the double value of the ScalarWrapper
      */
+    @Override
     public double doubleValue() {
         double value;
 
@@ -432,7 +434,7 @@ public class ScalarWrapper implements Cloneable {
         } else if (this.isDouble()) {
             value = this.dec;
         } else {
-            value = this.rat.value();
+            value = this.rat.doubleValue();
         }
 
         return value;
@@ -454,6 +456,26 @@ public class ScalarWrapper implements Cloneable {
         }
 
         return value;
+    }
+
+    /**
+     * Returns the float value of this ScalarWrapper
+     * @return the float value of this ScalarWrapper
+     */
+    @Override
+    public float floatValue() {
+        float fValue = (float)this.doubleValue();
+        return fValue;
+    }
+
+    /**
+     * Returns the long value of this ScalarWrapper
+     * @return the long value of this ScalarWrapper
+     */
+    @Override
+    public long longValue() {
+        long lValue = this.intValue();
+        return lValue;
     }
 
     /**
@@ -481,6 +503,21 @@ public class ScalarWrapper implements Cloneable {
             return new ScalarWrapper(Math.abs(this.dec));
         } else {
             return new ScalarWrapper(this.rat.negative());
+        }
+    }
+
+    /**
+     * Compares two ScalarWrappers numerically
+     * @param other the ScalarWrapper to compare with
+     * @return 0 if this is equal to other; -1 if this is less than other; 1 if this is greater than other
+     */
+    public int compareTo(ScalarWrapper other) {
+        if (this.equals(other)) {
+            return 0;
+        } else if (this.lessThan(other)) {
+            return -1;
+        } else {
+            return 1;
         }
     }
 
@@ -1452,7 +1489,7 @@ public class ScalarWrapper implements Cloneable {
         } else if (this.isDouble()) {
             return Math.sqrt(this.getDouble());
         } else {
-            return Math.sqrt(this.getRat().value());
+            return Math.sqrt(this.getRat().doubleValue());
         }
     }
 

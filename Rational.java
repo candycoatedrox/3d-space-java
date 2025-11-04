@@ -1,4 +1,4 @@
-public class Rational implements Cloneable {
+public class Rational extends Number implements Cloneable, Comparable<Rational> {
 
     // add constructors using Integer, double, Double, ScalarWrapper
     // add iadd, isub, imul, idiv equivalents
@@ -744,7 +744,8 @@ public class Rational implements Cloneable {
      * Returns the double value of this Rational
      * @return the double value of this Rational
      */
-    public double value() {
+    @Override
+    public double doubleValue() {
         double numerDouble = this.numerator;
         return numerDouble / this.denominator;
     }
@@ -753,8 +754,44 @@ public class Rational implements Cloneable {
      * Returns the double value of this Rational, rounded to the nearest integer
      * @return the double value of this Rational, rounded to the nearest integer
      */
+    @Override
     public int intValue() {
         return this.numerator / this.denominator;
+    }
+
+    /**
+     * Returns the float value of this Rational
+     * @return the float value of this Rational
+     */
+    @Override
+    public float floatValue() {
+        float fValue = (float)this.doubleValue();
+        return fValue;
+    }
+
+    /**
+     * Returns the double value of this Rational, rounded to the nearest integer, as a long
+     * @return the double value of this Rational, rounded to the nearest integer, as a long
+     */
+    @Override
+    public long longValue() {
+        long lValue = this.intValue();
+        return lValue;
+    }
+
+    /**
+     * Compares two Rationals numerically
+     * @param other the Rational to compare with
+     * @return 0 if this is equal to other; -1 if this is less than other; 1 if this is greater than other
+     */
+    public int compareTo(Rational other) {
+        if (this.equals(other)) {
+            return 0;
+        } else if (this.lessThan(other)) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 
     /**
@@ -763,7 +800,7 @@ public class Rational implements Cloneable {
      * @return true if the two Rationals' values are equal to the same double; false otherwise
      */
     public boolean equals(Rational other) {
-        return this.value() == other.value();
+        return this.doubleValue() == other.doubleValue();
     }
 
     /**
@@ -787,7 +824,7 @@ public class Rational implements Cloneable {
      */
     public boolean equals(int other) {
         double doubleOther = other;
-        return this.value() == doubleOther;
+        return this.doubleValue() == doubleOther;
     }
 
     /**
@@ -806,7 +843,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value equals the double; false otherwise
      */
     public boolean equals(double other) {
-        return this.value() == other;
+        return this.doubleValue() == other;
     }
 
     /**
@@ -815,7 +852,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value equals the Double; false otherwise
      */
     public boolean equals(Double other) {
-        return this.value() == other;
+        return this.doubleValue() == other;
     }
 
     /**
@@ -824,7 +861,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value equals the double; false otherwise
      */
     public boolean equals(Radical other) {
-        return this.value() == other.trueValue();
+        return this.doubleValue() == other.doubleValue();
     }
 
     /**
@@ -833,7 +870,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is less than other's value
      */
     public boolean lessThan(Rational other) {
-        return this.value() < other.value();
+        return this.doubleValue() < other.doubleValue();
     }
 
     /**
@@ -857,7 +894,7 @@ public class Rational implements Cloneable {
      */
     public boolean lessThan(int other) {
         double doubleOther = other;
-        return this.value() < doubleOther;
+        return this.doubleValue() < doubleOther;
     }
 
     /**
@@ -867,7 +904,7 @@ public class Rational implements Cloneable {
      */
     public boolean lessThan(Integer other) {
         double doubleOther = other;
-        return this.value() < doubleOther;
+        return this.doubleValue() < doubleOther;
     }
 
     /**
@@ -876,7 +913,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is less than other
      */
     public boolean lessThan(double other) {
-        return this.value() < other;
+        return this.doubleValue() < other;
     }
 
     /**
@@ -885,7 +922,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is less than other
      */
     public boolean lessThan(Double other) {
-        return this.value() < other;
+        return this.doubleValue() < other;
     }
 
     /**
@@ -894,7 +931,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is less than other
      */
     public boolean lessThan(Radical other) {
-        return this.value() < other.trueValue();
+        return this.doubleValue() < other.doubleValue();
     }
 
     /**
@@ -903,7 +940,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is less than or equal to other's value
      */
     public boolean lessThanOrEquals(Rational other) {
-        return this.value() <= other.value();
+        return this.doubleValue() <= other.doubleValue();
     }
 
     /**
@@ -927,7 +964,7 @@ public class Rational implements Cloneable {
      */
     public boolean lessThanOrEquals(int other) {
         double doubleOther = other;
-        return this.value() <= doubleOther;
+        return this.doubleValue() <= doubleOther;
     }
 
     /**
@@ -937,7 +974,7 @@ public class Rational implements Cloneable {
      */
     public boolean lessThanOrEquals(Integer other) {
         double doubleOther = other;
-        return this.value() <= doubleOther;
+        return this.doubleValue() <= doubleOther;
     }
 
     /**
@@ -946,7 +983,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is less than or equal to other
      */
     public boolean lessThanOrEquals(double other) {
-        return this.value() <= other;
+        return this.doubleValue() <= other;
     }
 
     /**
@@ -955,7 +992,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is less than or equal to other
      */
     public boolean lessThanOrEquals(Double other) {
-        return this.value() <= other;
+        return this.doubleValue() <= other;
     }
 
     /**
@@ -964,7 +1001,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is less than or equal to other
      */
     public boolean lessThanOrEquals(Radical other) {
-        return this.value() <= other.trueValue();
+        return this.doubleValue() <= other.doubleValue();
     }
 
     /**
@@ -973,7 +1010,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is greater than other's value
      */
     public boolean greaterThan(Rational other) {
-        return this.value() > other.value();
+        return this.doubleValue() > other.doubleValue();
     }
 
     /**
@@ -997,7 +1034,7 @@ public class Rational implements Cloneable {
      */
     public boolean greaterThan(int other) {
         double doubleOther = other;
-        return this.value() > doubleOther;
+        return this.doubleValue() > doubleOther;
     }
     
     /**
@@ -1007,7 +1044,7 @@ public class Rational implements Cloneable {
      */
     public boolean greaterThan(Integer other) {
         double doubleOther = other;
-        return this.value() > doubleOther;
+        return this.doubleValue() > doubleOther;
     }
 
     /**
@@ -1016,7 +1053,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is less than other
      */
     public boolean greaterThan(double other) {
-        return this.value() > other;
+        return this.doubleValue() > other;
     }
     
     /**
@@ -1025,7 +1062,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is less than other
      */
     public boolean greaterThan(Double other) {
-        return this.value() > other;
+        return this.doubleValue() > other;
     }
 
     /**
@@ -1034,7 +1071,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is greater than other
      */
     public boolean greaterThan(Radical other) {
-        return this.value() > other.trueValue();
+        return this.doubleValue() > other.doubleValue();
     }
 
     /**
@@ -1043,7 +1080,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is less than or equal to other's value
      */
     public boolean greaterThanOrEquals(Rational other) {
-        return this.value() >= other.value();
+        return this.doubleValue() >= other.doubleValue();
     }
 
     /**
@@ -1067,7 +1104,7 @@ public class Rational implements Cloneable {
      */
     public boolean greaterThanOrEquals(int other) {
         double doubleOther = other;
-        return this.value() >= doubleOther;
+        return this.doubleValue() >= doubleOther;
     }
     
     /**
@@ -1077,7 +1114,7 @@ public class Rational implements Cloneable {
      */
     public boolean greaterThanOrEquals(Integer other) {
         double doubleOther = other;
-        return this.value() >= doubleOther;
+        return this.doubleValue() >= doubleOther;
     }
 
     /**
@@ -1086,7 +1123,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is less than or equal to other
      */
     public boolean greaterThanOrEquals(double other) {
-        return this.value() >= other;
+        return this.doubleValue() >= other;
     }
     
     /**
@@ -1095,7 +1132,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is less than or equal to other
      */
     public boolean greaterThanOrEquals(Double other) {
-        return this.value() >= other;
+        return this.doubleValue() >= other;
     }
 
     /**
@@ -1104,7 +1141,7 @@ public class Rational implements Cloneable {
      * @return true if this Rational's value is greater than or equal to other
      */
     public boolean greaterThanOrEquals(Radical other) {
-        return this.value() >= other.trueValue();
+        return this.doubleValue() >= other.doubleValue();
     }
 
     /**
@@ -1163,7 +1200,7 @@ public class Rational implements Cloneable {
      * @return the sum of this Rational and other as a double
      */
     public double add(double other) {
-        return this.value() + other;
+        return this.doubleValue() + other;
     }
 
     /**
@@ -1172,7 +1209,7 @@ public class Rational implements Cloneable {
      * @return the sum of this Rational and other as a double
      */
     public double add(Double other) {
-        return this.value() + other;
+        return this.doubleValue() + other;
     }
     
     /**
@@ -1242,7 +1279,7 @@ public class Rational implements Cloneable {
      * @return the difference between this Rational and other as a double
      */
     public double subtract(double other) {
-        return this.value() - other;
+        return this.doubleValue() - other;
     }
 
     /**
@@ -1251,7 +1288,7 @@ public class Rational implements Cloneable {
      * @return the difference between this Rational and other as a double
      */
     public double subtract(Double other) {
-        return this.value() - other;
+        return this.doubleValue() - other;
     }
     
     /**
@@ -1320,7 +1357,7 @@ public class Rational implements Cloneable {
      * @return the difference between this Rational and other as a double
      */
     public double subtractFrom(double other) {
-        return other - this.value();
+        return other - this.doubleValue();
     }
 
     /**
@@ -1329,7 +1366,7 @@ public class Rational implements Cloneable {
      * @return the difference between this Rational and other as a double
      */
     public double subtractFrom(Double other) {
-        return other - this.value();
+        return other - this.doubleValue();
     }
     
     /**
@@ -1399,7 +1436,7 @@ public class Rational implements Cloneable {
      * @return the product of this Rational and other as a double
      */
     public double multiply(double other) {
-        return this.value() * other;
+        return this.doubleValue() * other;
     }
 
     /**
@@ -1408,7 +1445,7 @@ public class Rational implements Cloneable {
      * @return the product of this Rational and other as a double
      */
     public double multiply(Double other) {
-        return this.value() * other;
+        return this.doubleValue() * other;
     }
     
     /**
@@ -1478,7 +1515,7 @@ public class Rational implements Cloneable {
      * @return the quotient of this Rational and other as a double
      */
     public double divideBy(double other) {
-        return this.value() / other;
+        return this.doubleValue() / other;
     }
 
     /**
@@ -1487,7 +1524,7 @@ public class Rational implements Cloneable {
      * @return the quotient of this Rational and other as a double
      */
     public double divideBy(Double other) {
-        return this.value() / other;
+        return this.doubleValue() / other;
     }
     
     /**
@@ -1638,7 +1675,7 @@ public class Rational implements Cloneable {
      * @return the quotient of this Rational and other as a double
      */
     public double divide(double other) {
-        return other / this.value();
+        return other / this.doubleValue();
     }
 
     /**
@@ -1647,7 +1684,7 @@ public class Rational implements Cloneable {
      * @return the quotient of this Rational and other as a double
      */
     public double divide(Double other) {
-        return other / this.value();
+        return other / this.doubleValue();
     }
     
     /**
@@ -1681,7 +1718,7 @@ public class Rational implements Cloneable {
      * @return the square root of this Rational as a double
      */
     public double sqrt() {
-        return Math.sqrt(this.value());
+        return Math.sqrt(this.doubleValue());
     }
 
     /**
