@@ -2,10 +2,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class Vector implements Cloneable {
+public class Vector extends SpacialObject implements Cloneable {
 
     protected ScalarWrapper[] components;
-    protected final int dim;
     protected static final double PI = Math.acos(-1);
 
     /**
@@ -13,8 +12,8 @@ public class Vector implements Cloneable {
      * @param dim the dimension of the Vector
      */
     public Vector(int dim) {
+        super(dim);
         this.components = new ScalarWrapper[dim];
-        this.dim = dim;
     }
 
     /**
@@ -22,8 +21,8 @@ public class Vector implements Cloneable {
      * @param components an array of the Vector's components
      */
     public Vector(ScalarWrapper[] components) {
+        super(components.length);
         this.components = components;
-        this.dim = components.length;
     }
 
     /**
@@ -31,8 +30,8 @@ public class Vector implements Cloneable {
      * @param components an array of the Vector's components
      */
     public Vector(int[] components) {
+        super(components.length);
         this.components = ScalarWrapper.wrapArray(components);
-        this.dim = components.length;
     }
 
     /**
@@ -40,8 +39,8 @@ public class Vector implements Cloneable {
      * @param components an array of the Vector's components
      */
     public Vector(Integer[] components) {
+        super(components.length);
         this.components = ScalarWrapper.wrapArray(components);
-        this.dim = components.length;
     }
 
     /**
@@ -49,8 +48,8 @@ public class Vector implements Cloneable {
      * @param components an array of the Vector's components
      */
     public Vector(double[] components) {
+        super(components.length);
         this.components = ScalarWrapper.wrapArray(components);
-        this.dim = components.length;
     }
 
     /**
@@ -58,8 +57,8 @@ public class Vector implements Cloneable {
      * @param components an array of the Vector's components
      */
     public Vector(Double[] components) {
+        super(components.length);
         this.components = ScalarWrapper.wrapArray(components);
-        this.dim = components.length;
     }
 
     /**
@@ -67,8 +66,8 @@ public class Vector implements Cloneable {
      * @param components an array of the Vector's components
      */
     public Vector(Rational[] components) {
+        super(components.length);
         this.components = ScalarWrapper.wrapArray(components);
-        this.dim = components.length;
     }
 
     /**
@@ -76,14 +75,8 @@ public class Vector implements Cloneable {
      * @param p the terminal point of the Vector
      */
     public Vector(Point p) {
-        ScalarWrapper[] vector = new ScalarWrapper[p.getDim()];
-
-        for (int i = 0; i < p.getDim(); i++) {
-            vector[i] = p.get(i);
-        }
-
-        this.components = vector;
-        this.dim = vector.length;
+        super(p.getDim());
+        this.components = p.getCoordinates();
     }
 
     /**
@@ -92,6 +85,7 @@ public class Vector implements Cloneable {
      * @param q the terminal point of the Vector
      */
     public Vector(Point p, Point q) {
+        super(p.getDim());
         if (p.getDim() != q.getDim()) {
             throw new IllegalArgumentException("Points must share dimension");
         }
@@ -103,14 +97,13 @@ public class Vector implements Cloneable {
         }
 
         this.components = vector;
-        this.dim = vector.length;
     }
 
     /**
      * Accessor for components
      * @return the components of this Vector
      */
-    public ScalarWrapper[] getcomponents() {
+    public ScalarWrapper[] getComponents() {
         return this.components;
     }
 
@@ -175,30 +168,6 @@ public class Vector implements Cloneable {
      */
     public void set(int i, Rational newValue) {
         this.components[i] = new ScalarWrapper(newValue);
-    }
-
-    /**
-     * Accessor for dim
-     * @return the dimension of this Vector
-     */
-    public int getDim() {
-        return this.dim;
-    }
-
-    /**
-     * Checks whether this Vector is 2D
-     * @return true if this Vector is 2D; false otherwise
-     */
-    public boolean is2D() {
-        return this.dim == 2;
-    }
-
-    /**
-     * Checks whether this Vector is 3D
-     * @return true if this Vector is 3D; false otherwise
-     */
-    public boolean is3D() {
-        return this.dim == 3;
     }
 
     /**
@@ -388,7 +357,7 @@ public class Vector implements Cloneable {
      * @return true if this Vector is a scalar multiple of other; false otherwise
      */
     public boolean isScalarMultOf(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -403,7 +372,7 @@ public class Vector implements Cloneable {
      * @return true if this Vector is a scalar multiple of other in the given inner product space; false otherwise
      */
     public boolean isScalarMultOf(Vector other, Matrix Gij) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -418,7 +387,7 @@ public class Vector implements Cloneable {
      * @return true if all components of this Vector are equal to their counterparts in other; false otherwise
      */
     public boolean equals(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             return false;
         }
 
@@ -437,7 +406,7 @@ public class Vector implements Cloneable {
      * @return the sum of this Vector and other
      */
     public Vector add(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -463,7 +432,7 @@ public class Vector implements Cloneable {
      * @return the terminal Point of the vector
      */
     public Point add(Point other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Point and Vector must share dimension");
         }
 
@@ -671,7 +640,7 @@ public class Vector implements Cloneable {
      * @return true if this Vector is orthogonal to other; false otherwise
      */
     public boolean isOrthogonal(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -695,7 +664,7 @@ public class Vector implements Cloneable {
      * @return the cosine of the angle between the two Vectors
      */
     public double cosAngle(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -710,7 +679,7 @@ public class Vector implements Cloneable {
      * @return the cosine of the angle between the two Vectors
      */
     public double cosAngle(Vector other, Matrix Gij) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
         
@@ -724,7 +693,7 @@ public class Vector implements Cloneable {
      * @return the angle between the two Vectors
      */
     public double angle(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -739,7 +708,7 @@ public class Vector implements Cloneable {
      * @return the angle between the two Vectors
      */
     public double angle(Vector other, Matrix Gij) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
         
@@ -752,7 +721,7 @@ public class Vector implements Cloneable {
      * @return the angle between the two Vectors, divided by pi
      */
     public ScalarWrapper angleMultipleOfPi(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -767,7 +736,7 @@ public class Vector implements Cloneable {
      * @return the angle between the two Vectors, divided by pi
      */
     public ScalarWrapper angleMultipleOfPi(Vector other, Matrix Gij) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 
@@ -802,7 +771,7 @@ public class Vector implements Cloneable {
      * @return the projection of the two Vectors
      */
     public Vector projection(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
         
@@ -827,7 +796,7 @@ public class Vector implements Cloneable {
      * @return the projection of the two Vectors
      */
     public Vector projectionOnto(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
         
@@ -842,7 +811,7 @@ public class Vector implements Cloneable {
      * @return the projection of the two Vectors in the given inner product space
      */
     public Vector projectionOnto(Vector other, Matrix Gij) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Vectors must share dimension");
         }
 

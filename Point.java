@@ -1,18 +1,17 @@
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class Point {
+public class Point extends SpacialObject implements Cloneable {
     
     private ScalarWrapper[] coordinates;
-    private final int dim;
 
     /**
      * Constructs a Point in n dimensions from an array of n ScalarWrappers
      * @param coordinates a list of the point's coordinates
      */
     public Point(ScalarWrapper[] coordinates) {
+        super(coordinates.length);
         this.coordinates = coordinates;
-        this.dim = coordinates.length;
     }
 
     /**
@@ -20,8 +19,8 @@ public class Point {
      * @param coordinates a list of the point's coordinates
      */
     public Point(int[] coordinates) {
+        super(coordinates.length);
         this.coordinates = ScalarWrapper.wrapArray(coordinates);
-        this.dim = coordinates.length;
     }
 
     /**
@@ -29,8 +28,8 @@ public class Point {
      * @param coordinates a list of the point's coordinates
      */
     public Point(Integer[] coordinates) {
+        super(coordinates.length);
         this.coordinates = ScalarWrapper.wrapArray(coordinates);
-        this.dim = coordinates.length;
     }
 
     /**
@@ -38,8 +37,8 @@ public class Point {
      * @param coordinates a list of the point's coordinates
      */
     public Point(double[] coordinates) {
+        super(coordinates.length);
         this.coordinates = ScalarWrapper.wrapArray(coordinates);
-        this.dim = coordinates.length;
     }
 
     /**
@@ -47,8 +46,8 @@ public class Point {
      * @param coordinates a list of the point's coordinates
      */
     public Point(Double[] coordinates) {
+        super(coordinates.length);
         this.coordinates = ScalarWrapper.wrapArray(coordinates);
-        this.dim = coordinates.length;
     }
 
     /**
@@ -56,8 +55,8 @@ public class Point {
      * @param coordinates a list of the point's coordinates
      */
     public Point(Rational[] coordinates) {
+        super(coordinates.length);
         this.coordinates = ScalarWrapper.wrapArray(coordinates);
-        this.dim = coordinates.length;
     }
 
     // add 2D, 3D constructors for all combos of classes... eek
@@ -68,9 +67,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(ScalarWrapper x, ScalarWrapper y) {
+        super(2);
         ScalarWrapper[] c = {x, y};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -79,9 +78,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(ScalarWrapper x, int y) {
+        super(2);
         ScalarWrapper[] c = {x, new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -90,9 +89,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(ScalarWrapper x, Integer y) {
+        super(2);
         ScalarWrapper[] c = {x, new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -101,9 +100,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(ScalarWrapper x, double y) {
+        super(2);
         ScalarWrapper[] c = {x, new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -112,9 +111,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(ScalarWrapper x, Double y) {
+        super(2);
         ScalarWrapper[] c = {x, new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -123,9 +122,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(ScalarWrapper x, Rational y) {
+        super(2);
         ScalarWrapper[] c = {x, new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -134,9 +133,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(int x, ScalarWrapper y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), y};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -145,9 +144,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(int x, int y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -156,9 +155,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(int x, Integer y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -167,9 +166,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(int x, double y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -178,9 +177,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(int x, Double y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -189,9 +188,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(int x, Rational y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -200,9 +199,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Integer x, ScalarWrapper y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), y};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -211,9 +210,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Integer x, int y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -222,9 +221,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Integer x, Integer y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -233,9 +232,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Integer x, double y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -244,9 +243,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Integer x, Double y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -255,9 +254,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Integer x, Rational y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -266,9 +265,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(double x, ScalarWrapper y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), y};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -277,9 +276,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(double x, int y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -288,9 +287,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(double x, Integer y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -299,9 +298,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(double x, double y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -310,9 +309,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(double x, Double y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -321,9 +320,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(double x, Rational y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -332,9 +331,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Double x, ScalarWrapper y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), y};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -343,9 +342,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Double x, int y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -354,9 +353,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Double x, Integer y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -365,9 +364,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Double x, double y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -376,9 +375,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Double x, Double y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -387,9 +386,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Double x, Rational y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -398,9 +397,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Rational x, ScalarWrapper y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), y};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -409,9 +408,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Rational x, int y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -420,9 +419,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Rational x, Integer y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -431,9 +430,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Rational x, double y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -442,9 +441,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Rational x, Double y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -453,9 +452,9 @@ public class Point {
      * @param y the y coordinate of the Point
      */
     public Point(Rational x, Rational y) {
+        super(2);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
         this.coordinates = c;
-        this.dim = 2;
     }
 
     /**
@@ -465,9 +464,9 @@ public class Point {
      * @param z the z coordinate of the Point
      */
     public Point(ScalarWrapper x, ScalarWrapper y, ScalarWrapper z) {
+        super(3);
         ScalarWrapper[] c = {x, y, z};
         this.coordinates = c;
-        this.dim = 3;
     }
 
     /**
@@ -477,9 +476,9 @@ public class Point {
      * @param z the z coordinate of the Point
      */
     public Point(int x, int y, int z) {
+        super(3);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
         this.coordinates = c;
-        this.dim = 3;
     }
 
     /**
@@ -489,9 +488,9 @@ public class Point {
      * @param z the z coordinate of the Point
      */
     public Point(Integer x, Integer y, Integer z) {
+        super(3);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
         this.coordinates = c;
-        this.dim = 3;
     }
 
     /**
@@ -501,9 +500,9 @@ public class Point {
      * @param z the z coordinate of the Point
      */
     public Point(double x, double y, double z) {
+        super(3);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
         this.coordinates = c;
-        this.dim = 3;
     }
 
     /**
@@ -513,9 +512,9 @@ public class Point {
      * @param z the z coordinate of the Point
      */
     public Point(Double x, Double y, Double z) {
+        super(3);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
         this.coordinates = c;
-        this.dim = 3;
     }
 
     /**
@@ -525,9 +524,9 @@ public class Point {
      * @param z the z coordinate of the Point
      */
     public Point(Rational x, Rational y, Rational z) {
+        super(3);
         ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
         this.coordinates = c;
-        this.dim = 3;
     }
 
     /**
@@ -536,30 +535,6 @@ public class Point {
      */
     public ScalarWrapper[] getCoordinates() {
         return this.coordinates;
-    }
-
-    /**
-     * Accessor for dim
-     * @return the dimension of this Point
-     */
-    public int getDim() {
-        return this.dim;
-    }
-
-    /**
-     * Checks whether this Point is 2D
-     * @return true if this Point is 2D; false otherwise
-     */
-    public boolean is2D() {
-        return this.dim == 2;
-    }
-
-    /**
-     * Checks whether this Point is 3D
-     * @return true if this Point is 3D; false otherwise
-     */
-    public boolean is3D() {
-        return this.dim == 3;
     }
 
     /**
@@ -954,7 +929,7 @@ public class Point {
      * @return true if this Point is equal to other; false otherwise
      */
     public boolean equals(Point other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             return false;
         }
 
@@ -974,7 +949,7 @@ public class Point {
      * @throws IllegalArgumentException if this Point and other do not share dimension
      */
     public Point add(Point other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Points must share dimension");
         }
 
@@ -992,7 +967,7 @@ public class Point {
      * @throws IllegalArgumentException if this Point and other do not share dimension
      */
     public Point add(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Point and Vector must share dimension");
         }
 
@@ -1206,7 +1181,7 @@ public class Point {
      * @throws IllegalArgumentException if this Point and other do not share dimension
      */
     public boolean isOnLine(Line other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Point and Line must share dimension");
         }
 

@@ -113,21 +113,6 @@ public class Line2D extends Line {
         this.yIntercept = basePoint.getY().subtract(mx);
     }
 
-    @Override
-    public int getDim() {
-        return 2;
-    }
-
-    @Override
-    public boolean is2D() {
-        return true;
-    }
-
-    @Override
-    public boolean is3D() {
-        return true;
-    }
-
     /**
      * Accessor for slope
      * @return the slope of this Line2D

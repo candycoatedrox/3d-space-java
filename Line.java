@@ -1,7 +1,6 @@
-public class Line {
+public class Line extends SpacialObject implements Cloneable {
 
     // can be 2+D
-    protected final int dim;
     protected Point basePoint;
     protected Vector directionVector;
     
@@ -14,12 +13,11 @@ public class Line {
      * @throws IllegalArgumentException if basePoint and directionVector have different dimensions or fewer than 2 components
      */
     public Line(Point basePoint, Vector directionVector) {
+        super(basePoint.getDim());
         if (basePoint.getDim() != directionVector.getDim()) {
             throw new IllegalArgumentException("Point and Vector must share dimension");
         } else if (basePoint.getDim() < 2) {
             throw new IllegalArgumentException("Line cannot have fewer than 2 components");
-        } else {
-            this.dim = basePoint.getDim();
         }
 
         Vector d = directionVector.simplifiedIgnoreMagnitude();
@@ -35,12 +33,11 @@ public class Line {
      * @throws IllegalArgumentException if basePoint and directionTerminal have different dimensions or fewer than 2 components
      */
     public Line(Point basePoint, Point directionTerminal) {
+        super(basePoint.getDim());
         if (basePoint.getDim() != directionTerminal.getDim()) {
             throw new IllegalArgumentException("Points must share dimension");
         } else if (basePoint.getDim() < 2) {
             throw new IllegalArgumentException("Line cannot have fewer than 2 components");
-        } else {
-            this.dim = basePoint.getDim();
         }
 
         Vector d = new Vector(basePoint, directionTerminal);
@@ -58,12 +55,11 @@ public class Line {
      * @throws IllegalArgumentException if basePoint, directionInitial, and directionTerminal are not all of the same dimension or have fewer than 2 components
      */
     public Line(Point basePoint, Point directionInitial, Point directionTerminal) {
+        super(basePoint.getDim());
         if (basePoint.getDim() != directionInitial.getDim() || directionInitial.getDim() != directionTerminal.getDim()) {
             throw new IllegalArgumentException("All Points must share dimension");
         } else if (basePoint.getDim() < 2) {
             throw new IllegalArgumentException("Line cannot have fewer than 2 components");
-        } else {
-            this.dim = basePoint.getDim();
         }
 
         Vector d = new Vector(directionInitial, directionTerminal);
@@ -71,30 +67,6 @@ public class Line {
 
         this.basePoint = basePoint;
         this.directionVector = d;
-    }
-
-    /**
-     * Accessor for dim
-     * @return the dimension of this Line
-     */
-    public int getDim() {
-        return this.dim;
-    }
-
-    /**
-     * Checks whether this Line is 2D
-     * @return true if this Vector is 2D; false otherwise
-     */
-    public boolean is2D() {
-        return this.dim == 2;
-    }
-
-    /**
-     * Checks whether this Line is 3D
-     * @return true if this Vector is 3D; false otherwise
-     */
-    public boolean is3D() {
-        return this.dim == 3;
     }
 
     /**
@@ -207,7 +179,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public int interactionType(Line other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
 
@@ -228,7 +200,7 @@ public class Line {
      * @return true if this Line is equivalent to other; false otherwise
      */
     public boolean equals(Line other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             return false;
         } else {
             return this.inSameDirection(other) && this.includesPoint(other.basePoint);
@@ -242,7 +214,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public boolean inSameDirection(Line other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
         
@@ -256,7 +228,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public boolean inSameDirection(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Line and Vector must share dimension");
         }
 
@@ -270,7 +242,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public boolean isParallel(Line other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
 
@@ -284,7 +256,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public boolean isOrthogonal(Line other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
 
@@ -298,7 +270,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public boolean isOrthogonal(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
 
@@ -326,7 +298,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public boolean isSkew(Line other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
 
@@ -340,7 +312,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public boolean intersects(Line other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
 
@@ -376,7 +348,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public Point intersection(Line other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
 
@@ -428,7 +400,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public double cosAngle(Line other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
 
@@ -442,7 +414,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public double cosAngle(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Line and Vector must share dimension");
         }
 
@@ -456,7 +428,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public double angle(Line other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
 
@@ -477,7 +449,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public double angle(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Line and Vector must share dimension");
         }
 
@@ -491,7 +463,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public ScalarWrapper angleMultipleOfPi(Line other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Lines must share dimension");
         }
 
@@ -513,7 +485,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public ScalarWrapper angleMultipleOfPi(Vector other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Line and Vector must share dimension");
         }
 
@@ -552,7 +524,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public boolean includesPoint(Point other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Line and Point must share dimension");
         }
 
@@ -584,7 +556,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public ScalarWrapper solveForT(Point other) {
-        if (!Util.sameDimension(this, other)) {
+        if (!this.sameDimension(other)) {
             throw new IllegalArgumentException("Line and Point must share dimension");
         }
 
@@ -606,7 +578,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public Line shifted(Vector delta) {
-        if (!Util.sameDimension(this, delta)) {
+        if (!this.sameDimension(delta)) {
             throw new IllegalArgumentException("Line and Vector must share dimension");
         }
 
@@ -619,7 +591,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public void shift(Vector delta) {
-        if (!Util.sameDimension(this, delta)) {
+        if (!this.sameDimension(delta)) {
             throw new IllegalArgumentException("Line and Vector must share dimension");
         }
         
@@ -633,7 +605,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public Line shiftedTo(Point newBase) {
-        if (!Util.sameDimension(this, newBase)) {
+        if (!this.sameDimension(newBase)) {
             throw new IllegalArgumentException("Line and Point must share dimension");
         }
 
@@ -646,7 +618,7 @@ public class Line {
      * @throws IllegalArgumentException if this Line and other do not share dimension
      */
     public void shiftTo(Point newBase) {
-        if (!Util.sameDimension(this, newBase)) {
+        if (!this.sameDimension(newBase)) {
             throw new IllegalArgumentException("Line and Point must share dimension");
         }
         

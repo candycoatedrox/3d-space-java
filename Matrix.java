@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class Matrix {
+public class Matrix implements Cloneable {
     
     // Outer arrays = rows
     private ScalarWrapper[][] components;
@@ -652,7 +652,7 @@ public class Matrix {
         // outputs a Vector of dimension n
 
         for (Vector v : equations) {
-            if (!Util.sameDimension(v, equations[0])) {
+            if (v.sameDimension(equations[0])) {
                 throw new IllegalArgumentException("Equations have inconsistent dimension");
             }
         }
