@@ -12,7 +12,7 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public ScalarWrapper(Integer Int, Double dec, Rational rat) {
         if (Int == null && dec == null && rat == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("No value given");
         } else if (dec == null && rat == null) {
             this.Int = Int;
         } else if (Int == null && rat == null) {
@@ -23,9 +23,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
             } else {
                 this.rat = rat;
             }
+        } else {
+            throw new RuntimeException("Can only take one value");
         }
-
-        throw new RuntimeException();
     }
 
     /**
@@ -35,14 +35,14 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public ScalarWrapper(Integer Int, Double dec) {
         if (Int == null && dec == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("No value given");
         } else if (dec == null) {
             this.Int = Int;
         } else if (Int == null) {
             this.dec = dec;
+        } else {
+            throw new RuntimeException("Can only take one value");
         }
-
-        throw new RuntimeException();
     }
 
     /**
@@ -52,7 +52,7 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public ScalarWrapper(Integer Int, Rational rat) {
         if (Int == null && rat == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("No value given");
         } else if (rat == null) {
             this.Int = Int;
         } else if (Int == null) {
@@ -61,9 +61,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
             } else {
                 this.rat = rat;
             }
+        } else {
+            throw new RuntimeException("Can only take one value");
         }
-
-        throw new RuntimeException();
     }
 
     /**
@@ -73,7 +73,7 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public ScalarWrapper(Double dec, Rational rat) {
         if (dec == null && rat == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("No value given");
         } else if (rat == null) {
             this.dec = dec;
         } else if (dec == null) {
@@ -82,9 +82,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
             } else {
                 this.rat = rat;
             }
+        } else {
+            throw new RuntimeException("Can only take one value");
         }
-
-        throw new RuntimeException();
     }
 
     /**
@@ -92,6 +92,10 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @param Int the integer value of the wrapper
      */
     public ScalarWrapper(Integer Int) {
+        if (Int == null) {
+            throw new NullPointerException("No value given");
+        }
+        
         this.Int = Int;
     }
 
@@ -108,6 +112,10 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @param dec the double value of the wrapper
      */
     public ScalarWrapper(Double dec) {
+        if (dec == null) {
+            throw new NullPointerException("No value given");
+        }
+        
         this.dec = dec;
     }
 
@@ -124,10 +132,33 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @param rat the Rational value of the wrapper
      */
     public ScalarWrapper(Rational rat) {
+        if (rat == null) {
+            throw new NullPointerException("No value given");
+        }
+        
         if (rat.isWhole()) {
             this.Int = rat.intValue();
         } else {
             this.rat = rat;
+        }
+    }
+
+    /**
+     * Wraps the value of a Radical
+     * @param rad the Radical value of the wrapper
+     */
+    public ScalarWrapper(Radical rad) {
+        if (rad == null) {
+            throw new NullPointerException("No value given");
+        }
+        
+        ScalarWrapper value = rad.value();
+        if (value.isInt()) {
+            this.Int = value.getInt();
+        } else if (value.isDouble()) {
+            this.dec = value.getDouble();
+        } else {
+            this.rat = value.getRat();
         }
     }
 
@@ -160,6 +191,10 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @param newValue the new value of the wrapper
      */
     public void set(ScalarWrapper newValue) {
+        if (newValue == null) {
+            throw new NullPointerException("No value given");
+        }
+        
         if (newValue.isInt()) {
             this.set(newValue.getInt());
         } else if (newValue.isDouble()) {
@@ -184,6 +219,10 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @param newInt the new integer value of the wrapper
      */
     public void set(Integer newInt) {
+        if (newInt == null) {
+            throw new NullPointerException("No value given");
+        }
+        
         this.Int = newInt;
         this.dec = null;
         this.rat = null;
@@ -204,6 +243,10 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @param newDec the new double value of the wrapper
      */
     public void set(Double newDec) {
+        if (newDec == null) {
+            throw new NullPointerException("No value given");
+        }
+        
         this.Int = null;
         this.dec = newDec;
         this.rat = null;
@@ -214,9 +257,38 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @param newRat the new Rational value of the wrapper
      */
     public void set(Rational newRat) {
+        if (newRat == null) {
+            throw new NullPointerException("No value given");
+        }
+        
         this.Int = null;
         this.dec = null;
         this.rat = newRat;
+    }
+
+    /**
+     * Sets the value of this ScalarWrapper to the value of the specified Radical and removes any other value
+     * @param rad the new Radical value of the wrapper
+     */
+    public void set(Radical newRad) {
+        if (newRad == null) {
+            throw new NullPointerException("No value given");
+        }
+        
+        ScalarWrapper value = newRad.value();
+        if (value.isInt()) {
+            this.Int = value.getInt();
+            this.dec = null;
+            this.rat = null;
+        } else if (value.isDouble()) {
+            this.Int = null;
+            this.dec = value.getDouble();
+            this.rat = null;
+        } else {
+            this.Int = null;
+            this.dec = null;
+            this.rat = value.getRat();
+        }
     }
 
     /**
@@ -280,7 +352,7 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
         if (this.isInt()) {
             return true;
         } else if (this.isDouble()) {
-            return this.dec % 1 == 0;
+            return Util.isWhole(this.dec);
         } else {
             return this.rat.isWhole();
         }
@@ -291,20 +363,12 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @return the reduced and simplified form of this ScalarWrapper
      */
     public ScalarWrapper simplified() {
-        if (!this.isRat()) {
+        if (this.isInt()) {
             return this;
         }
 
-        ScalarWrapper wrapper;
-        if (this.isRat()) {
-            wrapper = new ScalarWrapper(this.rat.reduced());
-        } else {
-            wrapper = new ScalarWrapper(this.dec);
-        }
-
-        if (wrapper.isWhole()) {
-            wrapper.convertToInt();
-        }
+        ScalarWrapper wrapper = this.clone();
+        wrapper.simplify();
         return wrapper;
     }
 
@@ -312,12 +376,16 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * Reduces and simplifies this ScalarWrapper
      */
     public void simplify() {
-        if (this.isRat()) {
-            this.set(this.rat.reduced());
-        }
+        if (this.isDouble()) {
+            if (Util.isRational(this.dec)) {
+                this.convertToIntOrRat();
+            }
+        } else if (this.isRat()) {
+            this.reduce();
 
-        if (this.isWhole()) {
-            this.convertToInt();
+            if (this.isWhole()) {
+                this.convertToInt();
+            }
         }
     }
 
@@ -360,34 +428,21 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * Converts the double or Rational value of this ScalarWrapper to an integer
      */
     public void convertToInt() {
-        if (this.isDouble()) {
-            this.set(this.dec.intValue());
-        } else if (this.isRat()) {
-            this.set(this.rat.intValue());
-        }
+        this.set(this.intValue());
     }
 
     /**
      * Converts the integer or Rational value of this ScalarWrapper to a double
      */
     public void convertToDouble() {
-        if (this.isInt()) {
-            double d = this.Int;
-            this.set(d);
-        } else if (this.isRat()) {
-            this.set(this.rat.doubleValue());
-        }
+        this.set(this.doubleValue());
     }
 
     /**
      * Converts the integer or double value of this ScalarWrapper to a Rational
      */
     public void convertToRat() {
-        if (this.isInt()) {
-            this.set(new Rational(this.Int));
-        } else if (this.isDouble()) {
-            this.set(new Rational(this.dec));
-        }
+        this.set(this.ratValue());
     }
 
     /**
@@ -483,13 +538,7 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @return the negative version of this ScalarWrapper
      */
     public ScalarWrapper negative() {
-        if (this.isInt()) {
-            return new ScalarWrapper(this.Int * -1);
-        } else if (this.isDouble()) {
-            return new ScalarWrapper(this.dec * -1);
-        } else {
-            return new ScalarWrapper(this.rat.negative());
-        }
+        return this.multiply(-1);
     }
 
     /**
@@ -497,12 +546,10 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @return the absolute value of this ScalarWrapper
      */
     public ScalarWrapper absolute() {
-        if (this.isInt()) {
-            return new ScalarWrapper(Math.abs(this.Int));
-        } else if (this.isDouble()) {
-            return new ScalarWrapper(Math.abs(this.dec));
+        if (this.lessThan(0)) {
+            return this.negative();
         } else {
-            return new ScalarWrapper(this.rat.negative());
+            return this.clone();
         }
     }
 
@@ -511,6 +558,7 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @param other the ScalarWrapper to compare with
      * @return 0 if this is equal to other; -1 if this is less than other; 1 if this is greater than other
      */
+    @Override
     public int compareTo(ScalarWrapper other) {
         if (this.equals(other)) {
             return 0;
@@ -528,11 +576,11 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public boolean equals(ScalarWrapper other) {
         if (other.isInt()) {
-            return other.equals(this.Int);
+            return this.equals(other.Int);
         } else if (other.isDouble()) {
-            return other.equals(this.dec);
+            return this.equals(other.dec);
         } else {
-            return other.equals(this.rat);
+            return this.equals(other.rat);
         }
     }
 
@@ -621,9 +669,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public boolean lessThan(ScalarWrapper other) {
         if (this.isInt()) {
-            return other.greaterThanOrEquals(this.Int);
+            return other.greaterThan(this.Int);
         } else if (this.isDouble()) {
-            return other.greaterThanOrEquals(this.dec);
+            return other.greaterThan(this.dec);
         } else {
             return this.rat.lessThan(other);
         }
@@ -684,9 +732,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public boolean lessThan(Rational other) {
         if (this.isInt()) {
-            return other.greaterThanOrEquals(this.Int);
+            return other.greaterThan(this.Int);
         } else if (this.isDouble()) {
-            return other.greaterThanOrEquals(this.dec);
+            return other.greaterThan(this.dec);
         } else {
             return this.rat.lessThan(other);
         }
@@ -699,9 +747,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public boolean lessThan(Radical other) {
         if (this.isInt()) {
-            return other.greaterThanOrEquals(this.Int);
+            return other.greaterThan(this.Int);
         } else if (this.isDouble()) {
-            return other.greaterThanOrEquals(this.dec);
+            return other.greaterThan(this.dec);
         } else {
             return this.rat.lessThan(other);
         }
@@ -714,9 +762,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public boolean lessThanOrEquals(ScalarWrapper other) {
         if (this.isInt()) {
-            return other.lessThan(this.Int);
+            return other.greaterThanOrEquals(this.Int);
         } else if (this.isDouble()) {
-            return other.lessThan(this.dec);
+            return other.greaterThanOrEquals(this.dec);
         } else {
             return this.rat.lessThanOrEquals(other);
         }
@@ -777,9 +825,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public boolean lessThanOrEquals(Rational other) {
         if (this.isInt()) {
-            return other.lessThan(this.Int);
+            return other.greaterThanOrEquals(this.Int);
         } else if (this.isDouble()) {
-            return other.lessThan(this.dec);
+            return other.greaterThanOrEquals(this.dec);
         } else {
             return this.rat.lessThanOrEquals(other);
         }
@@ -792,9 +840,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public boolean lessThanOrEquals(Radical other) {
         if (this.isInt()) {
-            return other.lessThan(this.Int);
+            return other.greaterThanOrEquals(this.Int);
         } else if (this.isDouble()) {
-            return other.lessThan(this.dec);
+            return other.greaterThanOrEquals(this.dec);
         } else {
             return this.rat.lessThanOrEquals(other);
         }
@@ -807,9 +855,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public boolean greaterThan(ScalarWrapper other) {
         if (this.isInt()) {
-            return other.lessThanOrEquals(this.Int);
+            return other.lessThan(this.Int);
         } else if (this.isDouble()) {
-            return other.lessThanOrEquals(this.dec);
+            return other.lessThan(this.dec);
         } else {
             return this.rat.greaterThan(other);
         }
@@ -870,9 +918,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public boolean greaterThan(Rational other) {
         if (this.isInt()) {
-            return other.lessThanOrEquals(this.Int);
+            return other.lessThan(this.Int);
         } else if (this.isDouble()) {
-            return other.lessThanOrEquals(this.dec);
+            return other.lessThan(this.dec);
         } else {
             return this.rat.greaterThan(other);
         }
@@ -885,9 +933,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public boolean greaterThan(Radical other) {
         if (this.isInt()) {
-            return other.lessThanOrEquals(this.Int);
+            return other.lessThan(this.Int);
         } else if (this.isDouble()) {
-            return other.lessThanOrEquals(this.dec);
+            return other.lessThan(this.dec);
         } else {
             return this.rat.greaterThan(other);
         }
@@ -900,9 +948,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public boolean greaterThanOrEquals(ScalarWrapper other) {
         if (this.isInt()) {
-            return other.lessThan(this.Int);
+            return other.lessThanOrEquals(this.Int);
         } else if (this.isDouble()) {
-            return other.lessThan(this.dec);
+            return other.lessThanOrEquals(this.dec);
         } else {
             return this.rat.greaterThanOrEquals(other);
         }
@@ -963,9 +1011,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public boolean greaterThanOrEquals(Rational other) {
         if (this.isInt()) {
-            return other.lessThan(this.Int);
+            return other.lessThanOrEquals(this.Int);
         } else if (this.isDouble()) {
-            return other.lessThan(this.dec);
+            return other.lessThanOrEquals(this.dec);
         } else {
             return this.rat.greaterThanOrEquals(other);
         }
@@ -978,9 +1026,9 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public boolean greaterThanOrEquals(Radical other) {
         if (this.isInt()) {
-            return other.lessThan(this.Int);
+            return other.lessThanOrEquals(this.Int);
         } else if (this.isDouble()) {
-            return other.lessThan(this.dec);
+            return other.lessThanOrEquals(this.dec);
         } else {
             return this.rat.greaterThanOrEquals(other);
         }
@@ -992,12 +1040,13 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @return the sum of this ScalarWrapper and other
      */
     public ScalarWrapper add(ScalarWrapper other) {
-        if (other.isInt()) {
+        if (this.isInt()) {
             return other.add(this.Int);
-        } else if (other.isDouble()) {
+        } else if (this.isDouble()) {
             return other.add(this.dec);
+        } else {
+            return other.add(this.rat);
         }
-        return other.add(this.rat);
     }
 
     /**
@@ -1010,9 +1059,10 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
             return new ScalarWrapper(this.Int + other);
         } else if (this.isDouble()) {
             return new ScalarWrapper(this.dec + other);
+        } else {
+            Rational sum = this.rat.add(other);
+            return new ScalarWrapper(sum);
         }
-        Rational sum = this.rat.add(other);
-        return new ScalarWrapper(sum);
     }
 
     /**
@@ -1181,11 +1231,11 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      */
     public ScalarWrapper multiply(ScalarWrapper other) {
         if (other.isInt()) {
-            return other.multiply(this.Int);
+            return this.multiply(other.Int);
         } else if (other.isDouble()) {
-            return other.multiply(this.dec);
+            return this.multiply(other.dec);
         } else {
-            return other.multiply(this.rat);
+            return this.multiply(other.rat);
         }
     }
 
@@ -1340,53 +1390,6 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
         }
     }
 
-    public ScalarWrapper mod(ScalarWrapper other) {
-        if (other.isInt()) {
-            return this.mod(other.getInt());
-        } else if (other.isDouble()) {
-            return this.mod(other.getDouble());
-        } else {
-            return this.mod(other.getRat());
-        }
-    }
-
-    public ScalarWrapper mod(int other) {
-        if (this.isInt()) {
-            return new ScalarWrapper(this.getInt() % other);
-        } else if (this.isDouble()) {
-            return new ScalarWrapper(this.getDouble() % other);
-        } else {
-            return new ScalarWrapper(this.getRat().mod(other));
-        }
-    }
-
-    public ScalarWrapper mod(Integer other) {
-        return this.mod(other.intValue());
-    }
-
-    public ScalarWrapper mod(double other) {
-        if (this.isInt()) {
-            return new ScalarWrapper(this.getInt() % other);
-        } else if (this.isDouble()) {
-            return new ScalarWrapper(this.getDouble() % other);
-        } else {
-            return new ScalarWrapper(this.getRat().mod(other));
-        }
-    }
-
-    public ScalarWrapper mod(Double other) {
-        return this.mod(other.doubleValue());
-    }
-
-    public ScalarWrapper mod(Rational other) {
-        if (this.isRat()) {
-            return new ScalarWrapper(this.getRat().mod(other));
-        } else {
-            int quotient = this.divide(other).intValue();
-            return this.subtract(other.multiply(quotient));
-        }
-    }
-
     /**
      * Divides another ScalarWrapper by this ScalarWrapper
      * @param other the ScalarWrapper to divide by this ScalarWrapper
@@ -1465,6 +1468,83 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
     }
 
     /**
+     * Calculates the remainder of the quotient of this ScalarWrapper and another ScalarWrapper
+     * @param other the ScalarWrapper to take the mod of
+     * @return the remainder of the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper mod(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.mod(other.getInt());
+        } else if (other.isDouble()) {
+            return this.mod(other.getDouble());
+        } else {
+            return this.mod(other.getRat());
+        }
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this ScalarWrapper and an int
+     * @param other the int to take the mod of
+     * @return the remainder of the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper mod(int other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.getInt() % other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.getDouble() % other);
+        } else {
+            return new ScalarWrapper(this.getRat().mod(other));
+        }
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this ScalarWrapper and an Integer
+     * @param other the Integer to take the mod of
+     * @return the remainder of the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper mod(Integer other) {
+        return this.mod(other.intValue());
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this ScalarWrapper and a double
+     * @param other the double to take the mod of
+     * @return the remainder of the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper mod(double other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.getInt() % other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.getDouble() % other);
+        } else {
+            return new ScalarWrapper(this.getRat().mod(other));
+        }
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this ScalarWrapper and a Double
+     * @param other the Double to take the mod of
+     * @return the remainder of the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper mod(Double other) {
+        return this.mod(other.doubleValue());
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this ScalarWrapper and a Rational
+     * @param other the Rational to take the mod of
+     * @return the remainder of the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper mod(Rational other) {
+        if (this.isRat()) {
+            return new ScalarWrapper(this.getRat().mod(other));
+        } else {
+            int quotient = this.divideBy(other).intValue();
+            return this.subtract(other.multiply(quotient));
+        }
+    }
+
+    /**
      * Calculate the square of this ScalarWrapper
      * @return this ScalarWrapper squared
      */
@@ -1498,19 +1578,20 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @return the square root of this ScalarWrapper
      */
     public ScalarWrapper root() {
+        ScalarWrapper root;
         if (Util.perfectSquare(this)) {
-            if (this.isInt()) {
-                int root = (int)Math.sqrt(this.getInt());
-                return new ScalarWrapper(root);
-            } else if (this.isDouble()) {
-                double root = Math.sqrt(this.getDouble());
-                return new ScalarWrapper(root);
+            if (!this.isRat()) {
+                int r = (int)Math.sqrt(this.intValue());
+                root = new ScalarWrapper(r);
             } else {
-                return this.getRat().root();
+                root = this.getRat().root();
             }
         } else {
-            return new ScalarWrapper(this.sqrt());
+            root = new ScalarWrapper(this.sqrt());
         }
+
+        root.simplify();
+        return root;
     }
 
     /**

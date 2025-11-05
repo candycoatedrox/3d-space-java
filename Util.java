@@ -104,6 +104,52 @@ public class Util {
     }
 
     /**
+     * Checks if a double is a whole number
+     * @param d the double to check
+     * @return true if d is equivalent to an integer; false otherwise
+     */
+    public static boolean isWhole(double d) {
+        return (d % 1 == 0);
+    }
+
+    /**
+     * Checks if a Double is a whole number
+     * @param d the Double to check
+     * @return true if d is equivalent to an integer; false otherwise
+     */
+    public static boolean isWhole(Double d) {
+        return (d % 1 == 0);
+    }
+
+    /**
+     * Checks if a double is rational
+     * @param d the double to check
+     * @return true if d is equivalent to a Rational; false otherwise
+     */
+    public static boolean isRational(double d) {
+        if (isWhole(d)) {
+            return true;
+        } else {
+            Rational rat = new Rational(d);
+            return rat.doubleValue() == d;
+        }
+    }
+
+    /**
+     * Checks if a Double is rational
+     * @param d the Double to check
+     * @return true if d is equivalent to a Rational; false otherwise
+     */
+    public static boolean isRational(Double d) {
+        if (isWhole(d)) {
+            return true;
+        } else {
+            Rational rat = new Rational(d);
+            return rat.doubleValue() == d;
+        }
+    }
+
+    /**
      * Checks whether a ScalarWrapper is a perfect square
      * @param a the ScalarWrapper to check
      * @return true if a is a perfect square; false otherwise
@@ -125,7 +171,7 @@ public class Util {
      */
     public static boolean perfectSquare(int a) {
         double root = Math.sqrt(a);
-        return root % 1 == 0;
+        return isWhole(root);
     }
 
     /**
@@ -144,7 +190,7 @@ public class Util {
      */
     public static boolean perfectSquare(double a) {
         double root = Math.sqrt(a);
-        return root % 1 == 0;
+        return isWhole(root);
     }
 
     /**
@@ -164,7 +210,7 @@ public class Util {
     public static boolean perfectSquare(Rational a) {
         double nRoot = Math.sqrt(a.getNumerator());
         double dRoot = Math.sqrt(a.getDenominator());
-        return (nRoot % 1 == 0 && dRoot % 1 == 0);
+        return (isWhole(nRoot) && isWhole(dRoot));
     }
 
     /**

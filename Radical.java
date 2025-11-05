@@ -110,6 +110,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @param other the Radical to compare with
      * @return 0 if this is equal to other; -1 if this is less than other; 1 if this is greater than other
      */
+    @Override
     public int compareTo(Radical other) {
         if (this.equals(other)) {
             return 0;
@@ -451,7 +452,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the product of this Radical and other
      */
     public Radical multiply(ScalarWrapper other) {
-        ScalarWrapper factorSquare = this.innerValue.squared();
+        ScalarWrapper factorSquare = other.squared();
         ScalarWrapper wrapper = this.innerValue.multiply(factorSquare);
         return new Radical(wrapper);
     }
@@ -462,7 +463,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the product of this Radical and other
      */
     public Radical multiply(int other) {
-        ScalarWrapper factorSquare = this.innerValue.squared();
+        int factorSquare = other * other;
         ScalarWrapper wrapper = this.innerValue.multiply(factorSquare);
         return new Radical(wrapper);
     }
@@ -473,7 +474,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the product of this Radical and other
      */
     public Radical multiply(Integer other) {
-        ScalarWrapper factorSquare = this.innerValue.squared();
+        int factorSquare = other * other;
         ScalarWrapper wrapper = this.innerValue.multiply(factorSquare);
         return new Radical(wrapper);
     }
@@ -484,7 +485,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the product of this Radical and other
      */
     public Radical multiply(double other) {
-        ScalarWrapper factorSquare = this.innerValue.squared();
+        double factorSquare = other * other;
         ScalarWrapper wrapper = this.innerValue.multiply(factorSquare);
         return new Radical(wrapper);
     }
@@ -495,7 +496,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the product of this Radical and other
      */
     public Radical multiply(Double other) {
-        ScalarWrapper factorSquare = this.innerValue.squared();
+        double factorSquare = other * other;
         ScalarWrapper wrapper = this.innerValue.multiply(factorSquare);
         return new Radical(wrapper);
     }
@@ -506,7 +507,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the product of this Radical and other
      */
     public Radical multiply(Rational other) {
-        ScalarWrapper factorSquare = this.innerValue.squared();
+        Rational factorSquare = other.squared();
         ScalarWrapper wrapper = this.innerValue.multiply(factorSquare);
         return new Radical(wrapper);
     }
@@ -587,7 +588,8 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the quotient of this Radical and other
      */
     public Radical divideBy(ScalarWrapper other) {
-        ScalarWrapper wrapper = this.innerValue.divideBy(other);
+        ScalarWrapper factorSquare = other.squared();
+        ScalarWrapper wrapper = this.innerValue.divideBy(factorSquare);
         return new Radical(wrapper);
     }
 
@@ -597,7 +599,8 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the quotient of this Radical and other
      */
     public Radical divideBy(int other) {
-        ScalarWrapper wrapper = this.innerValue.divideBy(other);
+        int factorSquare = other * other;
+        ScalarWrapper wrapper = this.innerValue.divideBy(factorSquare);
         return new Radical(wrapper);
     }
 
@@ -607,7 +610,8 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the quotient of this Radical and other
      */
     public Radical divideBy(Integer other) {
-        ScalarWrapper wrapper = this.innerValue.divideBy(other);
+        int factorSquare = other * other;
+        ScalarWrapper wrapper = this.innerValue.divideBy(factorSquare);
         return new Radical(wrapper);
     }
 
@@ -617,7 +621,8 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the quotient of this Radical and other
      */
     public Radical divideBy(double other) {
-        ScalarWrapper wrapper = this.innerValue.divideBy(other);
+        double factorSquare = other * other;
+        ScalarWrapper wrapper = this.innerValue.divideBy(factorSquare);
         return new Radical(wrapper);
     }
 
@@ -627,7 +632,8 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the quotient of this Radical and other
      */
     public Radical divideBy(Double other) {
-        ScalarWrapper wrapper = this.innerValue.divideBy(other);
+        double factorSquare = other * other;
+        ScalarWrapper wrapper = this.innerValue.divideBy(factorSquare);
         return new Radical(wrapper);
     }
 
@@ -637,7 +643,8 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the quotient of this Radical and other
      */
     public Radical divideBy(Rational other) {
-        ScalarWrapper wrapper = this.innerValue.divideBy(other);
+        Rational factorSquare = other.squared();
+        ScalarWrapper wrapper = this.innerValue.divideBy(factorSquare);
         return new Radical(wrapper);
     }
 
@@ -647,7 +654,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the true value of the quotient of this Radical and other
      */
     public ScalarWrapper trueDivideBy(ScalarWrapper other) {
-        Radical radical = this.multiply(other);
+        Radical radical = this.divideBy(other);
         return radical.value();
     }
 
@@ -657,7 +664,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the true value of the quotient of this Radical and other
      */
     public ScalarWrapper trueDivideBy(int other) {
-        Radical radical = this.multiply(other);
+        Radical radical = this.divideBy(other);
         return radical.value();
     }
 
@@ -667,7 +674,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the true value of the quotient of this Radical and other
      */
     public ScalarWrapper trueDivideBy(Integer other) {
-        Radical radical = this.multiply(other);
+        Radical radical = this.divideBy(other);
         return radical.value();
     }
 
@@ -677,7 +684,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the true value of the quotient of this Radical and other
      */
     public ScalarWrapper trueDivideBy(double other) {
-        Radical radical = this.multiply(other);
+        Radical radical = this.divideBy(other);
         return radical.value();
     }
 
@@ -687,7 +694,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the true value of the quotient of this Radical and other
      */
     public ScalarWrapper trueDivideBy(Double other) {
-        Radical radical = this.multiply(other);
+        Radical radical = this.divideBy(other);
         return radical.value();
     }
 
@@ -697,7 +704,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @return the true value of the quotient of this Radical and other
      */
     public ScalarWrapper trueDivideBy(Rational other) {
-        Radical radical = this.multiply(other);
+        Radical radical = this.divideBy(other);
         return radical.value();
     }
 

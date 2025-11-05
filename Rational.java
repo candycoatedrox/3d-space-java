@@ -7,6 +7,15 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
     private int denominator;
     private static final int contFractIterations = 7;
 
+    public Rational(int n, int d, String key) {
+        if (key.equals("DEBUG")) {
+            this.numerator = n;
+            this.denominator = d;
+        } else {
+            throw new RuntimeException("Wrong key");
+        }
+    }
+
     /**
      * Constructs a Rational from two ScalarWrappers
      * @param numerator the numerator of the Rational
@@ -784,6 +793,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param other the Rational to compare with
      * @return 0 if this is equal to other; -1 if this is less than other; 1 if this is greater than other
      */
+    @Override
     public int compareTo(Rational other) {
         if (this.equals(other)) {
             return 0;
@@ -813,8 +823,9 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
             return this.equals(other.getInt());
         } else if (other.isDouble()) {
             return this.equals(other.getDouble());
+        } else {
+            return this.equals(other.getRat());
         }
-        return this.equals(other.getRat());
     }
 
     /**
@@ -883,8 +894,9 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
             return this.lessThan(other.getInt());
         } else if (other.isDouble()) {
             return this.lessThan(other.getDouble());
+        } else {
+            return this.lessThan(other.getRat());
         }
-        return this.lessThan(other.getRat());
     }
 
     /**
@@ -953,8 +965,9 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
             return this.lessThanOrEquals(other.getInt());
         } else if (other.isDouble()) {
             return this.lessThanOrEquals(other.getDouble());
+        } else {
+            return this.lessThanOrEquals(other.getRat());
         }
-        return this.lessThanOrEquals(other.getRat());
     }
 
     /**
@@ -1023,8 +1036,9 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
             return this.greaterThan(other.getInt());
         } else if (other.isDouble()) {
             return this.greaterThan(other.getDouble());
+        } else {
+            return this.greaterThan(other.getRat());
         }
-        return this.greaterThan(other.getRat());
     }
 
     /**
@@ -1093,8 +1107,9 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
             return this.greaterThanOrEquals(other.getInt());
         } else if (other.isDouble()) {
             return this.greaterThanOrEquals(other.getDouble());
+        } else {
+            return this.greaterThanOrEquals(other.getRat());
         }
-        return this.greaterThanOrEquals(other.getRat());
     }
 
     /**
@@ -1546,6 +1561,83 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
     }
 
     /**
+     * Divides a ScalarWrapper by this Rational
+     * @param other the ScalarWrapper to divide by this Rational
+     * @return the quotient of this Rational and other
+     */
+    public ScalarWrapper divide(ScalarWrapper other) {
+        if (other.isInt()) {
+            return new ScalarWrapper(this.divide(other.getInt()));
+        } else if (other.isDouble()) {
+            return new ScalarWrapper(this.divide(other.getDouble()));
+        }
+        return new ScalarWrapper(this.divide(other.getRat()));
+    }
+
+    /**
+     * Divides this Rational by another Rational, reflected
+     * @param other the Rational to divide by this Rational
+     * @return the quotient of other and this Rational
+     */
+    public Rational divide(Rational other) {
+        return this.invert().multiply(other);
+    }
+
+    /**
+     * Divides an int by this Rational
+     * @param other the int to divide by this Rational
+     * @return the quotient of other and this Rational
+     */
+    public Rational divide(int other) {
+        return this.invert().multiply(other);
+    }
+
+    /**
+     * Divides an Integer by this Rational
+     * @param other the Integer to divide by this Rational
+     * @return the quotient of this Rational and other
+     */
+    public Rational divide(Integer other) {
+        return this.divide(other.intValue());
+    }
+
+    /**
+     * Divides a double by this Rational
+     * @param other the double to divide by this Rational
+     * @return the quotient of this Rational and other as a double
+     */
+    public double divide(double other) {
+        return other / this.doubleValue();
+    }
+
+    /**
+     * Divides a Double by this Rational
+     * @param other the Double to divide by this Rational
+     * @return the quotient of this Rational and other as a double
+     */
+    public double divide(Double other) {
+        return other / this.doubleValue();
+    }
+    
+    /**
+     * Divides a double by this Rational and returns a Rational
+     * @param other the double to divide by this Rational
+     * @return the quotient of this Rational and other as a Rational
+     */
+    public Rational divideRat(double other) {
+        return new Rational(this.divide(other));
+    }
+    
+    /**
+     * Divides a Double by this Rational and returns a Rational
+     * @param other the Double to divide by this Rational
+     * @return the quotient of this Rational and other as a Rational
+     */
+    public Rational divideRat(Double other) {
+        return new Rational(this.divide(other));
+    }
+
+    /**
      * Calculates the remainder of the quotient of this Rational and a ScalarWrapper
      * @param other the ScalarWrapper to take the mod of
      * @return the remainder of the quotient of this Rational and other
@@ -1626,83 +1718,6 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      */
     public Rational modRat(Double other) {
         return this.modRat(other.doubleValue());
-    }
-
-    /**
-     * Divides a ScalarWrapper by this Rational
-     * @param other the ScalarWrapper to divide by this Rational
-     * @return the quotient of this Rational and other
-     */
-    public ScalarWrapper divide(ScalarWrapper other) {
-        if (other.isInt()) {
-            return new ScalarWrapper(this.divide(other.getInt()));
-        } else if (other.isDouble()) {
-            return new ScalarWrapper(this.divide(other.getDouble()));
-        }
-        return new ScalarWrapper(this.divide(other.getRat()));
-    }
-
-    /**
-     * Divides this Rational by another Rational, reflected
-     * @param other the Rational to divide by this Rational
-     * @return the quotient of other and this Rational
-     */
-    public Rational divide(Rational other) {
-        return this.invert().multiply(other);
-    }
-
-    /**
-     * Divides an int by this Rational
-     * @param other the int to divide by this Rational
-     * @return the quotient of other and this Rational
-     */
-    public Rational divide(int other) {
-        return this.invert().multiply(other);
-    }
-
-    /**
-     * Divides an Integer by this Rational
-     * @param other the Integer to divide by this Rational
-     * @return the quotient of this Rational and other
-     */
-    public Rational divide(Integer other) {
-        return this.divide(other.intValue());
-    }
-
-    /**
-     * Divides a double by this Rational
-     * @param other the double to divide by this Rational
-     * @return the quotient of this Rational and other as a double
-     */
-    public double divide(double other) {
-        return other / this.doubleValue();
-    }
-
-    /**
-     * Divides a Double by this Rational
-     * @param other the Double to divide by this Rational
-     * @return the quotient of this Rational and other as a double
-     */
-    public double divide(Double other) {
-        return other / this.doubleValue();
-    }
-    
-    /**
-     * Divides a double by this Rational and returns a Rational
-     * @param other the double to divide by this Rational
-     * @return the quotient of this Rational and other as a Rational
-     */
-    public Rational divideRat(double other) {
-        return new Rational(this.divide(other));
-    }
-    
-    /**
-     * Divides a Double by this Rational and returns a Rational
-     * @param other the Double to divide by this Rational
-     * @return the quotient of this Rational and other as a Rational
-     */
-    public Rational divideRat(Double other) {
-        return new Rational(this.divide(other));
     }
 
     /**

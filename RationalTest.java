@@ -2,6 +2,13 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class RationalTest {
+
+    @Test
+    public void debugConstructor() {
+        Rational testRat = new Rational(2, 4, "DEBUG");
+        assertEquals(2, testRat.getNumerator(), 0.01);
+        assertTrue(testRat.equals(0.5));
+    }
     
     /**
      * Create a new Rational from two ints with the given numerator
@@ -268,6 +275,12 @@ public class RationalTest {
         assertFalse(testRat.lessThan(testRat2));
     }
 
+    @Test
+    public void lessThanDoubleEquals() {
+        Rational testRat = new Rational(1, 2);
+        assertFalse(testRat.lessThan(0.5));
+    }
+
     // finish lessThan, lessThanOrEquals, greaterThan, greaterThanOrEquals tests here
 
     /**
@@ -416,6 +429,34 @@ public class RationalTest {
         Rational testRat = new Rational(3, 2);
         Rational expected = new Rational(10, 3);
         assertTrue(expected.equals(testRat.divide(5)));
+    }
+
+    @Test
+    public void modInt() {
+        Rational testRat = new Rational(3, 2);
+        Rational expected = new Rational(1, 2);
+        Rational mod = testRat.mod(1);
+        assertTrue(expected.equals(mod));
+    }
+
+    @Test
+    public void squared() {
+        Rational testRat = new Rational(4, 5);
+        Rational expected = new Rational(16, 25);
+        assertTrue(expected.equals(testRat.squared()));
+    }
+
+    @Test
+    public void sqrt() {
+        Rational testRat = new Rational(16, 25);
+        assertEquals(0.8, testRat.sqrt(), 0.01);
+    }
+
+    @Test
+    public void root() {
+        Rational testRat = new Rational(16, 25);
+        Rational expected = new Rational(4, 5);
+        assertTrue(expected.equals(testRat.root()));
     }
 
     @Test
