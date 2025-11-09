@@ -163,6 +163,13 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
     }
 
     /**
+     * Constructs a ScalarWrapper with a value of 0
+     */
+    public ScalarWrapper() {
+        this.Int = 0;
+    }
+
+    /**
      * Accessor for Int
      * @return the integer value of the wrapper
      */
@@ -342,6 +349,18 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
             return false;
         }
         return true;
+    }
+
+    /**
+     * Checks whether a ScalarWrapper is positive (or zero) or negative
+     * @return true if this ScalarWrapper is greater than or equal to 0; false otherwise
+     */
+    public boolean isPositive() {
+        if (this.isRat()) {
+            return this.rat.isPositive();
+        } else {
+            return this.doubleValue() >= 0;
+        }
     }
 
     /**
@@ -550,6 +569,20 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
             return this.negative();
         } else {
             return this.clone();
+        }
+    }
+
+    /**
+     * Returns the inverted value of this ScalarWrapper (1 / this)
+     * @return the inverted value of this ScalarWrapper (1 / this)
+     */
+    public ScalarWrapper invert() {
+        if (this.isInt()) {
+            return new ScalarWrapper(1 / this.Int);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(1 / this.dec);
+        } else {
+            return new ScalarWrapper(this.rat.invert());
         }
     }
 
@@ -1305,6 +1338,102 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
     }
 
     /**
+     * Calculate the square of this ScalarWrapper
+     * @return this ScalarWrapper squared
+     */
+    public ScalarWrapper squared() {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.Int * this.Int);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec * this.dec);
+        } else {
+            Rational product = this.rat.multiply(this.rat);
+            return new ScalarWrapper(product);
+        }
+    }
+
+    /**
+     * Calculate this ScalarWrapper raised to a ScalarWrapper power
+     * @param power the power to raise this ScalarWrapper to
+     * @return this ScalarWrapper raised to the given power
+     */
+    public ScalarWrapper toPower(ScalarWrapper power) {
+        if (power.isInt()) {
+            return this.toPower(power.getInt());
+        } else if (power.isDouble()) {
+            return this.toPower(power.getDouble());
+        } else {
+            return this.toPower(power.getRat());
+        }
+    }
+
+    /**
+     * Calculate this ScalarWrapper raised to an int power
+     * @param power the power to raise this ScalarWrapper to
+     * @return this ScalarWrapper raised to the given power
+     */
+    public ScalarWrapper toPower(int power) {
+        if (this.isRat()) {
+            return new ScalarWrapper(this.rat.toPower(power));
+        } else {
+            double value = Math.pow(this.doubleValue(), power);
+            ScalarWrapper wrapper = new ScalarWrapper(value);
+
+            wrapper.simplify();
+            return new ScalarWrapper(value);
+        }
+    }
+
+    /**
+     * Calculate this ScalarWrapper raised to an Integer power
+     * @param power the power to raise this ScalarWrapper to
+     * @return this ScalarWrapper raised to the given power
+     */
+    public ScalarWrapper toPower(Integer power) {
+        return this.toPower(power.intValue());
+    }
+
+    /**
+     * Calculate this ScalarWrapper raised to a double power
+     * @param power the power to raise this ScalarWrapper to
+     * @return this ScalarWrapper raised to the given power
+     */
+    public ScalarWrapper toPower(double power) {
+        if (this.isRat()) {
+            return new ScalarWrapper(this.rat.toPower(power));
+        } else {
+            double value = Math.pow(this.doubleValue(), power);
+            ScalarWrapper wrapper = new ScalarWrapper(value);
+
+            wrapper.simplify();
+            return new ScalarWrapper(value);
+        }
+    }
+
+    /**
+     * Calculate this ScalarWrapper raised to a Double power
+     * @param power the power to raise this ScalarWrapper to
+     * @return this ScalarWrapper raised to the given power
+     */
+    public ScalarWrapper toPower(Double power) {
+        return this.toPower(power.doubleValue());
+    }
+
+    /**
+     * Calculate this ScalarWrapper raised to a Rational power
+     * @param power the power to raise this ScalarWrapper to
+     * @return this ScalarWrapper raised to the given power
+     */
+    public ScalarWrapper toPower(Rational power) {
+        ScalarWrapper powerTop = this.toPower(power.getNumerator());
+        ScalarWrapper powerBottom = this.toPower(1 / power.getDenominator());
+        ScalarWrapper value = powerTop.multiply(powerBottom);
+
+        value.simplify();
+        return value;
+    }
+
+    /**
      * Divides this ScalarWrapper by another ScalarWrapper
      * @param other the ScalarWrapper to divide this ScalarWrapper by
      * @return the quotient of this ScalarWrapper and other
@@ -1541,21 +1670,6 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
         } else {
             int quotient = this.divideBy(other).intValue();
             return this.subtract(other.multiply(quotient));
-        }
-    }
-
-    /**
-     * Calculate the square of this ScalarWrapper
-     * @return this ScalarWrapper squared
-     */
-    public ScalarWrapper squared() {
-        if (this.isInt()) {
-            return new ScalarWrapper(this.Int * this.Int);
-        } else if (this.isDouble()) {
-            return new ScalarWrapper(this.dec * this.dec);
-        } else {
-            Rational product = this.rat.multiply(this.rat);
-            return new ScalarWrapper(product);
         }
     }
 

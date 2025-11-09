@@ -1,4 +1,4 @@
-public class Radical extends Number implements Cloneable, Comparable<Radical> {
+public class Radical extends Number implements Cloneable, Comparable<Radical>, AbstractRadical {
 
     private ScalarWrapper innerValue;
 

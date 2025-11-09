@@ -1,4 +1,4 @@
-public class Plane extends SpacialObject implements Cloneable {
+public class Plane extends SpacialObject {
     
     private Point basePoint;
     private Vector normalVector;

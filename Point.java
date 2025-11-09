@@ -1,9 +1,19 @@
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class Point extends SpacialObject implements Cloneable {
+public class Point extends SpacialObject {
     
-    private ScalarWrapper[] coordinates;
+    protected ScalarWrapper[] coordinates;
+
+    /**
+     * Constructs a point at the origin in a given dimension
+     * @param dim the dimension of the point
+     */
+    public Point(int dim) {
+        super(dim);
+        int[] coordinates = new int[dim];
+        this.coordinates = ScalarWrapper.wrapArray(coordinates);
+    }
 
     /**
      * Constructs a Point in n dimensions from an array of n ScalarWrappers
@@ -1200,6 +1210,28 @@ public class Point extends SpacialObject implements Cloneable {
         }
 
         return other.includesPoint(this);
+    }
+
+    /**
+     * Returns a PointPolar representing this 2D Point in polar coordinates
+     * @return the representation of this 2D Point in polar coordinates
+     */
+    public PointPolar polarForm() {
+        if (!this.is2D()) {
+            throw new IllegalArgumentException("Point must be 2D");
+        }
+
+        ScalarWrapper rSquared = this.getX().squared().add(this.getY().squared());
+        ScalarWrapper r = rSquared.root();
+
+        double thetaPosNeg = Math.atan2(this.getX().doubleValue(), this.getY().doubleValue());
+        if (thetaPosNeg < 0) {
+            thetaPosNeg = 2*Math.PI + thetaPosNeg;
+        }
+        ScalarWrapper theta = new ScalarWrapper(thetaPosNeg);
+        theta.simplify();
+
+        return new PointPolar(r, theta);
     }
 
     /**

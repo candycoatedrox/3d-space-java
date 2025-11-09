@@ -1,11 +1,9 @@
-public class Line extends SpacialObject implements Cloneable {
+public class Line extends SpacialObject {
 
     // can be 2+D
     protected Point basePoint;
     protected Vector directionVector;
-    
-    protected static final String[] variableNames = {"x", "y", "z", "w"};
-    
+        
     /**
      * Constructs a Line from a Point and a Vector
      * @param basePoint a Point on the Line

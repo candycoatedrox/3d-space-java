@@ -734,10 +734,19 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @return the absolute value of this Rational
      */
     public Rational absolute() {
-        if (this.numerator < 0) {
+        if (this.isPositive()) {
+            return this;
+        } else {
             return this.negative();
         }
-        return this;
+    }
+
+    /**
+     * Checks whether this Rational is positive (or zero) or negative
+     * @return true if this Rational is greater than or equal to 0; false otherwise
+     */
+    public boolean isPositive() {
+        return this.numerator >= 0;
     }
 
     /**
@@ -1482,6 +1491,87 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
     }
 
     /**
+     * Calculate the square of this Rational
+     * @return this Rational squared
+     */
+    public Rational squared() {
+        return this.multiply(this);
+    }
+
+    /**
+     * Calculate this Rational raised to a ScalarWrapper power
+     * @param power the power to raise this Rational to
+     * @return this Rational raised to the given power
+     */
+    public Rational toPower(ScalarWrapper power) {
+        if (power.isInt()) {
+            return this.toPower(power.getInt());
+        } else if (power.isDouble()) {
+            return this.toPower(power.getDouble());
+        } else {
+            return this.toPower(power.getRat());
+        }
+    }
+
+    /**
+     * Calculate this Rational raised to an int power
+     * @param power the power to raise this Rational to
+     * @return this Rational raised to the given power
+     */
+    public Rational toPower(int power) {
+        ScalarWrapper numer = new ScalarWrapper(Math.pow(this.numerator, power));
+        numer.simplify();
+        ScalarWrapper denom = new ScalarWrapper(Math.pow(this.denominator, power));
+        denom.simplify();
+
+        return new Rational(numer, denom);
+    }
+
+    /**
+     * Calculate this Rational raised to an Integer power
+     * @param power the power to raise this Rational to
+     * @return this Rational raised to the given power
+     */
+    public Rational toPower(Integer power) {
+        return this.toPower(power.intValue());
+    }
+
+    /**
+     * Calculate this Rational raised to a double power
+     * @param power the power to raise this Rational to
+     * @return this Rational raised to the given power
+     */
+    public Rational toPower(double power) {
+        ScalarWrapper numer = new ScalarWrapper(Math.pow(this.numerator, power));
+        numer.simplify();
+        ScalarWrapper denom = new ScalarWrapper(Math.pow(this.denominator, power));
+        denom.simplify();
+
+        return new Rational(numer, denom);
+    }
+
+    /**
+     * Calculate this Rational raised to a Double power
+     * @param power the power to raise this Rational to
+     * @return this Rational raised to the given power
+     */
+    public Rational toPower(Double power) {
+        return this.toPower(power.doubleValue());
+    }
+
+    /**
+     * Calculate this Rational raised to a Rational power
+     * @param power the power to raise this Rational to
+     * @return this Rational raised to the given power
+     */
+    public Rational toPower(Rational power) {
+        Rational powerTop = this.toPower(power.numerator);
+        Rational powerBottom = this.toPower(1 / power.denominator);
+
+        return powerTop.multiply(powerBottom);
+    }
+
+    /**
      * Divides this Rational by a ScalarWrapper
      * @param other the ScalarWrapper to divide this Rational by
      * @return the quotient of this Rational and other
@@ -1718,14 +1808,6 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      */
     public Rational modRat(Double other) {
         return this.modRat(other.doubleValue());
-    }
-
-    /**
-     * Calculate the square of this Rational
-     * @return this Rational squared
-     */
-    public Rational squared() {
-        return this.multiply(this);
     }
 
     /**

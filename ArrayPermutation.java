@@ -260,7 +260,7 @@ public class ArrayPermutation {
      * @param arr the array to check
      * @return true if indices is in order; false otherwise
      */
-    private static boolean inOrder(ScalarWrapper[] arr) {
+    public static boolean inOrder(ScalarWrapper[] arr) {
         ScalarWrapper[] target = Arrays.copyOf(arr, arr.length);
         Arrays.sort(target);
 
@@ -301,7 +301,7 @@ public class ArrayPermutation {
      * @param arr the array to check
      * @return true if indices is in order; false otherwise
      */
-    private static boolean inOrder(int[] arr) {
+    public static boolean inOrder(int[] arr) {
         int[] target = Arrays.copyOf(arr, arr.length);
         Arrays.sort(target);
 
@@ -342,7 +342,7 @@ public class ArrayPermutation {
      * @param arr the array to check
      * @return true if indices is in order; false otherwise
      */
-    private static boolean inOrder(Integer[] arr) {
+    public static boolean inOrder(Integer[] arr) {
         Integer[] target = Arrays.copyOf(arr, arr.length);
         Arrays.sort(target);
 
@@ -383,7 +383,7 @@ public class ArrayPermutation {
      * @param arr the array to check
      * @return true if indices is in order; false otherwise
      */
-    private static boolean inOrder(double[] arr) {
+    public static boolean inOrder(double[] arr) {
         double[] target = Arrays.copyOf(arr, arr.length);
         Arrays.sort(target);
 
@@ -424,7 +424,7 @@ public class ArrayPermutation {
      * @param arr the array to check
      * @return true if indices is in order; false otherwise
      */
-    private static boolean inOrder(Double[] arr) {
+    public static boolean inOrder(Double[] arr) {
         Double[] target = Arrays.copyOf(arr, arr.length);
         Arrays.sort(target);
 
@@ -465,7 +465,7 @@ public class ArrayPermutation {
      * @param arr the array to check
      * @return true if indices is in order; false otherwise
      */
-    private static boolean inOrder(Rational[] arr) {
+    public static boolean inOrder(Rational[] arr) {
         Rational[] target = Arrays.copyOf(arr, arr.length);
         Arrays.sort(target);
 
@@ -506,7 +506,7 @@ public class ArrayPermutation {
      * @param arr the array to check
      * @return true if indices is in order; false otherwise
      */
-    private static boolean inOrder(Radical[] arr) {
+    public static boolean inOrder(Radical[] arr) {
         Radical[] target = Arrays.copyOf(arr, arr.length);
         Arrays.sort(target);
 

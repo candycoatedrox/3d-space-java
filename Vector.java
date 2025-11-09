@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class Vector extends SpacialObject implements Cloneable {
+public class Vector extends SpacialObject implements AbstractVector {
 
     protected ScalarWrapper[] components;
     protected static final double PI = Math.acos(-1);
@@ -103,6 +103,7 @@ public class Vector extends SpacialObject implements Cloneable {
      * Accessor for components
      * @return the components of this Vector
      */
+    @Override
     public ScalarWrapper[] getComponents() {
         return this.components;
     }
@@ -112,6 +113,7 @@ public class Vector extends SpacialObject implements Cloneable {
      * @param i the index of the component
      * @return the ith component of this Vector
      */
+    @Override
     public ScalarWrapper get(int i) {
         return this.components[i];
     }
@@ -294,6 +296,7 @@ public class Vector extends SpacialObject implements Cloneable {
      * Calculates the magnitude-squared of this Vector
      * @return the magnitude-squared of this Vector
      */
+    @Override
     public ScalarWrapper mag2() {
         Matrix Gij = Matrix.identityMatrix(this.dim);
         return innerProduct(this, this, Gij);
@@ -312,6 +315,7 @@ public class Vector extends SpacialObject implements Cloneable {
      * Calculates the magnitude of this Vector
      * @return the magnitude of this Vector
      */
+    @Override
     public ScalarWrapper mag() {
         Matrix Gij = Matrix.identityMatrix(this.dim);
         return this.mag(Gij);

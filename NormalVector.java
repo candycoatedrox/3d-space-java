@@ -309,14 +309,8 @@ public class NormalVector extends Vector {
      */
     @Override
     public String toString() {
-        String s = String.format("(1/√%s)(", this.divSqrt);
-        for (int i = 0; i < this.dim; i++) {
-            if (i != 0) {
-                s += " ";
-            }
-            s += this.get(i);
-        }
-        s += ")";
+        String s = String.format("(1/√%s)", this.divSqrt);
+        s += super.toString();
 
         return s;
     }

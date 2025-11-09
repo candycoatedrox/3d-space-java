@@ -1,3 +1,4 @@
+import java.util.AbstractCollection;
 
 public class Util {
 
@@ -214,6 +215,58 @@ public class Util {
     }
 
     /**
+     * Checks whether an array of ints contains any duplicates
+     * @param arr the array to check
+     * @return true if there are any duplicate elements in arr; false otherwise
+     */
+    public static boolean containsDuplicates(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = i+1; j < arr.length; j++) {
+                if (arr[i] == arr[j]) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks whether an array of doubles contains any duplicates
+     * @param arr the array to check
+     * @return true if there are any duplicate elements in arr; false otherwise
+     */
+    public static boolean containsDuplicates(double[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = i+1; j < arr.length; j++) {
+                if (arr[i] == arr[j]) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks whether an array of Objects contains any duplicates
+     * @param <T> the class of Object in the array
+     * @param arr the array to check
+     * @return true if there are any duplicate elements in arr; false otherwise
+     */
+    public static <T> boolean containsDuplicates(T[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = i+1; j < arr.length; j++) {
+                if (arr[i].equals(arr[j])) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Creates and returns a deep copy of a given Integer
      * @param i the Integer to copy
      * @return a deep copy of i
@@ -341,6 +394,25 @@ public class Util {
     }
 
     /**
+     * Creates and returns a deep copy of a given array of PolynomialFunctionTerms
+     * @param arr the array to copy
+     * @return a deep copy of arr
+     */
+    public static PolynomialFunctionTerm[] deepCopy(PolynomialFunctionTerm[] arr) {
+        PolynomialFunctionTerm[] copy = new PolynomialFunctionTerm[arr.length];
+        
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == null) {
+                copy[i] = null;
+            } else {
+                copy[i] = arr[i].clone();
+            }
+        }
+
+        return copy;
+    }
+
+    /**
      * Returns the array of all integers from 0 to n-1
      * @param n the length of the resulting array
      * @return the array of all integers from 0 to n-1
@@ -389,6 +461,23 @@ public class Util {
         T temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
+    }
+
+    /**
+     * Creates a new array of ScalarWrappers with the same elements as the specified Collection
+     * @param c the collection whose elements are to be placed into the array
+     * @return an array of ScalarWrappers with the same elements as the specified Collection
+     */
+    public static ScalarWrapper[] arrayAddAll(AbstractCollection<ScalarWrapper> c) {
+        ScalarWrapper[] arr = new ScalarWrapper[c.size()];
+
+        int i = 0;
+        for (ScalarWrapper e : c) {
+            arr[i] = e;
+            i++;
+        }
+
+        return arr;
     }
     
     /**
