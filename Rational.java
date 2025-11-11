@@ -214,9 +214,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(int numerator, Integer denominator) {
-        this.numerator = numerator;
-        this.denominator = denominator;
-        this.reduce();
+        this(numerator, denominator.intValue());
     }
 
     /**
@@ -238,11 +236,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(int numerator, Double denominator) {
-        double value = numerator / denominator;
-        int[] contFract = continuedFraction(value, contFractIterations);
-        this.numerator = contFract[0];
-        this.denominator = contFract[1];
-        this.reduce();
+        this(numerator, denominator.doubleValue());
     }
 
     /**
@@ -262,20 +256,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(Integer numerator, ScalarWrapper denominator) {
-        if (denominator.isInt()) {
-            this.numerator = numerator;
-            this.denominator = denominator.getInt();
-        } else if (denominator.isDouble()) {
-            double value = numerator / denominator.getDouble();
-            int[] contFract = continuedFraction(value, contFractIterations);
-            this.numerator = contFract[0];
-            this.denominator = contFract[1];
-        } else {
-            this.numerator = numerator * denominator.getRat().denominator;
-            this.denominator = denominator.getRat().numerator;
-        }
-
-        this.reduce();
+        this(numerator.intValue(), denominator);
     }
 
     /**
@@ -284,9 +265,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(Integer numerator, int denominator) {
-        this.numerator = numerator;
-        this.denominator = denominator;
-        this.reduce();
+        this(numerator.intValue(), denominator);
     }
     
     /**
@@ -295,9 +274,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(Integer numerator, Integer denominator) {
-        this.numerator = numerator;
-        this.denominator = denominator;
-        this.reduce();
+        this(numerator.intValue(), denominator.intValue());
     }
 
     /**
@@ -306,11 +283,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(Integer numerator, double denominator) {
-        double value = numerator / denominator;
-        int[] contFract = continuedFraction(value, contFractIterations);
-        this.numerator = contFract[0];
-        this.denominator = contFract[1];
-        this.reduce();
+        this(numerator.intValue(), denominator);
     }
 
     /**
@@ -319,11 +292,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(Integer numerator, Double denominator) {
-        double value = numerator / denominator;
-        int[] contFract = continuedFraction(value, contFractIterations);
-        this.numerator = contFract[0];
-        this.denominator = contFract[1];
-        this.reduce();
+        this(numerator.intValue(), denominator.doubleValue());
     }
 
     /**
@@ -332,9 +301,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(Integer numerator, Rational denominator) {
-        this.numerator = numerator * denominator.denominator;
-        this.denominator = denominator.numerator;
-        this.reduce();
+        this(numerator.intValue(), denominator);
     }
 
     /**
@@ -377,11 +344,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(double numerator, Integer denominator) {
-        double value = numerator / denominator;
-        int[] contFract = continuedFraction(value, contFractIterations);
-        this.numerator = contFract[0];
-        this.denominator = contFract[1];
-        this.reduce();
+        this(numerator, denominator.intValue());
     }
 
     /**
@@ -403,11 +366,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(double numerator, Double denominator) {
-        double value = numerator / denominator;
-        int[] contFract = continuedFraction(value, contFractIterations);
-        this.numerator = contFract[0];
-        this.denominator = contFract[1];
-        this.reduce();
+        this(numerator, denominator.doubleValue());
     }
 
     /**
@@ -428,19 +387,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(Double numerator, ScalarWrapper denominator) {
-        double value;
-        if (denominator.isInt()) {
-            value = numerator / denominator.getInt();
-        } else if (denominator.isDouble()) {
-            value = numerator / denominator.getDouble();
-        } else {
-            value = denominator.getRat().divide(numerator);
-        }
-
-        int[] contFract = continuedFraction(value, contFractIterations);
-        this.numerator = contFract[0];
-        this.denominator = contFract[1];
-        this.reduce();
+        this(numerator.doubleValue(), denominator);
     }
 
     /**
@@ -449,11 +396,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(Double numerator, int denominator) {
-        double value = numerator / denominator;
-        int[] contFract = continuedFraction(value, contFractIterations);
-        this.numerator = contFract[0];
-        this.denominator = contFract[1];
-        this.reduce();
+        this(numerator.doubleValue(), denominator);
     }
 
     /**
@@ -462,11 +405,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(Double numerator, Integer denominator) {
-        double value = numerator / denominator;
-        int[] contFract = continuedFraction(value, contFractIterations);
-        this.numerator = contFract[0];
-        this.denominator = contFract[1];
-        this.reduce();
+        this(numerator.doubleValue(), denominator.intValue());
     }
 
     /**
@@ -475,11 +414,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(Double numerator, double denominator) {
-        double value = numerator / denominator;
-        int[] contFract = continuedFraction(value, contFractIterations);
-        this.numerator = contFract[0];
-        this.denominator = contFract[1];
-        this.reduce();
+        this(numerator.doubleValue(), denominator);
     }
 
     /**
@@ -488,11 +423,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(Double numerator, Double denominator) {
-        double value = numerator / denominator;
-        int[] contFract = continuedFraction(value, contFractIterations);
-        this.numerator = contFract[0];
-        this.denominator = contFract[1];
-        this.reduce();
+        this(numerator.doubleValue(), denominator.doubleValue());
     }
 
     /**
@@ -501,10 +432,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(Double numerator, Rational denominator) {
-        Rational value = denominator.divideRat(numerator);
-        this.numerator = value.numerator;
-        this.denominator = value.denominator;
-        this.reduce();
+        this(numerator.doubleValue(), denominator);
     }
 
     /**
@@ -545,9 +473,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(Rational numerator, Integer denominator) {
-        this.numerator = numerator.numerator;
-        this.denominator = numerator.denominator * denominator;
-        this.reduce();
+        this(numerator, denominator.intValue());
     }
 
     /**
@@ -568,10 +494,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param denominator the denominator of the Rational
      */
     public Rational(Rational numerator, Double denominator) {
-        Rational value = numerator.divideByRat(denominator);
-        this.numerator = value.numerator;
-        this.denominator = value.denominator;
-        this.reduce();
+        this(numerator, denominator.doubleValue());
     }
 
     /**
@@ -619,8 +542,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param value the integer value of the Rational
      */
     public Rational(Integer value) {
-        this.numerator = value;
-        this.denominator = 1;
+        this(value.intValue());
     }
 
     /**
@@ -639,10 +561,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param value the double value of the Rational
      */
     public Rational(Double value) {
-        int[] contFract = continuedFraction(value, contFractIterations);
-        this.numerator = contFract[0];
-        this.denominator = contFract[1];
-        this.reduce();
+        this(value.doubleValue());
     }
 
     /**

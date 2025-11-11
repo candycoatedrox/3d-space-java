@@ -88,9 +88,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(ScalarWrapper x, int y) {
-        super(2);
-        ScalarWrapper[] c = {x, new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(x, new ScalarWrapper(y));
     }
 
     /**
@@ -99,9 +97,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(ScalarWrapper x, Integer y) {
-        super(2);
-        ScalarWrapper[] c = {x, new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(x, new ScalarWrapper(y));
     }
 
     /**
@@ -110,9 +106,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(ScalarWrapper x, double y) {
-        super(2);
-        ScalarWrapper[] c = {x, new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(x, new ScalarWrapper(y));
     }
 
     /**
@@ -121,9 +115,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(ScalarWrapper x, Double y) {
-        super(2);
-        ScalarWrapper[] c = {x, new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(x, new ScalarWrapper(y));
     }
 
     /**
@@ -132,9 +124,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(ScalarWrapper x, Rational y) {
-        super(2);
-        ScalarWrapper[] c = {x, new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(x, new ScalarWrapper(y));
     }
 
     /**
@@ -143,9 +133,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(int x, ScalarWrapper y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), y};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), y);
     }
 
     /**
@@ -154,9 +142,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(int x, int y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -165,9 +151,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(int x, Integer y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -176,9 +160,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(int x, double y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -187,9 +169,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(int x, Double y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -198,9 +178,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(int x, Rational y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -209,9 +187,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Integer x, ScalarWrapper y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), y};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), y);
     }
 
     /**
@@ -220,9 +196,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Integer x, int y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -231,9 +205,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Integer x, Integer y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -242,9 +214,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Integer x, double y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -253,9 +223,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Integer x, Double y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -264,9 +232,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Integer x, Rational y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -275,9 +241,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(double x, ScalarWrapper y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), y};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), y);
     }
 
     /**
@@ -286,9 +250,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(double x, int y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -297,9 +259,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(double x, Integer y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -308,9 +268,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(double x, double y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -319,9 +277,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(double x, Double y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -330,9 +286,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(double x, Rational y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -341,9 +295,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Double x, ScalarWrapper y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), y};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), y);
     }
 
     /**
@@ -352,9 +304,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Double x, int y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -363,9 +313,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Double x, Integer y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -374,9 +322,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Double x, double y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -385,9 +331,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Double x, Double y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -396,9 +340,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Double x, Rational y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -407,9 +349,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Rational x, ScalarWrapper y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), y};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), y);
     }
 
     /**
@@ -418,9 +358,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Rational x, int y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -429,9 +367,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Rational x, Integer y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -440,9 +376,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Rational x, double y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -451,9 +385,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Rational x, Double y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -462,9 +394,7 @@ public class Point extends SpacialObject {
      * @param y the y coordinate of the Point
      */
     public Point(Rational x, Rational y) {
-        super(2);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y));
     }
 
     /**
@@ -486,9 +416,7 @@ public class Point extends SpacialObject {
      * @param z the z coordinate of the Point
      */
     public Point(int x, int y, int z) {
-        super(3);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z));
     }
 
     /**
@@ -498,9 +426,7 @@ public class Point extends SpacialObject {
      * @param z the z coordinate of the Point
      */
     public Point(Integer x, Integer y, Integer z) {
-        super(3);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z));
     }
 
     /**
@@ -510,9 +436,7 @@ public class Point extends SpacialObject {
      * @param z the z coordinate of the Point
      */
     public Point(double x, double y, double z) {
-        super(3);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z));
     }
 
     /**
@@ -522,9 +446,7 @@ public class Point extends SpacialObject {
      * @param z the z coordinate of the Point
      */
     public Point(Double x, Double y, Double z) {
-        super(3);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z));
     }
 
     /**
@@ -534,9 +456,7 @@ public class Point extends SpacialObject {
      * @param z the z coordinate of the Point
      */
     public Point(Rational x, Rational y, Rational z) {
-        super(3);
-        ScalarWrapper[] c = {new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z)};
-        this.coordinates = c;
+        this(new ScalarWrapper(x), new ScalarWrapper(y), new ScalarWrapper(z));
     }
 
     /**

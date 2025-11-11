@@ -1,4 +1,6 @@
 public class PointPolar extends Point {
+
+    // figure out how to be able to hold theta either as a raw value or as a multiple of pi?
      
     private ScalarWrapper r;
     private ScalarWrapper theta;
@@ -10,33 +12,23 @@ public class PointPolar extends Point {
     }
 
     public PointPolar(int r, int theta) {
-        super(r, theta);
-        this.r = new ScalarWrapper(r);
-        this.theta = new ScalarWrapper(theta);
+        this(new ScalarWrapper(r), new ScalarWrapper(theta));
     }
 
     public PointPolar(Integer r, Integer theta) {
-        super(r, theta);
-        this.r = new ScalarWrapper(r);
-        this.theta = new ScalarWrapper(theta);
+        this(new ScalarWrapper(r), new ScalarWrapper(theta));
     }
 
     public PointPolar(double r, double theta) {
-        super(r, theta);
-        this.r = new ScalarWrapper(r);
-        this.theta = new ScalarWrapper(theta);
+        this(new ScalarWrapper(r), new ScalarWrapper(theta));
     }
 
     public PointPolar(Double r, Double theta) {
-        super(r, theta);
-        this.r = new ScalarWrapper(r);
-        this.theta = new ScalarWrapper(theta);
+        this(new ScalarWrapper(r), new ScalarWrapper(theta));
     }
 
     public PointPolar(Rational r, Rational theta) {
-        super(r, theta);
-        this.r = new ScalarWrapper(r);
-        this.theta = new ScalarWrapper(theta);
+        this(new ScalarWrapper(r), new ScalarWrapper(theta));
     }
 
     public Point cartesianForm() {

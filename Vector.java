@@ -30,8 +30,7 @@ public class Vector extends SpacialObject implements AbstractVector {
      * @param components an array of the Vector's components
      */
     public Vector(int[] components) {
-        super(components.length);
-        this.components = ScalarWrapper.wrapArray(components);
+        this(ScalarWrapper.wrapArray(components));
     }
 
     /**
@@ -39,8 +38,7 @@ public class Vector extends SpacialObject implements AbstractVector {
      * @param components an array of the Vector's components
      */
     public Vector(Integer[] components) {
-        super(components.length);
-        this.components = ScalarWrapper.wrapArray(components);
+        this(ScalarWrapper.wrapArray(components));
     }
 
     /**
@@ -48,8 +46,7 @@ public class Vector extends SpacialObject implements AbstractVector {
      * @param components an array of the Vector's components
      */
     public Vector(double[] components) {
-        super(components.length);
-        this.components = ScalarWrapper.wrapArray(components);
+        this(ScalarWrapper.wrapArray(components));
     }
 
     /**
@@ -57,8 +54,7 @@ public class Vector extends SpacialObject implements AbstractVector {
      * @param components an array of the Vector's components
      */
     public Vector(Double[] components) {
-        super(components.length);
-        this.components = ScalarWrapper.wrapArray(components);
+        this(ScalarWrapper.wrapArray(components));
     }
 
     /**
@@ -66,8 +62,7 @@ public class Vector extends SpacialObject implements AbstractVector {
      * @param components an array of the Vector's components
      */
     public Vector(Rational[] components) {
-        super(components.length);
-        this.components = ScalarWrapper.wrapArray(components);
+        this(ScalarWrapper.wrapArray(components));
     }
 
     /**
@@ -75,8 +70,7 @@ public class Vector extends SpacialObject implements AbstractVector {
      * @param p the terminal point of the Vector
      */
     public Vector(Point p) {
-        super(p.getDim());
-        this.components = p.getCoordinates();
+        this(p.getCoordinates());
     }
 
     /**

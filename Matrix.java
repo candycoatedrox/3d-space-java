@@ -35,10 +35,7 @@ public class Matrix implements Cloneable {
      * @param components a two-dimensional array of the Matrix's components
      */
     public Matrix(int[][] components) {
-        ScalarWrapper[][] wrappedcomponents = ScalarWrapper.wrapArray(components);
-        this.components = wrappedcomponents.clone();
-        this.k = components.length;
-        this.n = components[0].length;
+        this(ScalarWrapper.wrap2DArray(components));
     }
 
     /**
@@ -46,10 +43,7 @@ public class Matrix implements Cloneable {
      * @param components a two-dimensional array of the Matrix's components
      */
     public Matrix(Integer[][] components) {
-        ScalarWrapper[][] wrappedcomponents = ScalarWrapper.wrapArray(components);
-        this.components = wrappedcomponents.clone();
-        this.k = components.length;
-        this.n = components[0].length;
+        this(ScalarWrapper.wrap2DArray(components));
     }
 
     /**
@@ -57,10 +51,7 @@ public class Matrix implements Cloneable {
      * @param components a two-dimensional array of the Matrix's components
      */
     public Matrix(double[][] components) {
-        ScalarWrapper[][] wrappedcomponents = ScalarWrapper.wrapArray(components);
-        this.components = wrappedcomponents.clone();
-        this.k = components.length;
-        this.n = components[0].length;
+        this(ScalarWrapper.wrap2DArray(components));
     }
 
     /**
@@ -68,10 +59,7 @@ public class Matrix implements Cloneable {
      * @param components a two-dimensional array of the Matrix's components
      */
     public Matrix(Double[][] components) {
-        ScalarWrapper[][] wrappedcomponents = ScalarWrapper.wrapArray(components);
-        this.components = wrappedcomponents.clone();
-        this.k = components.length;
-        this.n = components[0].length;
+        this(ScalarWrapper.wrap2DArray(components));
     }
 
     /**
@@ -79,10 +67,7 @@ public class Matrix implements Cloneable {
      * @param components a two-dimensional array of the Matrix's components
      */
     public Matrix(Rational[][] components) {
-        ScalarWrapper[][] wrappedcomponents = ScalarWrapper.wrapArray(components);
-        this.components = wrappedcomponents.clone();
-        this.k = components.length;
-        this.n = components[0].length;
+        this(ScalarWrapper.wrap2DArray(components));
     }
 
     /**

@@ -23,10 +23,7 @@ public class Line2D extends Line {
      * @param yIntercept the y-intercept of the Line2D
      */
     public Line2D(int slope, int yIntercept) {
-        super(new Point(0, yIntercept), new Vector(new Point(1, slope)));
-
-        this.slope = new ScalarWrapper(slope);
-        this.yIntercept = new ScalarWrapper(yIntercept);
+        this(new ScalarWrapper(slope), new ScalarWrapper(yIntercept));
     }
 
     /**
@@ -35,10 +32,7 @@ public class Line2D extends Line {
      * @param yIntercept the y-intercept of the Line2D
      */
     public Line2D(Integer slope, Integer yIntercept) {
-        super(new Point(0, yIntercept), new Vector(new Point(1, slope)));
-
-        this.slope = new ScalarWrapper(slope);
-        this.yIntercept = new ScalarWrapper(yIntercept);
+        this(new ScalarWrapper(slope), new ScalarWrapper(yIntercept));
     }
 
     /**
@@ -47,10 +41,7 @@ public class Line2D extends Line {
      * @param yIntercept the y-intercept of the Line2D
      */
     public Line2D(double slope, double yIntercept) {
-        super(new Point(0, yIntercept), new Vector(new Point(1, slope)));
-
-        this.slope = new ScalarWrapper(slope);
-        this.yIntercept = new ScalarWrapper(yIntercept);
+        this(new ScalarWrapper(slope), new ScalarWrapper(yIntercept));
     }
 
     /**
@@ -59,10 +50,7 @@ public class Line2D extends Line {
      * @param yIntercept the y-intercept of the Line2D
      */
     public Line2D(Double slope, Double yIntercept) {
-        super(new Point(0, yIntercept), new Vector(new Point(1, slope)));
-
-        this.slope = new ScalarWrapper(slope);
-        this.yIntercept = new ScalarWrapper(yIntercept);
+        this(new ScalarWrapper(slope), new ScalarWrapper(yIntercept));
     }
 
     /**
@@ -71,10 +59,7 @@ public class Line2D extends Line {
      * @param yIntercept the y-intercept of the Line2D
      */
     public Line2D(Rational slope, Rational yIntercept) {
-        super(new Point(0, yIntercept), new Vector(new Point(1, slope)));
-
-        this.slope = new ScalarWrapper(slope);
-        this.yIntercept = new ScalarWrapper(yIntercept);
+        this(new ScalarWrapper(slope), new ScalarWrapper(yIntercept));
     }
 
     /**

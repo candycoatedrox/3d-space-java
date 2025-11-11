@@ -17,69 +17,47 @@ public class PolynomialFunctionTerm extends Polynomial implements MultivariableP
     }
 
     public PolynomialFunctionTerm(int constantMultiple, ScalarWrapper[] exponents) {
-        super(exponents.length);
-        this.constantMultiple = new ScalarWrapper(constantMultiple);
-        this.exponents = exponents;
+        this(new ScalarWrapper(constantMultiple), exponents);
     }
 
     public PolynomialFunctionTerm(Integer constantMultiple, ScalarWrapper[] exponents) {
-        super(exponents.length);
-        this.constantMultiple = new ScalarWrapper(constantMultiple);
-        this.exponents = exponents;
+        this(new ScalarWrapper(constantMultiple), exponents);
     }
 
     public PolynomialFunctionTerm(double constantMultiple, ScalarWrapper[] exponents) {
-        super(exponents.length);
-        this.constantMultiple = new ScalarWrapper(constantMultiple);
-        this.exponents = exponents;
+        this(new ScalarWrapper(constantMultiple), exponents);
     }
 
     public PolynomialFunctionTerm(Double constantMultiple, ScalarWrapper[] exponents) {
-        super(exponents.length);
-        this.constantMultiple = new ScalarWrapper(constantMultiple);
-        this.exponents = exponents;
+        this(new ScalarWrapper(constantMultiple), exponents);
     }
 
     public PolynomialFunctionTerm(Rational constantMultiple, ScalarWrapper[] exponents) {
-        super(exponents.length);
-        this.constantMultiple = new ScalarWrapper(constantMultiple);
-        this.exponents = exponents;
+        this(new ScalarWrapper(constantMultiple), exponents);
     }
 
     public PolynomialFunctionTerm(ScalarWrapper constantMultiple, int[] exponents) {
-        super(exponents.length);
-        this.constantMultiple = constantMultiple;
-        this.exponents = ScalarWrapper.wrapArray(exponents);
+        this(constantMultiple, ScalarWrapper.wrapArray(exponents));
     }
 
     public PolynomialFunctionTerm(int constantMultiple, int[] exponents) {
-        super(exponents.length);
-        this.constantMultiple = new ScalarWrapper(constantMultiple);
-        this.exponents = ScalarWrapper.wrapArray(exponents);
+        this(new ScalarWrapper(constantMultiple), ScalarWrapper.wrapArray(exponents));
     }
 
     public PolynomialFunctionTerm(Integer constantMultiple, int[] exponents) {
-        super(exponents.length);
-        this.constantMultiple = new ScalarWrapper(constantMultiple);
-        this.exponents = ScalarWrapper.wrapArray(exponents);
+        this(new ScalarWrapper(constantMultiple), ScalarWrapper.wrapArray(exponents));
     }
 
     public PolynomialFunctionTerm(double constantMultiple, int[] exponents) {
-        super(exponents.length);
-        this.constantMultiple = new ScalarWrapper(constantMultiple);
-        this.exponents = ScalarWrapper.wrapArray(exponents);
+        this(new ScalarWrapper(constantMultiple), ScalarWrapper.wrapArray(exponents));
     }
 
     public PolynomialFunctionTerm(Double constantMultiple, int[] exponents) {
-        super(exponents.length);
-        this.constantMultiple = new ScalarWrapper(constantMultiple);
-        this.exponents = ScalarWrapper.wrapArray(exponents);
+        this(new ScalarWrapper(constantMultiple), ScalarWrapper.wrapArray(exponents));
     }
 
     public PolynomialFunctionTerm(Rational constantMultiple, int[] exponents) {
-        super(exponents.length);
-        this.constantMultiple = new ScalarWrapper(constantMultiple);
-        this.exponents = ScalarWrapper.wrapArray(exponents);
+        this(new ScalarWrapper(constantMultiple), ScalarWrapper.wrapArray(exponents));
     }
 
     public PolynomialFunctionTerm(ScalarWrapper constant, int dim) {
@@ -103,54 +81,23 @@ public class PolynomialFunctionTerm extends Polynomial implements MultivariableP
     }
 
     public PolynomialFunctionTerm(Integer constant, int dim) {
-        super(dim);
-        this.constantMultiple = new ScalarWrapper(constant);
-
-        this.exponents = new ScalarWrapper[dim];
-        for (int i = 0; i < dim; i++) {
-            this.exponents[i] = new ScalarWrapper();
-        }
+        this(new ScalarWrapper(constant), dim);
     }
 
     public PolynomialFunctionTerm(double constant, int dim) {
-        super(dim);
-        this.constantMultiple = new ScalarWrapper(constant);
-
-        this.exponents = new ScalarWrapper[dim];
-        for (int i = 0; i < dim; i++) {
-            this.exponents[i] = new ScalarWrapper();
-        }
+        this(new ScalarWrapper(constant), dim);
     }
 
     public PolynomialFunctionTerm(Double constant, int dim) {
-        super(dim);
-        this.constantMultiple = new ScalarWrapper(constant);
-
-        this.exponents = new ScalarWrapper[dim];
-        for (int i = 0; i < dim; i++) {
-            this.exponents[i] = new ScalarWrapper();
-        }
+        this(new ScalarWrapper(constant), dim);
     }
 
     public PolynomialFunctionTerm(Rational constant, int dim) {
-        super(dim);
-        this.constantMultiple = new ScalarWrapper(constant);
-
-        this.exponents = new ScalarWrapper[dim];
-        for (int i = 0; i < dim; i++) {
-            this.exponents[i] = new ScalarWrapper();
-        }
+        this(new ScalarWrapper(constant), dim);
     }
 
     public PolynomialFunctionTerm(int dim) {
-        // constant 0
-        super(dim);
-        this.constantMultiple = new ScalarWrapper(0);
-
-        this.exponents = new ScalarWrapper[dim];
-        for (int i = 0; i < dim; i++) {
-            this.exponents[i] = new ScalarWrapper();
-        }
+        this(new ScalarWrapper(), dim);
     }
 
     public ScalarWrapper getConstantMultiple() {

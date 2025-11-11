@@ -11,6 +11,7 @@ public class Plane extends SpacialObject {
      */
     public Plane(Point basePoint, Vector normalVector) {
         super(3);
+        
         if (!basePoint.is3D() || !normalVector.is3D()) {
             throw new IllegalArgumentException("Base point and normal vector must be 3D");
         }
@@ -29,6 +30,7 @@ public class Plane extends SpacialObject {
      */
     public Plane(Line line1, Line line2) {
         super(3);
+
         if (!line1.is3D() || !line2.is3D()) {
             throw new IllegalArgumentException("Both Lines must be 3D");
         } else if (line1.isParallel(line2)) {
@@ -53,6 +55,7 @@ public class Plane extends SpacialObject {
      */
     public Plane(Point basePoint, Vector vector1, Vector vector2) {
         super(3);
+
         if (!basePoint.is3D() || !vector1.is3D() || !vector2.is3D()) {
             throw new IllegalArgumentException("Base point and vectors must be 3D");
         } else if (vector1.isScalarMultOf(vector2)) {

@@ -31,18 +31,7 @@ public class Line extends SpacialObject {
      * @throws IllegalArgumentException if basePoint and directionTerminal have different dimensions or fewer than 2 components
      */
     public Line(Point basePoint, Point directionTerminal) {
-        super(basePoint.getDim());
-        if (basePoint.getDim() != directionTerminal.getDim()) {
-            throw new IllegalArgumentException("Points must share dimension");
-        } else if (basePoint.getDim() < 2) {
-            throw new IllegalArgumentException("Line cannot have fewer than 2 components");
-        }
-
-        Vector d = new Vector(basePoint, directionTerminal);
-        d.simplifyIgnoreMagnitude();
-
-        this.basePoint = basePoint;
-        this.directionVector = d;
+        this(basePoint, new Vector(basePoint, directionTerminal));
     }
     
     /**
@@ -53,18 +42,7 @@ public class Line extends SpacialObject {
      * @throws IllegalArgumentException if basePoint, directionInitial, and directionTerminal are not all of the same dimension or have fewer than 2 components
      */
     public Line(Point basePoint, Point directionInitial, Point directionTerminal) {
-        super(basePoint.getDim());
-        if (basePoint.getDim() != directionInitial.getDim() || directionInitial.getDim() != directionTerminal.getDim()) {
-            throw new IllegalArgumentException("All Points must share dimension");
-        } else if (basePoint.getDim() < 2) {
-            throw new IllegalArgumentException("Line cannot have fewer than 2 components");
-        }
-
-        Vector d = new Vector(directionInitial, directionTerminal);
-        d.simplifyIgnoreMagnitude();
-
-        this.basePoint = basePoint;
-        this.directionVector = d;
+        this(basePoint, new Vector(directionInitial, directionTerminal));
     }
 
     /**

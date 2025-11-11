@@ -18,9 +18,7 @@ public class PolynomialFunction extends Polynomial implements MultivariablePolyn
     }
 
     public PolynomialFunction(ArrayList<PolynomialFunctionTerm> terms) {
-        super(terms.get(0).getDim());
-        this.terms = terms.toArray(new PolynomialFunctionTerm[0]);
-        this.simplify();
+        this(terms.toArray(new PolynomialFunctionTerm[0]));
     }
 
     public PolynomialFunction(PolynomialFunctionTerm term) {

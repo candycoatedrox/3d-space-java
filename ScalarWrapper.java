@@ -166,7 +166,7 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * Constructs a ScalarWrapper with a value of 0
      */
     public ScalarWrapper() {
-        this.Int = 0;
+        this(0);
     }
 
     /**
@@ -1813,7 +1813,7 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @param values a two-dimensional array of ints to wrap
      * @return a two-dimensional array of wrapped integers
      */
-    public static ScalarWrapper[][] wrapArray(int[][] values) {
+    public static ScalarWrapper[][] wrap2DArray(int[][] values) {
         ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
         for (int i = 0; i < values.length; i++) {
             for (int j = 0; j < values[0].length; j++) {
@@ -1829,7 +1829,7 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @param values a two-dimensional array of Integers to wrap
      * @return a two-dimensional array of wrapped integers
      */
-    public static ScalarWrapper[][] wrapArray(Integer[][] values) {
+    public static ScalarWrapper[][] wrap2DArray(Integer[][] values) {
         ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
         for (int i = 0; i < values.length; i++) {
             for (int j = 0; j < values[0].length; j++) {
@@ -1845,7 +1845,7 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @param values a two-dimensional array of doubles to wrap
      * @return a two-dimensional array of wrapped doubles
      */
-    public static ScalarWrapper[][] wrapArray(double[][] values) {
+    public static ScalarWrapper[][] wrap2DArray(double[][] values) {
         ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
         for (int i = 0; i < values.length; i++) {
             for (int j = 0; j < values[0].length; j++) {
@@ -1861,7 +1861,7 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @param values a two-dimensional array of Doubles to wrap
      * @return a two-dimensional array of wrapped doubles
      */
-    public static ScalarWrapper[][] wrapArray(Double[][] values) {
+    public static ScalarWrapper[][] wrap2DArray(Double[][] values) {
         ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
         for (int i = 0; i < values.length; i++) {
             for (int j = 0; j < values[0].length; j++) {
@@ -1877,7 +1877,7 @@ public class ScalarWrapper extends Number implements Cloneable, Comparable<Scala
      * @param values a two-dimensional array of Rationals to wrap
      * @return a two-dimensional array of wrapped Rationals
      */
-    public static ScalarWrapper[][] wrapArray(Rational[][] values) {
+    public static ScalarWrapper[][] wrap2DArray(Rational[][] values) {
         ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
         for (int i = 0; i < values.length; i++) {
             for (int j = 0; j < values[0].length; j++) {
