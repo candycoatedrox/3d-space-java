@@ -103,6 +103,26 @@ public class PolynomialFunction extends Polynomial implements MultivariablePolyn
         return this.terms.length;
     }
 
+    @Override
+    public boolean isConstant() {
+        for (int t = 0; t < this.nTerms(); t++) {
+            if (!this.getTerm(t).isConstant()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public ScalarWrapper getConstant() {
+        if (this.isConstant()) {
+            return this.getTerm(0).getConstantMultiple();
+        } else {
+            throw new IllegalArgumentException("Function is not constant");
+        }
+    }
+
     public boolean isSingleTerm() {
         if (this.nTerms() == 1) {
             return true;
@@ -134,17 +154,6 @@ public class PolynomialFunction extends Polynomial implements MultivariablePolyn
     @Override
     public int nVariablesIncluded() {
         return this.includedVariables().size();
-    }
-
-    @Override
-    public boolean isConstant() {
-        for (int t = 0; t < this.nTerms(); t++) {
-            if (!this.getTerm(t).isConstant()) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     @Override
@@ -353,14 +362,6 @@ public class PolynomialFunction extends Polynomial implements MultivariablePolyn
             return value;
         } else {
             throw new RuntimeException("Cannot evaluate with wrong number of variables");
-        }
-    }
-
-    public ScalarWrapper evaluate() {
-        if (this.isConstant()) {
-            return this.getTerm(0).getConstantMultiple();
-        } else {
-            throw new RuntimeException("Function is not a constant");
         }
     }
 
@@ -604,7 +605,7 @@ public class PolynomialFunction extends Polynomial implements MultivariablePolyn
                 prevIntegration = currentIntegration;
             }
 
-            return currentIntegration.evaluate();
+            return currentIntegration.getConstant();
         }
     }
 
@@ -644,7 +645,7 @@ public class PolynomialFunction extends Polynomial implements MultivariablePolyn
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
@@ -672,7 +673,7 @@ public class PolynomialFunction extends Polynomial implements MultivariablePolyn
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
@@ -711,7 +712,7 @@ public class PolynomialFunction extends Polynomial implements MultivariablePolyn
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
@@ -739,7 +740,7 @@ public class PolynomialFunction extends Polynomial implements MultivariablePolyn
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
@@ -790,7 +791,7 @@ public class PolynomialFunction extends Polynomial implements MultivariablePolyn
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
@@ -818,7 +819,7 @@ public class PolynomialFunction extends Polynomial implements MultivariablePolyn
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
@@ -846,7 +847,7 @@ public class PolynomialFunction extends Polynomial implements MultivariablePolyn
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
@@ -874,7 +875,7 @@ public class PolynomialFunction extends Polynomial implements MultivariablePolyn
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override

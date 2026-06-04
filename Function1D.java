@@ -1,5 +1,7 @@
 public interface Function1D {
 
+    int getDim();
+
     Function derivative();
     ScalarWrapper evaluateDerivative(ScalarWrapper value);
     Function multipleDerivative(int n);

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public abstract class Function extends SpacialObject {
 
     // somehow figure out how to get this to take any function of n variables
@@ -5,6 +7,11 @@ public abstract class Function extends SpacialObject {
     public Function(int dim) {
         super(dim);
     }
+    
+    public abstract boolean isConstant();
+    public abstract boolean includes(int v);
+    public abstract ArrayList<Integer> includedVariables();
+    public abstract int nVariablesIncluded();
 
     public abstract Function negative();
     public abstract Function absolute();

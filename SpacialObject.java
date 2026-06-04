@@ -26,6 +26,14 @@ public abstract class SpacialObject implements Cloneable {
     }
 
     /**
+     * Checks whether this SpacialObject is 1D
+     * @return true if this SpacialObject is 1D; false otherwise
+     */
+    public boolean is1D() {
+        return this.dim == 1;
+    }
+
+    /**
      * Checks whether this SpacialObject is 2D
      * @return true if this SpacialObject is 2D; false otherwise
      */
@@ -66,6 +74,22 @@ public abstract class SpacialObject implements Cloneable {
      */
     public boolean sameDimension(SpacialObject other) {
         return this.dim == other.dim;
+    }
+
+    /**
+     * Checks whether all SpacialObjects in an array are of the same dimension
+     * @param objects the array of SpacialObjects to check
+     * @return true if all SpacialObjects in objects have the same dimension; false otherwise
+     */
+    public static boolean allSameDimension(SpacialObject[] objects) {
+        int d = objects[0].dim;
+        for (int i = 1; i < objects.length; i++) {
+            if (objects[i].dim != d) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

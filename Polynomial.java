@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public abstract class Polynomial extends NonParameterizedFunction {
     
     public Polynomial(int dim) {
@@ -11,11 +9,6 @@ public abstract class Polynomial extends NonParameterizedFunction {
 
     @Override public abstract Polynomial squared();
     @Override public abstract Polynomial toPower(int power);
-
-    public abstract boolean includes(int v);
-    public abstract ArrayList<Integer> includedVariables();
-    public abstract int nVariablesIncluded();
-    public abstract boolean isConstant();
 
     public abstract PolynomialFunction add(PolynomialFunction other);
     public abstract PolynomialFunction add(PolynomialFunctionTerm other);

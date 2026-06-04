@@ -93,6 +93,13 @@ public class Vector extends SpacialObject implements AbstractVector {
         this.components = vector;
     }
 
+    public Vector(VectorValuedFunction f) {
+        super(f.getDim());
+        if (f.isConstant()) {
+            // FILL IN
+        }
+    }
+
     /**
      * Accessor for components
      * @return the components of this Vector

@@ -166,6 +166,20 @@ public class PolynomialFunctionTerm extends Polynomial implements MultivariableP
     }
 
     @Override
+    public boolean isConstant() {
+        return this.nVariablesIncluded() == 0;
+    }
+
+    @Override
+    public ScalarWrapper getConstant() {
+        if (this.isConstant()) {
+            return this.getConstantMultiple();
+        } else {
+            throw new IllegalArgumentException("Function is not constant");
+        }
+    }
+
+    @Override
     public boolean includes(int v) {
         this.checkVariableIndex(v);
         return this.exponents[v].equals(0);
@@ -187,11 +201,6 @@ public class PolynomialFunctionTerm extends Polynomial implements MultivariableP
     @Override
     public int nVariablesIncluded() {
         return this.includedVariables().size();
-    }
-
-    @Override
-    public boolean isConstant() {
-        return this.nVariablesIncluded() == 0;
     }
 
     public boolean isLikeTerm(PolynomialFunctionTerm other) {
@@ -640,7 +649,7 @@ public class PolynomialFunctionTerm extends Polynomial implements MultivariableP
                 prevIntegration = currentIntegration;
             }
 
-            return currentIntegration.evaluate();
+            return currentIntegration.getConstant();
         }
     }
 
@@ -680,7 +689,7 @@ public class PolynomialFunctionTerm extends Polynomial implements MultivariableP
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
@@ -708,7 +717,7 @@ public class PolynomialFunctionTerm extends Polynomial implements MultivariableP
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
@@ -747,7 +756,7 @@ public class PolynomialFunctionTerm extends Polynomial implements MultivariableP
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
@@ -775,7 +784,7 @@ public class PolynomialFunctionTerm extends Polynomial implements MultivariableP
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
@@ -826,7 +835,7 @@ public class PolynomialFunctionTerm extends Polynomial implements MultivariableP
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
@@ -854,7 +863,7 @@ public class PolynomialFunctionTerm extends Polynomial implements MultivariableP
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
@@ -882,7 +891,7 @@ public class PolynomialFunctionTerm extends Polynomial implements MultivariableP
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
@@ -910,7 +919,7 @@ public class PolynomialFunctionTerm extends Polynomial implements MultivariableP
             prevIntegration = currentIntegration;
         }
 
-        return currentIntegration.evaluate();
+        return currentIntegration.getConstant();
     }
 
     @Override
