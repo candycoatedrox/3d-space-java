@@ -2,7 +2,7 @@ public abstract class SpacialObject implements Cloneable {
     
     protected final int dim;
     // usually nothing past w should be used, but IF NECESSARY I have included the entire alphabet...
-    protected static final String[] variableNames = {"x", "y", "z", "w", "u", "v", "t", "s", "r", "q", "p", "o", "n", "m", "l", "k", "j", "i", "h", "g", "f", "e", "d", "c", "b", "a"};
+    protected static final String[] VAR_NAMES = {"x", "y", "z", "w", "u", "v", "t", "s", "r", "q", "p", "o", "n", "m", "l", "k", "j", "i", "h", "g", "f", "e", "d", "c", "b", "a"};
 
     public SpacialObject(int dim) {
         this.dim = dim;

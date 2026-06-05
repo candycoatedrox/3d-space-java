@@ -1,0 +1,1891 @@
+public class ScalarWrapper extends Number implements Cloneable, Comparable<ScalarWrapper> {
+
+    private Integer Int = null;
+    private Double dec = null;
+    private Rational rat = null;
+
+    /**
+     * Wraps an Integer, a double, and a Rational
+     * @param Int the possible integer value of the wrapper
+     * @param dec the possible double value of the wrapper
+     * @param rat the possible Rational value of the wrapper
+     */
+    public ScalarWrapper(Integer Int, Double dec, Rational rat) {
+        if (Int == null && dec == null && rat == null) {
+            throw new NullPointerException("No value given");
+        } else if (dec == null && rat == null) {
+            this.Int = Int;
+        } else if (Int == null && rat == null) {
+            this.dec = dec;
+        } else if (Int == null && dec == null) {
+            if (rat.isWhole()) {
+                this.Int = rat.intValue();
+            } else {
+                this.rat = rat;
+            }
+        } else {
+            throw new RuntimeException("Can only take one value");
+        }
+    }
+
+    /**
+     * Wraps an Integer and a Double
+     * @param Int the possible integer value of the wrapper
+     * @param dec the possible double value of the wrapper
+     */
+    public ScalarWrapper(Integer Int, Double dec) {
+        if (Int == null && dec == null) {
+            throw new NullPointerException("No value given");
+        } else if (dec == null) {
+            this.Int = Int;
+        } else if (Int == null) {
+            this.dec = dec;
+        } else {
+            throw new RuntimeException("Can only take one value");
+        }
+    }
+
+    /**
+     * Wraps an Integer and a Rational
+     * @param Int the possible integer value of the wrapper
+     * @param rat the possible Rational value of the wrapper
+     */
+    public ScalarWrapper(Integer Int, Rational rat) {
+        if (Int == null && rat == null) {
+            throw new NullPointerException("No value given");
+        } else if (rat == null) {
+            this.Int = Int;
+        } else if (Int == null) {
+            if (rat.isWhole()) {
+                this.Int = rat.intValue();
+            } else {
+                this.rat = rat;
+            }
+        } else {
+            throw new RuntimeException("Can only take one value");
+        }
+    }
+
+    /**
+     * Wraps a Double and a Rational
+     * @param dec the possible double value of the wrapper
+     * @param rat the possible Rational value of the wrapper
+     */
+    public ScalarWrapper(Double dec, Rational rat) {
+        if (dec == null && rat == null) {
+            throw new NullPointerException("No value given");
+        } else if (rat == null) {
+            this.dec = dec;
+        } else if (dec == null) {
+            if (rat.isWhole()) {
+                this.Int = rat.intValue();
+            } else {
+                this.rat = rat;
+            }
+        } else {
+            throw new RuntimeException("Can only take one value");
+        }
+    }
+
+    /**
+     * Wraps an Integer
+     * @param Int the integer value of the wrapper
+     */
+    public ScalarWrapper(Integer Int) {
+        if (Int == null) {
+            throw new NullPointerException("No value given");
+        }
+        
+        this.Int = Int;
+    }
+
+    /**
+     * Wraps an int
+     * @param Int the integer value of the wrapper
+     */
+    public ScalarWrapper(int Int) {
+        this.Int = Int;
+    }
+
+    /**
+     * Wraps a Double
+     * @param dec the double value of the wrapper
+     */
+    public ScalarWrapper(Double dec) {
+        if (dec == null) {
+            throw new NullPointerException("No value given");
+        }
+        
+        this.dec = dec;
+    }
+
+    /**
+     * Wraps a double
+     * @param dec the double value of the wrapper
+     */
+    public ScalarWrapper(double dec) {
+        this.dec = dec;
+    }
+
+    /**
+     * Wraps a Rational
+     * @param rat the Rational value of the wrapper
+     */
+    public ScalarWrapper(Rational rat) {
+        if (rat == null) {
+            throw new NullPointerException("No value given");
+        }
+        
+        if (rat.isWhole()) {
+            this.Int = rat.intValue();
+        } else {
+            this.rat = rat;
+        }
+    }
+
+    /**
+     * Wraps the value of a Radical
+     * @param rad the Radical value of the wrapper
+     */
+    public ScalarWrapper(Radical rad) {
+        if (rad == null) {
+            throw new NullPointerException("No value given");
+        }
+        
+        ScalarWrapper value = rad.value();
+        if (value.isInt()) {
+            this.Int = value.getInt();
+        } else if (value.isDouble()) {
+            this.dec = value.getDouble();
+        } else {
+            this.rat = value.getRat();
+        }
+    }
+
+    /**
+     * Constructs a ScalarWrapper with a value of 0
+     */
+    public ScalarWrapper() {
+        this(0);
+    }
+
+    /**
+     * Accessor for Int
+     * @return the integer value of the wrapper
+     */
+    public Integer getInt() {
+        return this.Int;
+    }
+
+    /**
+     * Accessor for dec
+     * @return the double value of the wrapper
+     */
+    public Double getDouble() {
+        return this.dec;
+    }
+
+    /**
+     * Accessor for rat
+     * @return the Rational value of the wrapper
+     */
+    public Rational getRat() {
+        return this.rat;
+    }
+
+    /**
+     * Sets the value of this ScalarWrapper to the value of the specified ScalarWrapper and removes any other type value
+     * @param newValue the new value of the wrapper
+     */
+    public void set(ScalarWrapper newValue) {
+        if (newValue == null) {
+            throw new NullPointerException("No value given");
+        }
+        
+        if (newValue.isInt()) {
+            this.set(newValue.getInt());
+        } else if (newValue.isDouble()) {
+            this.set(newValue.getDouble());
+        } else {
+            this.set(newValue.getRat());
+        }
+    }
+
+    /**
+     * Sets the value of this ScalarWrapper to the specified int and removes any double or rational value
+     * @param newInt the new integer value of the wrapper
+     */
+    public void set(int newInt) {
+        this.Int = newInt;
+        this.dec = null;
+        this.rat = null;
+    }
+
+    /**
+     * Sets the value of this ScalarWrapper to the specified Integer and removes any double or rational value
+     * @param newInt the new integer value of the wrapper
+     */
+    public void set(Integer newInt) {
+        if (newInt == null) {
+            throw new NullPointerException("No value given");
+        }
+        
+        this.Int = newInt;
+        this.dec = null;
+        this.rat = null;
+    }
+
+    /**
+     * Sets the value of this ScalarWrapper to the specified double and removes any integer or rational value
+     * @param newDec the new double value of the wrapper
+     */
+    public void set(double newDec) {
+        this.Int = null;
+        this.dec = newDec;
+        this.rat = null;
+    }
+
+    /**
+     * Sets the value of this ScalarWrapper to the specified Double and removes any integer or rational value
+     * @param newDec the new double value of the wrapper
+     */
+    public void set(Double newDec) {
+        if (newDec == null) {
+            throw new NullPointerException("No value given");
+        }
+        
+        this.Int = null;
+        this.dec = newDec;
+        this.rat = null;
+    }
+
+    /**
+     * Sets the value of this ScalarWrapper to the specified Rational and removes any integer or double value
+     * @param newRat the new Rational value of the wrapper
+     */
+    public void set(Rational newRat) {
+        if (newRat == null) {
+            throw new NullPointerException("No value given");
+        }
+        
+        this.Int = null;
+        this.dec = null;
+        this.rat = newRat;
+    }
+
+    /**
+     * Sets the value of this ScalarWrapper to the value of the specified Radical and removes any other value
+     * @param rad the new Radical value of the wrapper
+     */
+    public void set(Radical newRad) {
+        if (newRad == null) {
+            throw new NullPointerException("No value given");
+        }
+        
+        ScalarWrapper value = newRad.value();
+        if (value.isInt()) {
+            this.Int = value.getInt();
+            this.dec = null;
+            this.rat = null;
+        } else if (value.isDouble()) {
+            this.Int = null;
+            this.dec = value.getDouble();
+            this.rat = null;
+        } else {
+            this.Int = null;
+            this.dec = null;
+            this.rat = value.getRat();
+        }
+    }
+
+    /**
+     * Checks if this ScalarWrapper is valud (has only one type value set)
+     * @return true if exactly one of this ScalarWrapper's values is not null; false otherwise
+     */
+    public boolean isValid() {
+        boolean i = this.isInt();
+        boolean d = this.isDouble();
+        boolean r = this.isRat();
+        
+        if (i && !d && !r) {
+            return true;
+        } else if (!i && d && !r) {
+            return true;
+        } else if (!i && !d && r) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    /**
+     * Checks if this ScalarWrapper has a non-null integer value
+     * @return true if this ScalarWrapper's integer value is not null; false otherwise
+     */
+    public boolean isInt() {
+        if (this.Int == null) {
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Checks if this ScalarWrapper has a non-null double value
+     * @return true if this ScalarWrapper's double value is not null; false otherwise
+     */
+    public boolean isDouble() {
+        if (this.dec == null) {
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Checks if this ScalarWrapper has a non-null Rational value
+     * @return true if this ScalarWrapper's Rational value is not null; false otherwise
+     */
+    public boolean isRat() {
+        if (this.rat == null) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Checks whether a ScalarWrapper is positive (or zero) or negative
+     * @return true if this ScalarWrapper is greater than or equal to 0; false otherwise
+     */
+    public boolean isPositive() {
+        if (this.isRat()) {
+            return this.rat.isPositive();
+        } else {
+            return this.doubleValue() >= 0;
+        }
+    }
+
+    /**
+     * Checks if this ScalarWrapper's value is equivalent to an integer
+     * @return true if this ScalarWrapper's value is equivalent to an integer; false otherwise
+     */
+    public boolean isWhole() {
+        if (this.isInt()) {
+            return true;
+        } else if (this.isDouble()) {
+            return Util.isWhole(this.dec);
+        } else {
+            return this.rat.isWhole();
+        }
+    }
+
+    /**
+     * Calculates the reduced and simplified form of this ScalarWrapper
+     * @return the reduced and simplified form of this ScalarWrapper
+     */
+    public ScalarWrapper simplified() {
+        if (this.isInt()) {
+            return this;
+        }
+
+        ScalarWrapper wrapper = this.clone();
+        wrapper.simplify();
+        return wrapper;
+    }
+
+    /**
+     * Reduces and simplifies this ScalarWrapper
+     */
+    public void simplify() {
+        if (this.isDouble()) {
+            if (Util.isRational(this.dec)) {
+                this.convertToIntOrRat();
+            }
+        } else if (this.isRat()) {
+            this.reduce();
+
+            if (this.isWhole()) {
+                this.convertToInt();
+            }
+        }
+    }
+
+    /**
+     * Calculates the reduced form of this ScalarWrapper
+     * @return the reduced form of this ScalarWrapper
+     */
+    public ScalarWrapper reduced() {
+        if (!this.isRat()) {
+            return this;
+        }
+
+        return new ScalarWrapper(this.rat.reduced());
+    }
+
+    /**
+     * Reduces this ScalarWrapper, if it is a Rational
+     */
+    public void reduce() {
+        if (this.isRat()) {
+            this.set(this.rat.reduced());
+        }
+    }
+
+    /**
+     * Returns an integer value corresponding to the type of the wrapped value
+     * @return 0 if the wrapped value is an Integer; 1 if it is a Double; 2 if it is a Rational
+     */
+    public int type() {
+        if (this.isInt()) {
+            return 0;
+        } else if (this.isDouble()) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
+    /**
+     * Converts the double or Rational value of this ScalarWrapper to an integer
+     */
+    public void convertToInt() {
+        this.set(this.intValue());
+    }
+
+    /**
+     * Converts the integer or Rational value of this ScalarWrapper to a double
+     */
+    public void convertToDouble() {
+        this.set(this.doubleValue());
+    }
+
+    /**
+     * Converts the integer or double value of this ScalarWrapper to a Rational
+     */
+    public void convertToRat() {
+        this.set(this.ratValue());
+    }
+
+    /**
+     * Converts the double or Rational value of this ScalarWrapper to an integer if it is whole, or to a Rational otherwise
+     */
+    public void convertToIntOrRat() {
+        if (this.isWhole()) {
+            this.convertToInt();
+        } else {
+            this.convertToRat();
+        }
+    }
+
+    /**
+     * Returns the int value of the ScalarWrapper
+     * @return the int value of the ScalarWrapper
+     */
+    @Override
+    public int intValue() {
+        int value;
+
+        if (this.isInt()) {
+            value = this.Int;
+        } else if (this.isDouble()) {
+            double dValue = this.dec;
+            value = (int)dValue;
+        } else {
+            value = this.rat.intValue();
+        }
+
+        return value;
+    }
+
+    /**
+     * Returns the double value of the ScalarWrapper
+     * @return the double value of the ScalarWrapper
+     */
+    @Override
+    public double doubleValue() {
+        double value;
+
+        if (this.isInt()) {
+            value = this.Int;
+        } else if (this.isDouble()) {
+            value = this.dec;
+        } else {
+            value = this.rat.doubleValue();
+        }
+
+        return value;
+    }
+
+    /**
+     * Returns the Rational value of the ScalarWrapper
+     * @return the Rational value of the ScalarWrapper
+     */
+    public Rational ratValue() {
+        Rational value;
+
+        if (this.isInt()) {
+            value = new Rational(this.Int);
+        } else if (this.isDouble()) {
+            value = new Rational(this.dec);
+        } else {
+            value = this.rat;
+        }
+
+        return value;
+    }
+
+    /**
+     * Returns the float value of this ScalarWrapper
+     * @return the float value of this ScalarWrapper
+     */
+    @Override
+    public float floatValue() {
+        float fValue = (float)this.doubleValue();
+        return fValue;
+    }
+
+    /**
+     * Returns the long value of this ScalarWrapper
+     * @return the long value of this ScalarWrapper
+     */
+    @Override
+    public long longValue() {
+        long lValue = this.intValue();
+        return lValue;
+    }
+
+    /**
+     * Returns the negative version of this ScalarWrapper
+     * @return the negative version of this ScalarWrapper
+     */
+    public ScalarWrapper negative() {
+        return this.multiply(-1);
+    }
+
+    /**
+     * Returns the absolute value of this ScalarWrapper
+     * @return the absolute value of this ScalarWrapper
+     */
+    public ScalarWrapper absolute() {
+        if (this.lessThan(0)) {
+            return this.negative();
+        } else {
+            return this.clone();
+        }
+    }
+
+    /**
+     * Returns the inverted value of this ScalarWrapper (1 / this)
+     * @return the inverted value of this ScalarWrapper (1 / this)
+     */
+    public ScalarWrapper invert() {
+        if (this.isInt()) {
+            return new ScalarWrapper(1 / this.Int);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(1 / this.dec);
+        } else {
+            return new ScalarWrapper(this.rat.invert());
+        }
+    }
+
+    /**
+     * Compares two ScalarWrappers numerically
+     * @param other the ScalarWrapper to compare with
+     * @return 0 if this is equal to other; -1 if this is less than other; 1 if this is greater than other
+     */
+    @Override
+    public int compareTo(ScalarWrapper other) {
+        if (this.equals(other)) {
+            return 0;
+        } else if (this.lessThan(other)) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to another ScalarWrapper
+     * @param other the ScalarWrapper to compare to
+     * @return true if the values of this ScalarWrapper and other are equal; false otherwise
+     */
+    public boolean equals(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.equals(other.Int);
+        } else if (other.isDouble()) {
+            return this.equals(other.dec);
+        } else {
+            return this.equals(other.rat);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to an int
+     * @param other the int to compare to
+     * @return true if the value of this ScalarWrapper is equal to other; false otherwise
+     */
+    public boolean equals(int other) {
+        if (this.isInt()) {
+            return this.Int.equals(other);
+        } else if (this.isDouble()) {
+            return this.dec == other;
+        } else {
+            return this.rat.equals(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to an Integer
+     * @param other the Integer to compare to
+     * @return true if the value of this ScalarWrapper is equal to other; false otherwise
+     */
+    public boolean equals(Integer other) {
+        return this.equals(other.intValue());
+    }
+
+    /**
+     * Compares this ScalarWrapper to a double
+     * @param other the double to compare to
+     * @return true if the value of this ScalarWrapper is equal to other; false otherwise
+     */
+    public boolean equals(double other) {
+        if (this.isInt()) {
+            return this.Int == other;
+        } else if (this.isDouble()) {
+            return this.dec.equals(other);
+        } else {
+            return this.rat.equals(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Double
+     * @param other the Double to compare to
+     * @return true if the value of this ScalarWrapper is equal to other; false otherwise
+     */
+    public boolean equals(Double other) {
+        return this.equals(other.doubleValue());
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Rational
+     * @param other the Rational to compare to
+     * @return true if the value of this ScalarWrapper is equal to other; false otherwise
+     */
+    public boolean equals(Rational other) {
+        if (this.isInt()) {
+            return other.equals(this.Int);
+        } else if (this.isDouble()) {
+            return other.equals(this.dec);
+        } else {
+            return this.rat.equals(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Radical
+     * @param other the Radical to compare to
+     * @return true if the value of this ScalarWrapper is equal to other; false otherwise
+     */
+    public boolean equals(Radical other) {
+        if (this.isInt()) {
+            return other.equals(this.Int);
+        } else if (this.isDouble()) {
+            return other.equals(this.dec);
+        } else {
+            return this.rat.equals(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to another ScalarWrapper
+     * @param other the ScalarWrapper to compare to
+     * @return true if the value of this ScalarWrapper is less than other; false otherwise
+     */
+    public boolean lessThan(ScalarWrapper other) {
+        if (this.isInt()) {
+            return other.greaterThan(this.Int);
+        } else if (this.isDouble()) {
+            return other.greaterThan(this.dec);
+        } else {
+            return this.rat.lessThan(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to an int
+     * @param other the int to compare to
+     * @return true if the value of this ScalarWrapper is less than other; false otherwise
+     */
+    public boolean lessThan(int other) {
+        if (this.isInt()) {
+            return this.Int < other;
+        } else if (this.isDouble()) {
+            return this.dec < other;
+        } else {
+            return this.rat.lessThan(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Integer
+     * @param other the Integer to compare to
+     * @return true if the value of this ScalarWrapper is less than other; false otherwise
+     */
+    public boolean lessThan(Integer other) {
+        return this.lessThan(other.intValue());
+    }
+
+    /**
+     * Compares this ScalarWrapper to a double
+     * @param other the double to compare to
+     * @return true if the value of this ScalarWrapper is less than other; false otherwise
+     */
+    public boolean lessThan(double other) {
+        if (this.isInt()) {
+            return this.Int < other;
+        } else if (this.isDouble()) {
+            return this.dec < other;
+        } else {
+            return this.rat.lessThan(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Double
+     * @param other the Double to compare to
+     * @return true if the value of this ScalarWrapper is less than other; false otherwise
+     */
+    public boolean lessThan(Double other) {
+        return this.lessThan(other.doubleValue());
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Rational
+     * @param other the Rational to compare to
+     * @return true if the value of this ScalarWrapper is less than other; false otherwise
+     */
+    public boolean lessThan(Rational other) {
+        if (this.isInt()) {
+            return other.greaterThan(this.Int);
+        } else if (this.isDouble()) {
+            return other.greaterThan(this.dec);
+        } else {
+            return this.rat.lessThan(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Radical
+     * @param other the Radical to compare to
+     * @return true if the value of this ScalarWrapper is less than other; false otherwise
+     */
+    public boolean lessThan(Radical other) {
+        if (this.isInt()) {
+            return other.greaterThan(this.Int);
+        } else if (this.isDouble()) {
+            return other.greaterThan(this.dec);
+        } else {
+            return this.rat.lessThan(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to another ScalarWrapper
+     * @param other the ScalarWrapper to compare to
+     * @return true if the value of this ScalarWrapper is less than or equal to other; false otherwise
+     */
+    public boolean lessThanOrEquals(ScalarWrapper other) {
+        if (this.isInt()) {
+            return other.greaterThanOrEquals(this.Int);
+        } else if (this.isDouble()) {
+            return other.greaterThanOrEquals(this.dec);
+        } else {
+            return this.rat.lessThanOrEquals(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to an int
+     * @param other the int to compare to
+     * @return true if the value of this ScalarWrapper is less than or equal to other; false otherwise
+     */
+    public boolean lessThanOrEquals(int other) {
+        if (this.isInt()) {
+            return this.Int <= other;
+        } else if (this.isDouble()) {
+            return this.dec <= other;
+        } else {
+            return this.rat.lessThanOrEquals(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Integer
+     * @param other the Integer to compare to
+     * @return true if the value of this ScalarWrapper is less than or equal to other; false otherwise
+     */
+    public boolean lessThanOrEquals(Integer other) {
+        return this.lessThanOrEquals(other.intValue());
+    }
+
+    /**
+     * Compares this ScalarWrapper to a double
+     * @param other the double to compare to
+     * @return true if the value of this ScalarWrapper is less than or equal to other; false otherwise
+     */
+    public boolean lessThanOrEquals(double other) {
+        if (this.isInt()) {
+            return this.Int <= other;
+        } else if (this.isDouble()) {
+            return this.dec <= other;
+        } else {
+            return this.rat.lessThanOrEquals(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Double
+     * @param other the Double to compare to
+     * @return true if the value of this ScalarWrapper is less than or equal to other; false otherwise
+     */
+    public boolean lessThanOrEquals(Double other) {
+        return this.lessThanOrEquals(other.doubleValue());
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Rational
+     * @param other the Rational to compare to
+     * @return true if the value of this ScalarWrapper is less than or equal to other; false otherwise
+     */
+    public boolean lessThanOrEquals(Rational other) {
+        if (this.isInt()) {
+            return other.greaterThanOrEquals(this.Int);
+        } else if (this.isDouble()) {
+            return other.greaterThanOrEquals(this.dec);
+        } else {
+            return this.rat.lessThanOrEquals(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Radical
+     * @param other the Radical to compare to
+     * @return true if the value of this ScalarWrapper is less than or equal to other; false otherwise
+     */
+    public boolean lessThanOrEquals(Radical other) {
+        if (this.isInt()) {
+            return other.greaterThanOrEquals(this.Int);
+        } else if (this.isDouble()) {
+            return other.greaterThanOrEquals(this.dec);
+        } else {
+            return this.rat.lessThanOrEquals(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to another ScalarWrapper
+     * @param other the ScalarWrapper to compare to
+     * @return true if the value of this ScalarWrapper is less than other; false otherwise
+     */
+    public boolean greaterThan(ScalarWrapper other) {
+        if (this.isInt()) {
+            return other.lessThan(this.Int);
+        } else if (this.isDouble()) {
+            return other.lessThan(this.dec);
+        } else {
+            return this.rat.greaterThan(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to an int
+     * @param other the int to compare to
+     * @return true if the value of this ScalarWrapper is less than other; false otherwise
+     */
+    public boolean greaterThan(int other) {
+        if (this.isInt()) {
+            return this.Int > other;
+        } else if (this.isDouble()) {
+            return this.dec > other;
+        } else {
+            return this.rat.greaterThan(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Integer
+     * @param other the Integer to compare to
+     * @return true if the value of this ScalarWrapper is less than other; false otherwise
+     */
+    public boolean greaterThan(Integer other) {
+        return this.greaterThan(other.intValue());
+    }
+
+    /**
+     * Compares this ScalarWrapper to a double
+     * @param other the double to compare to
+     * @return true if the value of this ScalarWrapper is less than other; false otherwise
+     */
+    public boolean greaterThan(double other) {
+        if (this.isInt()) {
+            return this.Int > other;
+        } else if (this.isDouble()) {
+            return this.dec > other;
+        } else {
+            return this.rat.greaterThan(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Double
+     * @param other the Double to compare to
+     * @return true if the value of this ScalarWrapper is less than other; false otherwise
+     */
+    public boolean greaterThan(Double other) {
+        return this.greaterThan(other.doubleValue());
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Rational
+     * @param other the Rational to compare to
+     * @return true if the value of this ScalarWrapper is less than other; false otherwise
+     */
+    public boolean greaterThan(Rational other) {
+        if (this.isInt()) {
+            return other.lessThan(this.Int);
+        } else if (this.isDouble()) {
+            return other.lessThan(this.dec);
+        } else {
+            return this.rat.greaterThan(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Radical
+     * @param other the Radical to compare to
+     * @return true if the value of this ScalarWrapper is less than other; false otherwise
+     */
+    public boolean greaterThan(Radical other) {
+        if (this.isInt()) {
+            return other.lessThan(this.Int);
+        } else if (this.isDouble()) {
+            return other.lessThan(this.dec);
+        } else {
+            return this.rat.greaterThan(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to another ScalarWrapper
+     * @param other the ScalarWrapper to compare to
+     * @return true if the value of this ScalarWrapper is less than or equal to other; false otherwise
+     */
+    public boolean greaterThanOrEquals(ScalarWrapper other) {
+        if (this.isInt()) {
+            return other.lessThanOrEquals(this.Int);
+        } else if (this.isDouble()) {
+            return other.lessThanOrEquals(this.dec);
+        } else {
+            return this.rat.greaterThanOrEquals(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to an int
+     * @param other the int to compare to
+     * @return true if the value of this ScalarWrapper is less than or equal to other; false otherwise
+     */
+    public boolean greaterThanOrEquals(int other) {
+        if (this.isInt()) {
+            return this.Int >= other;
+        } else if (this.isDouble()) {
+            return this.dec >= other;
+        } else {
+            return this.rat.greaterThanOrEquals(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Integer
+     * @param other the Integer to compare to
+     * @return true if the value of this ScalarWrapper is less than or equal to other; false otherwise
+     */
+    public boolean greaterThanOrEquals(Integer other) {
+        return this.greaterThanOrEquals(other.intValue());
+    }
+
+    /**
+     * Compares this ScalarWrapper to a double
+     * @param other the double to compare to
+     * @return true if the value of this ScalarWrapper is less than or equal to other; false otherwise
+     */
+    public boolean greaterThanOrEquals(double other) {
+        if (this.isInt()) {
+            return this.Int >= other;
+        } else if (this.isDouble()) {
+            return this.dec >= other;
+        } else {
+            return this.rat.greaterThanOrEquals(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Double
+     * @param other the Double to compare to
+     * @return true if the value of this ScalarWrapper is less than or equal to other; false otherwise
+     */
+    public boolean greaterThanOrEquals(Double other) {
+        return this.greaterThanOrEquals(other.doubleValue());
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Rational
+     * @param other the Rational to compare to
+     * @return true if the value of this ScalarWrapper is less than or equal to other; false otherwise
+     */
+    public boolean greaterThanOrEquals(Rational other) {
+        if (this.isInt()) {
+            return other.lessThanOrEquals(this.Int);
+        } else if (this.isDouble()) {
+            return other.lessThanOrEquals(this.dec);
+        } else {
+            return this.rat.greaterThanOrEquals(other);
+        }
+    }
+
+    /**
+     * Compares this ScalarWrapper to a Radical
+     * @param other the Radical to compare to
+     * @return true if the value of this ScalarWrapper is less than or equal to other; false otherwise
+     */
+    public boolean greaterThanOrEquals(Radical other) {
+        if (this.isInt()) {
+            return other.lessThanOrEquals(this.Int);
+        } else if (this.isDouble()) {
+            return other.lessThanOrEquals(this.dec);
+        } else {
+            return this.rat.greaterThanOrEquals(other);
+        }
+    }
+
+    /**
+     * Adds this ScalarWrapper and another ScalarWrapper
+     * @param other the ScalarWrapper to add to this ScalarWrapper
+     * @return the sum of this ScalarWrapper and other
+     */
+    public ScalarWrapper add(ScalarWrapper other) {
+        if (this.isInt()) {
+            return other.add(this.Int);
+        } else if (this.isDouble()) {
+            return other.add(this.dec);
+        } else {
+            return other.add(this.rat);
+        }
+    }
+
+    /**
+     * Adds this ScalarWrapper and an int
+     * @param other the int to add to this ScalarWrapper
+     * @return the sum of this ScalarWrapper and other
+     */
+    public ScalarWrapper add(int other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.Int + other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec + other);
+        } else {
+            Rational sum = this.rat.add(other);
+            return new ScalarWrapper(sum);
+        }
+    }
+
+    /**
+     * Adds this ScalarWrapper and an Integer
+     * @param other the Integer to add to this ScalarWrapper
+     * @return the sum of this ScalarWrapper and other
+     */
+    public ScalarWrapper add(Integer other) {
+        return this.add(other.intValue());
+    }
+
+    /**
+     * Adds this ScalarWrapper and a double
+     * @param other the double to add to this ScalarWrapper
+     * @return the sum of this ScalarWrapper and other
+     */
+    public ScalarWrapper add(double other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.Int + other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec + other);
+        } else {
+            return new ScalarWrapper(this.rat.add(other));
+        }
+    }
+
+    /**
+     * Adds this ScalarWrapper and a Double
+     * @param other the Double to add to this ScalarWrapper
+     * @return the sum of this ScalarWrapper and other
+     */
+    public ScalarWrapper add(Double other) {
+        return this.add(other.doubleValue());
+    }
+
+    /**
+     * Adds this ScalarWrapper and a Rational
+     * @param other the Rational to add to this ScalarWrapper
+     * @return the sum of this ScalarWrapper and other
+     */
+    public ScalarWrapper add(Rational other) {
+        if (this.isInt()) {
+            Rational sum = other.add(this.Int);
+            return new ScalarWrapper(sum);
+        } else if (this.isDouble()) {
+            double sum = other.add(this.dec);
+            return new ScalarWrapper(sum);
+        } else {
+            Rational sum = other.add(this.rat);
+            return new ScalarWrapper(sum);
+        }
+    }
+
+    /**
+     * Subtracts a ScalarWrapper from this ScalarWrapper
+     * @param other the ScalarWrapper to subtract from this ScalarWrapper
+     * @return the difference between this ScalarWrapper and other
+     */
+    public ScalarWrapper subtract(ScalarWrapper other) {
+        return this.add(other.negative());
+    }
+
+    /**
+     * Subtracts an int from this ScalarWrapper
+     * @param other the int to subtract from this ScalarWrapper
+     * @return the difference between this ScalarWrapper and other
+     */
+    public ScalarWrapper subtract(int other) {
+        return this.add(other * -1);
+    }
+
+    /**
+     * Subtracts an Integer from this ScalarWrapper
+     * @param other the Integer to subtract from this ScalarWrapper
+     * @return the difference between this ScalarWrapper and other
+     */
+    public ScalarWrapper subtract(Integer other) {
+        return this.add(other * -1);
+    }
+
+    /**
+     * Subtracts a double from this ScalarWrapper
+     * @param other the double to subtract from this ScalarWrapper
+     * @return the difference between this ScalarWrapper and other
+     */
+    public ScalarWrapper subtract(double other) {
+        return this.add(other * -1);
+    }
+
+    /**
+     * Subtracts a Double from this ScalarWrapper
+     * @param other the Double to subtract from this ScalarWrapper
+     * @return the difference between this ScalarWrapper and other
+     */
+    public ScalarWrapper subtract(Double other) {
+        return this.add(other * -1);
+    }
+
+    /**
+     * Subtracts a Rational from this ScalarWrapper
+     * @param other the Rational to subtract from this ScalarWrapper
+     * @return the difference between this ScalarWrapper and other
+     */
+    public ScalarWrapper subtract(Rational other) {
+        return this.add(other.negative());
+    }
+
+    /**
+     * Subtracts this ScalarWrapper from another ScalarWrapper
+     * @param other the ScalarWrapper to subtract this ScalarWrapper from
+     * @return the difference between other and this ScalarWrapper
+     */
+    public ScalarWrapper subtractFrom(ScalarWrapper other) {
+        return other.add(this.negative());
+    }
+
+    /**
+     * Subtracts this ScalarWrapper from an int
+     * @param other the int to subtract this ScalarWrapper from
+     * @return the difference between other and this ScalarWrapper
+     */
+    public ScalarWrapper subtractFrom(int other) {
+        return this.negative().add(other);
+    }
+
+    /**
+     * Subtracts this ScalarWrapper from an Integer
+     * @param other the Integer to subtract this ScalarWrapper from
+     * @return the difference between other and this ScalarWrapper
+     */
+    public ScalarWrapper subtractFrom(Integer other) {
+        return this.negative().add(other);
+    }
+
+    /**
+     * Subtracts this ScalarWrapper from a double
+     * @param other the double to subtract this ScalarWrapper from
+     * @return the difference between other and this ScalarWrapper
+     */
+    public ScalarWrapper subtractFrom(double other) {
+        return this.negative().add(other);
+    }
+
+    /**
+     * Subtracts this ScalarWrapper from a Double
+     * @param other the Double to subtract this ScalarWrapper from
+     * @return the difference between other and this ScalarWrapper
+     */
+    public ScalarWrapper subtractFromDouble(Double other) {
+        return this.negative().add(other);
+    }
+
+    /**
+     * Subtracts this ScalarWrapper from a Rational
+     * @param other the Rational to subtract this ScalarWrapper from
+     * @return the difference between other and this ScalarWrapper
+     */
+    public ScalarWrapper subtractFrom(Rational other) {
+        return this.negative().add(other);
+    }
+
+    /**
+     * Multiplies this ScalarWrapper with another ScalarWrapper
+     * @param other the ScalarWrapper to multiply with this ScalarWrapper
+     * @return the product of this ScalarWrapper and other
+     */
+    public ScalarWrapper multiply(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.multiply(other.Int);
+        } else if (other.isDouble()) {
+            return this.multiply(other.dec);
+        } else {
+            return this.multiply(other.rat);
+        }
+    }
+
+    /**
+     * Multiplies this ScalarWrapper with an int
+     * @param other the int to multiply with this ScalarWrapper
+     * @return the product of this ScalarWrapper and other
+     */
+    public ScalarWrapper multiply(int other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.Int * other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec * other);
+        } else {
+            return new ScalarWrapper(this.rat.multiply(other));
+        }
+    }
+
+    /**
+     * Multiplies this ScalarWrapper with an Integer
+     * @param other the Integer to multiply with this ScalarWrapper
+     * @return the product of this ScalarWrapper and other
+     */
+    public ScalarWrapper multiply(Integer other) {
+        return this.multiply(other.intValue());
+    }
+    
+    /**
+     * Multiplies this ScalarWrapper with a double
+     * @param other the double to multiply with this ScalarWrapper
+     * @return the product of this ScalarWrapper and other
+     */
+    public ScalarWrapper multiply(double other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.Int * other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec * other);
+        } else {
+            return new ScalarWrapper(this.rat.multiply(other));
+        }
+    }
+
+    /**
+     * Multiplies this ScalarWrapper with a Double
+     * @param other the Double to multiply with this ScalarWrapper
+     * @return the product of this ScalarWrapper and other
+     */
+    public ScalarWrapper multiply(Double other) {
+        return this.multiply(other.doubleValue());
+    }
+
+    /**
+     * Multiplies this ScalarWrapper with a Rational
+     * @param other the Rational to multiply with this ScalarWrapper
+     * @return the product of this ScalarWrapper and other
+     */
+    public ScalarWrapper multiply(Rational other) {
+        if (this.isInt()) {
+            Rational product = other.multiply(this.Int);
+            return new ScalarWrapper(product);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(other.multiply(this.dec));
+        } else {
+            Rational product = other.multiply(this.rat);
+            return new ScalarWrapper(product);
+        }
+    }
+
+    /**
+     * Calculate the square of this ScalarWrapper
+     * @return this ScalarWrapper squared
+     */
+    public ScalarWrapper squared() {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.Int * this.Int);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec * this.dec);
+        } else {
+            Rational product = this.rat.multiply(this.rat);
+            return new ScalarWrapper(product);
+        }
+    }
+
+    /**
+     * Calculate this ScalarWrapper raised to a ScalarWrapper power
+     * @param power the power to raise this ScalarWrapper to
+     * @return this ScalarWrapper raised to the given power
+     */
+    public ScalarWrapper toPower(ScalarWrapper power) {
+        if (power.isInt()) {
+            return this.toPower(power.getInt());
+        } else if (power.isDouble()) {
+            return this.toPower(power.getDouble());
+        } else {
+            return this.toPower(power.getRat());
+        }
+    }
+
+    /**
+     * Calculate this ScalarWrapper raised to an int power
+     * @param power the power to raise this ScalarWrapper to
+     * @return this ScalarWrapper raised to the given power
+     */
+    public ScalarWrapper toPower(int power) {
+        if (this.isRat()) {
+            return new ScalarWrapper(this.rat.toPower(power));
+        } else {
+            double value = Math.pow(this.doubleValue(), power);
+            ScalarWrapper wrapper = new ScalarWrapper(value);
+
+            wrapper.simplify();
+            return new ScalarWrapper(value);
+        }
+    }
+
+    /**
+     * Calculate this ScalarWrapper raised to an Integer power
+     * @param power the power to raise this ScalarWrapper to
+     * @return this ScalarWrapper raised to the given power
+     */
+    public ScalarWrapper toPower(Integer power) {
+        return this.toPower(power.intValue());
+    }
+
+    /**
+     * Calculate this ScalarWrapper raised to a double power
+     * @param power the power to raise this ScalarWrapper to
+     * @return this ScalarWrapper raised to the given power
+     */
+    public ScalarWrapper toPower(double power) {
+        if (this.isRat()) {
+            return new ScalarWrapper(this.rat.toPower(power));
+        } else {
+            double value = Math.pow(this.doubleValue(), power);
+            ScalarWrapper wrapper = new ScalarWrapper(value);
+
+            wrapper.simplify();
+            return new ScalarWrapper(value);
+        }
+    }
+
+    /**
+     * Calculate this ScalarWrapper raised to a Double power
+     * @param power the power to raise this ScalarWrapper to
+     * @return this ScalarWrapper raised to the given power
+     */
+    public ScalarWrapper toPower(Double power) {
+        return this.toPower(power.doubleValue());
+    }
+
+    /**
+     * Calculate this ScalarWrapper raised to a Rational power
+     * @param power the power to raise this ScalarWrapper to
+     * @return this ScalarWrapper raised to the given power
+     */
+    public ScalarWrapper toPower(Rational power) {
+        ScalarWrapper powerTop = this.toPower(power.getNumerator());
+        ScalarWrapper powerBottom = this.toPower(1 / power.getDenominator());
+        ScalarWrapper value = powerTop.multiply(powerBottom);
+
+        value.simplify();
+        return value;
+    }
+
+    /**
+     * Divides this ScalarWrapper by another ScalarWrapper
+     * @param other the ScalarWrapper to divide this ScalarWrapper by
+     * @return the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper divideBy(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.divideBy(other.Int);
+        } else if (other.isDouble()) {
+            return this.divideBy(other.dec);
+        } else {
+            return this.divideBy(other.rat);
+        }
+    }
+
+    /**
+     * Divides this ScalarWrapper by an int
+     * @param other the int to divide this ScalarWrapper by
+     * @return the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper divideBy(int other) {
+        Rational quotient;
+        if (this.isInt()) {
+            quotient = new Rational(this.Int, other);
+            ScalarWrapper wrapper = new ScalarWrapper(quotient);
+            wrapper.convertToIntOrRat();
+            return wrapper;
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec / other);
+        } else {
+            quotient = this.rat.divideBy(other);
+            return new ScalarWrapper(quotient);
+        }
+    }
+
+    /**
+     * Divides this ScalarWrapper by an Integer
+     * @param other the Integer to divide this ScalarWrapper by
+     * @return the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper divideBy(Integer other) {
+        return this.divideBy(other.intValue());
+    }
+
+    /**
+     * Divides this ScalarWrapper by a double
+     * @param other the double to divide this ScalarWrapper by
+     * @return the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper divideBy(double other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.Int / other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec / other);
+        } else {
+            double quotient = this.rat.divideBy(other);
+            return new ScalarWrapper(quotient);
+        }
+    }
+
+    /**
+     * Divides this ScalarWrapper by a Double
+     * @param other the Double to divide this ScalarWrapper by
+     * @return the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper divideBy(Double other) {
+        return this.divideBy(other.doubleValue());
+    }
+
+    /**
+     * Divides this ScalarWrapper by a Rational
+     * @param other the Rational to divide this ScalarWrapper by
+     * @return the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper divideBy(Rational other) {
+        if (this.isInt()) {
+            Rational quotient = other.divide(this.Int);
+            return new ScalarWrapper(quotient);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(other.divide(this.dec));         
+        } else {
+            Rational quotient = this.rat.divideBy(other);
+            return new ScalarWrapper(quotient);
+        }
+    }
+
+    /**
+     * Divides another ScalarWrapper by this ScalarWrapper
+     * @param other the ScalarWrapper to divide by this ScalarWrapper
+     * @return the quotient of other and this ScalarWrapper
+     */
+    public ScalarWrapper divide(ScalarWrapper other) {
+        return other.divideBy(this);
+    }
+
+    /**
+     * Divides an int by this ScalarWrapper
+     * @param other the int to divide by this ScalarWrapper
+     * @return the quotient of other and this ScalarWrapper
+     */
+    public ScalarWrapper divide(int other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(other / this.Int);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(other / this.dec);
+        } else {
+            Rational quotient = this.rat.divide(other);
+            return new ScalarWrapper(quotient);
+        }
+    }
+
+    /**
+     * Divides an Integer by this ScalarWrapper
+     * @param other the Integer to divide by this ScalarWrapper
+     * @return the quotient of other and this ScalarWrapper
+     */
+    public ScalarWrapper divide(Integer other) {
+        return this.divide(other.intValue());
+    }
+
+    /**
+     * Divides a double by this ScalarWrapper
+     * @param other the double to divide by this ScalarWrapper
+     * @return the quotient of other and this ScalarWrapper
+     */
+    public ScalarWrapper divide(double other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(other / this.Int);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(other / this.dec);
+        } else {
+            double quotient = this.rat.divide(other);
+            return new ScalarWrapper(quotient);
+        }
+    }
+
+    /**
+     * Divides a Double by this ScalarWrapper
+     * @param other the Double to divide by this ScalarWrapper
+     * @return the quotient of other and this ScalarWrapper
+     */
+    public ScalarWrapper divide(Double other) {
+        return this.divide(other.doubleValue());
+    }
+
+    /**
+     * Divides a Rational by this ScalarWrapper
+     * @param other the Rational to divide by this ScalarWrapper
+     * @return the quotient of other and this ScalarWrapper
+     */
+    public ScalarWrapper divide(Rational other) {
+        Rational quotient;
+        if (this.isInt()) {
+            quotient = other.divideBy(this.Int);
+            return new ScalarWrapper(quotient);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(other.divideBy(this.dec));
+        } else {
+            quotient = this.rat.divide(other);
+            return new ScalarWrapper(quotient);
+        }
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this ScalarWrapper and another ScalarWrapper
+     * @param other the ScalarWrapper to take the mod of
+     * @return the remainder of the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper mod(ScalarWrapper other) {
+        if (other.isInt()) {
+            return this.mod(other.getInt());
+        } else if (other.isDouble()) {
+            return this.mod(other.getDouble());
+        } else {
+            return this.mod(other.getRat());
+        }
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this ScalarWrapper and an int
+     * @param other the int to take the mod of
+     * @return the remainder of the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper mod(int other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.getInt() % other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.getDouble() % other);
+        } else {
+            return new ScalarWrapper(this.getRat().mod(other));
+        }
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this ScalarWrapper and an Integer
+     * @param other the Integer to take the mod of
+     * @return the remainder of the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper mod(Integer other) {
+        return this.mod(other.intValue());
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this ScalarWrapper and a double
+     * @param other the double to take the mod of
+     * @return the remainder of the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper mod(double other) {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.getInt() % other);
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.getDouble() % other);
+        } else {
+            return new ScalarWrapper(this.getRat().mod(other));
+        }
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this ScalarWrapper and a Double
+     * @param other the Double to take the mod of
+     * @return the remainder of the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper mod(Double other) {
+        return this.mod(other.doubleValue());
+    }
+
+    /**
+     * Calculates the remainder of the quotient of this ScalarWrapper and a Rational
+     * @param other the Rational to take the mod of
+     * @return the remainder of the quotient of this ScalarWrapper and other
+     */
+    public ScalarWrapper mod(Rational other) {
+        if (this.isRat()) {
+            return new ScalarWrapper(this.getRat().mod(other));
+        } else {
+            int quotient = this.divideBy(other).intValue();
+            return this.subtract(other.multiply(quotient));
+        }
+    }
+
+    /**
+     * Calculates the square root of this ScalarWrapper
+     * @return the square root of this ScalarWrapper
+     */
+    public double sqrt() {
+        if (this.isInt()) {
+            return Math.sqrt(this.getInt());
+        } else if (this.isDouble()) {
+            return Math.sqrt(this.getDouble());
+        } else {
+            return Math.sqrt(this.getRat().doubleValue());
+        }
+    }
+
+    /**
+     * Calculates and simplifies the square root of this ScalarWrapper as much as possible
+     * @return the square root of this ScalarWrapper
+     */
+    public ScalarWrapper root() {
+        ScalarWrapper root;
+        if (Util.perfectSquare(this)) {
+            if (!this.isRat()) {
+                int r = (int)Math.sqrt(this.intValue());
+                root = new ScalarWrapper(r);
+            } else {
+                root = this.getRat().root();
+            }
+        } else {
+            root = new ScalarWrapper(this.sqrt());
+        }
+
+        root.simplify();
+        return root;
+    }
+
+    /**
+     * Creates and returns a deep copy of this ScalarWrapper
+     * @return a deep copy of this ScalarWrapper
+     */
+    @Override
+    public ScalarWrapper clone() {
+        if (this.isInt()) {
+            return new ScalarWrapper(this.Int.intValue());
+        } else if (this.isDouble()) {
+            return new ScalarWrapper(this.dec.doubleValue());
+        } else {
+            return new ScalarWrapper(this.rat.clone());
+        }
+    }
+
+    /**
+     * Returns a String representation of this ScalarWrapper
+     * @return a String representation of this ScalarWrapper
+     */
+    @Override
+    public String toString() {
+        if (this.isInt()) {
+            return this.Int.toString();
+        } else if (this.isDouble()) {
+            return this.dec.toString();
+        } else {
+            return this.rat.toString();
+        }
+    }
+
+    /**
+     * Wraps each member of a array of ints
+     * @param values a array of ints to wrap
+     * @return a array of wrapped integers
+     */
+    public static ScalarWrapper[] wrapArray(int[] values) {
+        ScalarWrapper[] wrappedArray = new ScalarWrapper[values.length];
+        for (int i = 0; i < values.length; i++) {
+            wrappedArray[i] = new ScalarWrapper(values[i]);
+        }
+
+        return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a array of Integers
+     * @param values a array of Integers to wrap
+     * @return a array of wrapped integers
+     */
+    public static ScalarWrapper[] wrapArray(Integer[] values) {
+        ScalarWrapper[] wrappedArray = new ScalarWrapper[values.length];
+        for (int i = 0; i < values.length; i++) {
+            wrappedArray[i] = new ScalarWrapper(values[i]);
+        }
+
+        return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a array of doubles
+     * @param values a array of doubles to wrap
+     * @return a array of wrapped doubles
+     */
+    public static ScalarWrapper[] wrapArray(double[] values) {
+        ScalarWrapper[] wrappedArray = new ScalarWrapper[values.length];
+        for (int i = 0; i < values.length; i++) {
+            wrappedArray[i] = new ScalarWrapper(values[i]);
+        }
+
+        return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a array of Doubles
+     * @param values a array of Doubles to wrap
+     * @return a array of wrapped doubles
+     */
+    public static ScalarWrapper[] wrapArray(Double[] values) {
+        ScalarWrapper[] wrappedArray = new ScalarWrapper[values.length];
+        for (int i = 0; i < values.length; i++) {
+            wrappedArray[i] = new ScalarWrapper(values[i]);
+        }
+
+        return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a array of Rationals
+     * @param values a array of Rationals to wrap
+     * @return a array of wrapped Rationals
+     */
+    public static ScalarWrapper[] wrapArray(Rational[] values) {
+        ScalarWrapper[] wrappedArray = new ScalarWrapper[values.length];
+        for (int i = 0; i < values.length; i++) {
+            wrappedArray[i] = new ScalarWrapper(values[i]);
+        }
+
+        return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a two-dimensional array of ints
+     * @param values a two-dimensional array of ints to wrap
+     * @return a two-dimensional array of wrapped integers
+     */
+    public static ScalarWrapper[][] wrap2DArray(int[][] values) {
+        ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values[0].length; j++) {
+                wrappedArray[i][j] = new ScalarWrapper(values[i][j]);
+            }
+        }
+
+        return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a two-dimensional array of Integers
+     * @param values a two-dimensional array of Integers to wrap
+     * @return a two-dimensional array of wrapped integers
+     */
+    public static ScalarWrapper[][] wrap2DArray(Integer[][] values) {
+        ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values[0].length; j++) {
+                wrappedArray[i][j] = new ScalarWrapper(values[i][j]);
+            }
+        }
+
+        return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a two-dimensional array of doubles
+     * @param values a two-dimensional array of doubles to wrap
+     * @return a two-dimensional array of wrapped doubles
+     */
+    public static ScalarWrapper[][] wrap2DArray(double[][] values) {
+        ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values[0].length; j++) {
+                wrappedArray[i][j] = new ScalarWrapper(values[i][j]);
+            }
+        }
+
+        return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a two-dimensional array of Doubles
+     * @param values a two-dimensional array of Doubles to wrap
+     * @return a two-dimensional array of wrapped doubles
+     */
+    public static ScalarWrapper[][] wrap2DArray(Double[][] values) {
+        ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values[0].length; j++) {
+                wrappedArray[i][j] = new ScalarWrapper(values[i][j]);
+            }
+        }
+
+        return wrappedArray;
+    }
+
+    /**
+     * Wraps each member of a two-dimensional array of Rationals
+     * @param values a two-dimensional array of Rationals to wrap
+     * @return a two-dimensional array of wrapped Rationals
+     */
+    public static ScalarWrapper[][] wrap2DArray(Rational[][] values) {
+        ScalarWrapper[][] wrappedArray = new ScalarWrapper[values.length][values[0].length];
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values[0].length; j++) {
+                wrappedArray[i][j] = new ScalarWrapper(values[i][j]);
+            }
+        }
+
+        return wrappedArray;
+    }
+
+}

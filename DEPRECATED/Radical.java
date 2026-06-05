@@ -1,4 +1,4 @@
-public class Radical extends Number implements Cloneable, Comparable<Radical> {
+public class Radical extends Number implements Cloneable, Comparable<Radical>, AbstractRadical {
 
     private ScalarWrapper innerValue;
 
@@ -441,6 +441,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @param other the Radical to multiply with
      * @return the product of this Radical and other
      */
+    @Override
     public Radical multiply(Radical other) {
         ScalarWrapper wrapper = this.innerValue.multiply(other.innerValue);
         return new Radical(wrapper);
@@ -577,6 +578,7 @@ public class Radical extends Number implements Cloneable, Comparable<Radical> {
      * @param other the Radical to divide by
      * @return the quotient of this Radical and other
      */
+    @Override
     public Radical divideBy(Radical other) {
         ScalarWrapper wrapper = this.innerValue.divideBy(other.innerValue);
         return new Radical(wrapper);

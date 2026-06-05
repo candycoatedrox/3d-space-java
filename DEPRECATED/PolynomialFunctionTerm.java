@@ -925,10 +925,10 @@ public class PolynomialFunctionTerm extends Polynomial implements MultivariableP
         ArrayList<Integer> included = this.includedVariables();
 
         if (included.size() == 1) {
-            s += variableNames[included.get(0)] + "^" + this.exponents[included.get(0)];
+            s += VAR_NAMES[included.get(0)] + "^" + this.exponents[included.get(0)];
         } else if (included.size() > 1) {
             for (int v : included) {
-                s += "(" + variableNames[v] + "^" + this.exponents[v] + ")";
+                s += "(" + VAR_NAMES[v] + "^" + this.exponents[v] + ")";
             }
         }
 

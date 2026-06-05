@@ -394,6 +394,25 @@ public class Util {
     }
 
     /**
+     * Creates and returns a deep copy of a given array of PolynomialFunctionTerms
+     * @param arr the array to copy
+     * @return a deep copy of arr
+     */
+    public static PolynomialFunctionTerm[] deepCopy(PolynomialFunctionTerm[] arr) {
+        PolynomialFunctionTerm[] copy = new PolynomialFunctionTerm[arr.length];
+        
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == null) {
+                copy[i] = null;
+            } else {
+                copy[i] = arr[i].clone();
+            }
+        }
+
+        return copy;
+    }
+
+    /**
      * Returns the array of all integers from 0 to n-1
      * @param n the length of the resulting array
      * @return the array of all integers from 0 to n-1

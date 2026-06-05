@@ -633,7 +633,7 @@ public class Line extends SpacialObject {
             throw new IllegalArgumentException("i cannot be greater than 4");
         }
 
-        return variableNames[i] + " - " + this.getFromBase(i) + " = t" + this.getFromDirection(i);
+        return VAR_NAMES[i] + " - " + this.getFromBase(i) + " = t" + this.getFromDirection(i);
     }
 
     /**
@@ -668,7 +668,7 @@ public class Line extends SpacialObject {
             throw new IllegalArgumentException("i cannot be greater than 4");
         }
 
-        return variableNames[i] + " = " + this.getFromBase(i) + " + t" + this.getFromDirection(i);
+        return VAR_NAMES[i] + " = " + this.getFromBase(i) + " + t" + this.getFromDirection(i);
     }
 
     /**
@@ -703,7 +703,7 @@ public class Line extends SpacialObject {
             throw new IllegalArgumentException("i cannot be greater than 4");
         }
 
-        return "t = (" + variableNames[i] + " - " + this.getFromBase(i) + ")/" + this.getFromDirection(i);
+        return "t = (" + VAR_NAMES[i] + " - " + this.getFromBase(i) + ")/" + this.getFromDirection(i);
     }
 
     /**
@@ -722,7 +722,7 @@ public class Line extends SpacialObject {
             if (i > 0) {
                 s += "\n";
             }
-            e = "= (" + variableNames[i] + " - " + this.getFromBase(i) + ")/" + this.getFromDirection(i);
+            e = "= (" + VAR_NAMES[i] + " - " + this.getFromBase(i) + ")/" + this.getFromDirection(i);
             s += e;
         }
         

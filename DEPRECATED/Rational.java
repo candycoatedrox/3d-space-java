@@ -5,7 +5,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
     
     private int numerator;
     private int denominator;
-    private static final int CONT_FRACT_ITERATIONS = 7;
+    private static final int contFractIterations = 7;
 
     public Rational(int n, int d, String key) {
         if (key.equals("DEBUG")) {
@@ -44,7 +44,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
                 }
             }
 
-            int[] contFract = continuedFraction(value, CONT_FRACT_ITERATIONS);
+            int[] contFract = continuedFraction(value, contFractIterations);
             this.numerator = contFract[0];
             this.denominator = contFract[1];
         } else { // if either is a Rational, but neither is double
@@ -79,7 +79,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
             this.denominator = denominator;
         } else if (numerator.isDouble()) {
             double value = numerator.getDouble() / denominator;
-            int[] contFract = continuedFraction(value, CONT_FRACT_ITERATIONS);
+            int[] contFract = continuedFraction(value, contFractIterations);
             this.numerator = contFract[0];
             this.denominator = contFract[1];
         } else {
@@ -101,7 +101,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
             this.denominator = denominator;
         } else if (numerator.isDouble()) {
             double value = numerator.getDouble() / denominator;
-            int[] contFract = continuedFraction(value, CONT_FRACT_ITERATIONS);
+            int[] contFract = continuedFraction(value, contFractIterations);
             this.numerator = contFract[0];
             this.denominator = contFract[1];
         } else {
@@ -126,7 +126,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
         } else {
             value = numerator.getRat().divideBy(denominator);
         }
-        int[] contFract = continuedFraction(value, CONT_FRACT_ITERATIONS);
+        int[] contFract = continuedFraction(value, contFractIterations);
         this.numerator = contFract[0];
         this.denominator = contFract[1];
 
@@ -147,7 +147,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
         } else {
             value = numerator.getRat().divideBy(denominator);
         }
-        int[] contFract = continuedFraction(value, CONT_FRACT_ITERATIONS);
+        int[] contFract = continuedFraction(value, contFractIterations);
         this.numerator = contFract[0];
         this.denominator = contFract[1];
 
@@ -186,7 +186,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
             this.denominator = denominator.getInt();
         } else if (denominator.isDouble()) {
             double value = numerator / denominator.getDouble();
-            int[] contFract = continuedFraction(value, CONT_FRACT_ITERATIONS);
+            int[] contFract = continuedFraction(value, contFractIterations);
             this.numerator = contFract[0];
             this.denominator = contFract[1];
         } else {
@@ -224,7 +224,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      */
     public Rational(int numerator, double denominator) {
         double value = numerator / denominator;
-        int[] contFract = continuedFraction(value, CONT_FRACT_ITERATIONS);
+        int[] contFract = continuedFraction(value, contFractIterations);
         this.numerator = contFract[0];
         this.denominator = contFract[1];
         this.reduce();
@@ -319,7 +319,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
             value = denominator.getRat().divide(numerator);
         }
 
-        int[] contFract = continuedFraction(value, CONT_FRACT_ITERATIONS);
+        int[] contFract = continuedFraction(value, contFractIterations);
         this.numerator = contFract[0];
         this.denominator = contFract[1];
         this.reduce();
@@ -332,7 +332,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      */
     public Rational(double numerator, int denominator) {
         double value = numerator / denominator;
-        int[] contFract = continuedFraction(value, CONT_FRACT_ITERATIONS);
+        int[] contFract = continuedFraction(value, contFractIterations);
         this.numerator = contFract[0];
         this.denominator = contFract[1];
         this.reduce();
@@ -354,7 +354,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      */
     public Rational(double numerator, double denominator) {
         double value = numerator / denominator;
-        int[] contFract = continuedFraction(value, CONT_FRACT_ITERATIONS);
+        int[] contFract = continuedFraction(value, contFractIterations);
         this.numerator = contFract[0];
         this.denominator = contFract[1];
         this.reduce();
@@ -517,7 +517,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
             this.numerator = value.getInt();
             this.denominator = 1;
         } else if (value.isDouble()) {
-            int[] contFract = continuedFraction(value.getDouble(), CONT_FRACT_ITERATIONS);
+            int[] contFract = continuedFraction(value.getDouble(), contFractIterations);
             this.numerator = contFract[0];
             this.denominator = contFract[1];
         } else {
@@ -550,7 +550,7 @@ public class Rational extends Number implements Cloneable, Comparable<Rational> 
      * @param value the double value of the Rational
      */
     public Rational(double value) {
-        int[] contFract = continuedFraction(value, CONT_FRACT_ITERATIONS);
+        int[] contFract = continuedFraction(value, contFractIterations);
         this.numerator = contFract[0];
         this.denominator = contFract[1];
         this.reduce();
