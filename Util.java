@@ -2,6 +2,8 @@ import java.util.AbstractCollection;
 
 public class Util {
 
+    public static final double TAU = 2*Math.PI;
+
     /**
      * Calculates n-factorial (n!), or the product of all integers 1 <= i <= n
      * @param n the integer to take the factorial of

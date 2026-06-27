@@ -1,5 +1,8 @@
 public class Vector2D {
 
+    public static final Vector2D X_AXIS = new Vector2D(1,0);
+    public static final Vector2D Y_AXIS = new Vector2D(0,1);
+
     private double x;
     private double y;
 
@@ -259,12 +262,28 @@ public class Vector2D {
 
     // --- VECTOR ARITHMETIC ---
 
+    public double cosAngle() {
+        return cosAngle(X_AXIS, Matrix2x2.GIJ);
+    }
+
+    public double cosAngle(Matrix2x2 Gij) {
+        return cosAngle(X_AXIS, Gij);
+    }
+
     public double cosAngle(Vector2D other) {
         return cosAngle(other, Matrix2x2.GIJ);
     }
 
     public double cosAngle(Vector2D other, Matrix2x2 Gij) {
         return innerProduct(this, other, Gij) / (this.magnitude(Gij) * other.magnitude(Gij));
+    }
+
+    public double angle() {
+        return angle(X_AXIS, Matrix2x2.GIJ);
+    }
+
+    public double angle(Matrix2x2 Gij) {
+        return angle(X_AXIS, Gij);
     }
 
     public double angle(Vector2D other) {
@@ -275,12 +294,28 @@ public class Vector2D {
         return Math.acos(cosAngle(other, Gij));
     }
 
+    public double angleMultipleOfPi() {
+        return cosAngle(X_AXIS, Matrix2x2.GIJ);
+    }
+
+    public double angleMultipleOfPi(Matrix2x2 Gij) {
+        return cosAngle(X_AXIS, Gij);
+    }
+
     public double angleMultipleOfPi(Vector2D other) {
         return angleMultipleOfPi(other, Matrix2x2.GIJ);
     }
 
     public double angleMultipleOfPi(Vector2D other, Matrix2x2 Gij) {
         return angle(other, Gij) / Math.PI;
+    }
+
+    public Rational angleRatMultipleOfPi() {
+        return angleRatMultipleOfPi(X_AXIS, Matrix2x2.GIJ);
+    }
+
+    public Rational angleRatMultipleOfPi(Matrix2x2 Gij) {
+        return angleRatMultipleOfPi(X_AXIS, Gij);
     }
 
     public Rational angleRatMultipleOfPi(Vector2D other) {
